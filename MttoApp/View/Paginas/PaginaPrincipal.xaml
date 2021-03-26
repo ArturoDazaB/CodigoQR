@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MttoApp.View.Paginas.PaginaPrincipal"
+             BackgroundColor="{Binding BackGroundColor}">
+
+    <ScrollView Margin="5,5,5,5">
+
+        <Frame BorderColor="Black"
+               CornerRadius="0">
+
+            <Grid HorizontalOptions="Center"
+                  VerticalOptions="Center">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="auto"/>
+                    <!--0) TITULO DE LA APLICACION-->
+                    <RowDefinition Height="20"/>
+                    <!--1) espacio-->
+                    <RowDefinition Height="auto"/>
+                    <!--2) "¡Bienvenido! "-->
+                    <RowDefinition Height="10"/>
+                    <!--3) espacio-->
+                    <RowDefinition Height="auto"/>
+                    <!--4) INGRESO DE DATOS-->
+                    <RowDefinition Height="5"/>
+                    <!--5) espacio-->
+                    <RowDefinition Height="auto"/>
+                    <!--6) BOTON-->
+                    <RowDefinition Height="30"/>
+                    <!--7) espacio-->
+                    <RowDefinition Height="auto"/>
+                    <!--8) "Digitalizacion Industrial, 2020"-->
+
+                </Grid.RowDefinitions>
+
+                <!--================================================================================-->
+                <!--0) TITULO DE LA APLICACION: MTTO APP-->
+                <Frame BackgroundColor="{Binding HeaderBackGroundColor}"
+                       BorderColor="Black"
+                       CornerRadius="10"
+                       Grid.Row="0">
+
+                    <Label Text="{Binding HeaderText}"
+                           TextColor="White"
+                           FontSize="35"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+                </Frame>
+
+                <!--================================================================================-->
+                <!--2) "¡Bienvenido!"-->
+                <Label Text="¡Bienvenido!"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#424242"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Grid.Row="2"/>
+
+                <!--================================================================================-->
+                <!--4) INGRESO DE DATOS-->
+                <StackLayout Orientation="Vertical"
+                                 Grid.Row="4">
+
+                    <Label  Text="Inicio de sesion"
+                                FontSize="15"
+                                TextColor="#757575"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"/>
+
+                    <!--===============================================-->
+                    <Frame  BorderColor="#616161"
+                            CornerRadius="10"
+                             BackgroundColor="{Binding IngresoDatosBackGroundColor}">
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="auto"/>
+                                <!--0) NOMBRE DE USUARIO-->
+                                <RowDefinition Height="auto"/>
+                                <!--1) CONTRASEÑA-->
+
+                            </Grid.RowDefinitions>
+
+                            <!--0) NOMBRE DE USUARIO-->
+                            <Entry  Placeholder="{Binding UsernamePH}"
+                                    TextColor="{Binding EntryBackGroundColor}"
+                                    Grid.Row="0"
+                                    Keyboard="Default"
+                                    x:Name="usernameEntry"
+                                        
+                                    FontSize="{Binding EntryFontSize}"
+                                    Text="{Binding Username}"/>
+
+                            <!--1) CONTRASEÑA-->
+                            <Entry  Placeholder="{Binding PasswordPH}"
+                                    TextColor="{Binding EntryBackGroundColor}"
+                                    Grid.Row="1"
+                                    IsPassword="True"
+                                    Keyboard="Default"
+                                    x:Name="passwordEntry"
+                                        
+                                    FontSize="{Binding EntryFontSize}"
+                                    Text="{Binding Password}"/>
+
+                        </Grid>
+
+                    </Frame>
+                    <!--===============================================-->
+
+                </StackLayout>
+
+                <!--================================================================================-->
+                <!--6) BOTON-->
+                <Button Text="{Binding ButtonPH}"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            CornerRadius="10"
+                    
+                            HorizontalOptions="Center"
+                            Grid.Row="6"
+                            Clicked="OnIngresar"/>
+
+                <!--================================================================================-->
+                <!--7)-->
+                <ActivityIndicator  Grid.Row="7"
+                                    x:Name="ActivityIndicator"/>
+
+                <!--================================================================================-->
+                <!--8) "Digitalizacion Industrial, 2020"-->
+                <Label  Text="Digitalizacion Industrial, 2020"
+                            FontSize="10"
+                            TextColor="#9E9E9E"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End"
+                            Grid.Row="8"/>
+
+            </Grid>
+
+        </Frame>
+
+    </ScrollView>
+
+</ContentPage>

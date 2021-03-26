@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MttoApp.View.Paginas.PaginaQueryAdmin"
+             Title="{Binding TituloPagina}"
+             BackgroundColor="{Binding BackGroundColor}">
+    
+    <!--===============================================================================>
+    <================================================================================-->
+    <!--BARRA SUPERIOR-->
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="INFO"
+                     Clicked="OnInfoClicked" />
+    </ContentPage.ToolbarItems>
+
+    <!--===============================================================================>
+    <================================================================================-->
+    <!--CONTENIDO-->
+
+    <ScrollView Margin="5,5,5,5">
+
+        <StackLayout>
+
+            <!--======================================================================================================-->
+            <!--======================================================================================================-->
+
+            <Frame BorderColor="Black"
+                   CornerRadius="0">
+
+                <StackLayout>
+
+                    <!--=================================================================================================================-->
+                    <!--=================================================================================================================-->
+                    <!--SECCION DE BUSQUEDA-->
+                    <Frame BorderColor="Black"
+                           CornerRadius="10"
+                           Margin="0,0,0,5"
+                           BackgroundColor="{Binding BackGroundColor}">
+
+                        <StackLayout>
+
+                            <Grid RowSpacing="2">
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="auto" />
+                                    <!--0) LISTA DE OPCIONES-->
+                                    <RowDefinition Height="auto" />
+                                    <!--1) espacio-->
+                                    <RowDefinition Height="auto" />
+                                    <!--2) DATOS DE BUSQUEDA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--3) BOTON DE BUSQUEDA-->
+                                </Grid.RowDefinitions>
+
+                                <!--===========================================================================================-->
+                                <!--0) LISTA DE OPCIONES-->
+                                <StackLayout x:Name="MenuBusqueda"
+                                             Grid.Row="0"
+                                             Grid.RowSpan="2">
+
+                                    <BindableLayout.ItemTemplate>
+
+                                        <DataTemplate>
+
+                                            <Grid RowSpacing="2">
+
+                                                <Grid.RowDefinitions>
+
+                                                    <RowDefinition Height="auto" />
+                                                    <!--0) TITULO DE LA SECCION DE BUSQUEDA-->
+                                                    <RowDefinition Height="auto" />
+                                                    <!--1) LISTA DE OPCIONES DE METODOS DE BUSQUEDA-->
+                                                </Grid.RowDefinitions>
+
+                                                <!--==========================================================-->
+                                                <!--0) TITULO DE LA SECCION DE BUSQUEDA-->
+                                                <Label  Text="{Binding Titulo}"
+                                                    TextColor="Black"
+                                                    FontSize="20"
+                                                    FontAttributes="Bold"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Start"
+                                                    Grid.Row="0" />
+
+                                                <!--==========================================================-->
+                                                <!--1) LISTA DE OPCIONES DE METODOS DE BUSQUEDA-->
+                                                <Picker ItemsSource="{Binding Opciones}"
+                                                    Title="Opciones"
+                                                    FontSize="15"
+                                                    Grid.Row="1"
+                                                    SelectedIndexChanged="OnSelectedOpciones" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+
+                                <!--===========================================================================================-->
+                                <!--2) DATOS DE BUSQUEDA-->
+                                <Entry  Placeholder="{Binding EntryDatosPH}"
+                                    FontSize="15"
+                                    Grid.Row="2"
+                                    x:Name="EntryDatos" />
+
+                                <!--===========================================================================================-->
+                                <!--3) BOTON DE BUSQUEDA-->
+                                <Button VerticalOptions="Center"
+                                    Text="Buscar"
+                                    Margin="2,2,2,2"
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    BackgroundColor="{Binding ButtonColor}"
+                                    TextColor="White"
+                                    HeightRequest="35"
+                                    CornerRadius="10"
+                                    Grid.Row="3"
+                                    Clicked="OnBuscar" />
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+
+                    <!--=========================================================================-->
+                    <!--=========================================================================-->
+                    <!--SECCION DE RESULTADO DE BUSQUEDA (INVISIBLE ANTES DE BUSQUEDA)-->
+
+                    <Frame  BorderColor="Black"
+                            CornerRadius="10"
+                            x:Name="FrameListaBusqueda"
+                            BackgroundColor="{Binding BackGroundColor}">
+
+                        <StackLayout>
+
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--TITULO DE LA LISTA DE PERSONAS OBTENIDAS-->
+                            <Label Text="Personas:"
+                                   TextColor="Black"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   Grid.Row="0" />
+
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--TITULO DE CADA COLUMNA-->
+                            <Grid ColumnSpacing="10"
+                                  HorizontalOptions="StartAndExpand">
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="90" />
+                                    <!--0) COLUMNA CEDULA-->
+                                    <ColumnDefinition Width="90" />
+                                    <!--1) COLUMNA NOMBRES-->
+                                    <ColumnDefinition Width="90" />
+                                    <!--2) COLUMNA APELLIDOS-->
+                                </Grid.ColumnDefinitions>
+
+                                <!--===========================================================================================-->
+                                <!--0) COLUMNA CEDULA-->
+                                <Label  Text="{Binding ColumnaCedula}"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        TextColor="Black"
+                                        Grid.Column="0" />
+
+                                <!--===========================================================================================-->
+                                <!--0) COLUMNA NOMBRES-->
+                                <Label  Text="{Binding ColumnaNombres}"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        TextColor="Black"
+                                        Grid.Column="1" />
+
+                                <!--===========================================================================================-->
+                                <!--0) COLUMNA APELLIDOS-->
+                                <Label  Text="{Binding ColumnaApellidos}"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        TextColor="Black"
+                                        Grid.Column="2" />
+                            </Grid>
+
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--LISTA DE PERSONAS OBTENIDAS-->
+                            <ListView   x:Name="ListViewPersonas"
+                                        SeparatorColor="Black"
+                                        ItemTapped="OnItemSelected">
+
+                                <ListView.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <ViewCell>
+
+                                            <Grid ColumnSpacing="10"
+                                                  HorizontalOptions="StartAndExpand">
+
+                                                <Grid.ColumnDefinitions>
+
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="90" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label  Text="{Binding Cedula}"
+                                                        FontSize="15"
+                                                        HorizontalOptions="Start"
+                                                        TextColor="Black"
+                                                        Grid.Column="0" />
+
+                                                <Label  Text="{Binding Nombres}"
+                                                        FontSize="15"
+                                                        HorizontalOptions="Start"
+                                                        TextColor="Black"
+                                                        Grid.Column="1" />
+
+                                                <Label  Text="{Binding Apellidos}"
+                                                        FontSize="15"
+                                                        HorizontalOptions="Start"
+                                                        TextColor="Black"
+                                                        Grid.Column="2" />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            
+                        </StackLayout>
+                        
+                    </Frame>
+
+                    <!--=========================================================================-->
+                    <!--=========================================================================-->
+                    <!--ACTIVITY INDICATOR-->
+                    <ActivityIndicator x:Name="ActivityIndicatorBusqueda"
+                                               HeightRequest="30" />
+                    
+                </StackLayout>
+                
+            </Frame>
+
+            <!--======================================================================================================-->
+            <!--======================================================================================================-->
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

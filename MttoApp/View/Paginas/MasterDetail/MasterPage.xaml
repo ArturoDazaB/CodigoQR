@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MttoApp.View.Paginas.MasterDetail.MasterPage"
+             Title="Master"
+             BackgroundColor="#ffcdd2">
+    
+    <ContentPage.Content>
+
+        <StackLayout>
+
+            <!--===========================================================================================>
+            <============================================================================================-->
+
+            <!--SECCION CON BINDING EN EL STACKLAYOUT
+                (MVVM: MasterPageUserInfo(MODEL), MasterPageUserInfoViewModel(VIEWMODEL)-->
+
+            <Frame  BorderColor="Black"
+                    Margin="3,2,3,0"
+                    CornerRadius="10"
+                    BackgroundColor="#fcf3e3">
+
+                <StackLayout>
+
+                    <!--BindableLayout.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="2"/>
+                                    <ColumnDefinition Width="auto"/>
+
+                                </Grid.ColumnDefinitions>
+
+                                <ICONO DE USUARIO>
+                                
+                                <Image  Source="{Binding UserIconFile}"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        Grid.Row ="0"
+                                        Grid.Column="0"
+                                        Grid.RowSpan="2"
+                                        Aspect="AspectFill"/>
+
+                                <NOMBRE DE USUARIO>
+                                
+                                <Label  Text="{Binding UserName}"
+                                        TextColor="Black"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                        Grid.Row="0"
+                                        Grid.Column="2"/>
+
+                                <NOMBRE PERSONAL DEL USUARIO>
+                                
+                                <Label  Text="{Binding FullName}"
+                                        TextColor="Black"
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        FontSize="15"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate-->
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition Width="auto"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <!--ICONO DE USUARIO-->
+
+                        <Image  Source="{Binding UserIconFile}"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Grid.Row ="0"
+                                Grid.Column="0"
+                                Grid.RowSpan="2"
+                                Aspect="AspectFill"/>
+
+                        <!--NOMBRE DE USUARIO-->
+
+                        <Label  Text="{Binding UserName}"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                FontSize="{Binding SmallHeaderFontSize}"
+                                Grid.Row="0"
+                                Grid.Column="2"/>
+
+                        <!--NOMBRE PERSONAL DEL USUARIO-->
+
+                        <Label  Text="{Binding FullName}"
+                                TextColor="Black"
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                FontSize="{Binding EntryFontSize}"/>
+
+                    </Grid>
+
+                </StackLayout>
+
+            </Frame>
+
+            <!--===========================================================================================>
+            <==============================================================================================>
+            
+            <Frame BorderColor="Black"
+                   Margin="3,2,3,0"
+                   CornerRadius="10"
+                   BackgroundColor="#fcf3e3"
+                   HeightRequest="60">
+
+                <ListView   x:Name="UserInfo"
+                            SelectionMode="None"
+                            SelectedItem="null">
+                    
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <ViewCell>
+
+                                <ViewCell.View>
+                                    
+                                    <StackLayout>
+
+                                        <Grid>
+
+                                            <Grid.RowDefinitions>
+
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="2"/>
+                                                <ColumnDefinition Width="auto"/>
+
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image  Source="{Binding UserIconFile}"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    Grid.Row ="0"
+                                                    Grid.Column="0"
+                                                    Grid.RowSpan="2"
+                                                    Aspect="AspectFill"/>
+
+                                            <Label  Text="{Binding UserName}"
+                                                    TextColor="Black"
+                                                    FontAttributes="Bold"
+                                                    FontSize="20"
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"/>
+
+                                            <Label  Text="{Binding FullName}"
+                                                    TextColor="Black"
+                                                    Grid.Row="1"
+                                                    Grid.Column="2"
+                                                    FontSize="15"/>
+
+                                        </Grid>
+
+                                    </StackLayout>
+
+                                </ViewCell.View>
+                                
+                            </ViewCell>
+                            
+                        </DataTemplate>
+                        
+                    </ListView.ItemTemplate>
+                    
+                </ListView>
+
+            </Frame>
+            
+            <=============================================================================================>
+            <===========================================================================================-->
+
+            <Frame BorderColor="Black"
+                   Margin="3,0,3,2"
+                   CornerRadius="10"
+                   BackgroundColor="#fcf3e3">
+
+                <ListView   x:Name="ListaNavegacion"
+                            ItemSelected="OnItemSelected"
+                            SelectionMode="Single">
+
+
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <ViewCell>
+
+                                <ViewCell.View>
+
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <!--ICONO DE OPCION-->
+
+                                        <Image  Source="{Binding IconFileName}"
+                                                WidthRequest="20"
+                                                HeightRequest="20"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"/>
+
+                                        <!--NOMBRE DE LA OPCION-->
+
+                                        <Label  Text="{Binding NombreOpcion}"
+                                                TextColor="Black"
+                                                VerticalOptions="Center"
+                                                FontSize="20"/>
+
+                                    </StackLayout>
+
+                                </ViewCell.View>
+
+                            </ViewCell>
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+            </Frame>
+
+            <!--===========================================================================================>
+            <============================================================================================-->
+
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>

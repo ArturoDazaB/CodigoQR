@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="MttoApp.View.Paginas.PaginasInformacion.PaginaInformacionRegistro">
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation  PositionIn="Center"
+                                    PositionOut="Center"
+                                    ScaleIn="1.4"
+                                    ScaleOut="1.0"
+                                    DurationIn="500"
+                                    DurationOut="500"
+                                    EasingIn="SinOut"
+                                    EasingOut="SinIn"
+                                    HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
+    <Frame BorderColor="Black"
+           BackgroundColor="{Binding BackGroundColor}"
+           CornerRadius="10"
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+
+        <ScrollView>
+
+            <StackLayout Orientation="Vertical"
+                         BackgroundColor="{Binding BackGroundColor}">
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
+
+                <ImageButton    Source="Cerrar24px2.png"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start"
+                                Clicked="OnClose"
+                                Aspect="AspectFit" />
+
+                <!--https://iconos8.es/icons/set/close-window"
+                    Cerrar ventana  icon by a target="_blank"
+                    href "https://iconos8.es"-->
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--CONTENIDO
+                    TEXTO: INFORMACION
+                
+                           Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que 
+                           respecta a las condiciones minimas para poder realizar un registro de usuario exitoso.
+                
+                           1) Para los espacios Nombres(s) y Apellido(s) solo es necesario el ingreso de un solo nombre y un 
+                              solo apellido respectivamente, sin embargo, de ser más de un nombre y/o más de un apellido lo 
+                              ideal es ingresar ambos nombres y apellidos.
+                
+                           2) En los renglones Correo, Nombre de Usuario y Contraseña no se permiten espacios en blanco.
+                
+                           3) La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas, no se permiten 
+                              ninguno de los siguientes caracteres: !, @, #, $, %, (, ), +, =, /, | .
+                
+                           4) El nombre de usuario se genera automaticamente bajo el siguiente formato: 
+                                
+                                       - Username = Inicial Primer Nombre + Apellido
+                    
+                              Si al momento de generar el nombre de usuario se detecta que ya existe 
+                              un registro que contenga un nombre de usuario similar se vuelve a generar 
+                              el nombre bajo el siguiente formato: 
+                    
+                                       -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido
+                
+                           5) El nivel de usuario es definido en la seccion de Datos de Usuario. Existen tres (3) niveles 
+                              jerarquizados en una escala del uno (1) al diez (10): 
+                    
+                               -Nivel Bajo (0)
+                               -Nivel Medio (5)
+                               -Nivel Alto (10)-->
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto" />
+                        <!--0) TITULO-->
+                        <RowDefinition Height="10" />
+                        <!--1) ESPACIO-->
+                        <RowDefinition Height="auto" />
+                        <!--2) TEXTO EXPLICATIVO-->
+                        <RowDefinition Height="auto" />
+                        <!--3) NUMERO UNO-->
+                        <RowDefinition Height="auto" />
+                        <!--4) NUMERO DOS-->
+                        <RowDefinition Height="auto" />
+                        <!--5) NUMERO TRES-->
+                        <RowDefinition Height="auto" />
+                        <!--6) NUMERO CUATRO-->
+                        <RowDefinition Height="auto" />
+                        <!--7) NUMERO CINCO-->
+                    </Grid.RowDefinitions>
+
+                    <!--=====================================================================================================-->
+                    <!--0) TITULO: INFORMACION-->
+                    <Label  Text="{Binding TituloPH}"
+                            FontSize="{Binding HeaderFontSize}"
+
+                            FontAttributes="Bold"
+                            TextColor="Black"
+
+                            Grid.Row="0"
+
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center" />
+
+                    <!--=====================================================================================================-->
+                    <!--2) TEXTO EXPLICATIVO-->
+                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que 
+                               respecta a las condiciones minimas para poder realizar un registro de usuario exitoso.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+
+                            Grid.Row="2">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="Bienvenido "
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                                <Span   Text="respecta a las condiciones minimas para poder realizar un registro de usuario exitoso." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--3) NUMERO UNO-->
+                    <!--TEXTO: Para los espacios Nombres(s) y Apellido(s) solo es necesario el ingreso de un solo nombre y un 
+                               solo apellido respectivamente, sin embargo, de ser más de un nombre y/o más de un apellido lo 
+                               ideal es ingresar ambos nombres y apellidos.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="3"
+                            HorizontalTextAlignment="Start">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="1)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para los espacios" />
+                                <Span   Text=" Nombres(s)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" y"/>
+                                <Span   Text=" Apellido(s)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" solo es necesario el ingreso de un solo nombre y un solo apellido respectivamente, sin embargo, de ser" />
+                                <Span   Text=" más de un nombre y/o más de un apellido lo ideal es ingresar ambos nombres y apellidos." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--4) NUMERO DOS-->
+                    <!--TEXTO: En los renglones Correo, Nombre de Usuario y Contraseña no se permiten espacios en blanco.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="4"
+                            HorizontalTextAlignment="Start">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="2)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" En los renglones"/>
+                                <Span   Text=" Correo, Nombre de Usuario"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" y"/>
+                                <Span   Text=" Contraseña"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" no se permiten espacios en blanco."
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--5) NUMERO TRES-->
+                    <!--TEXTO: La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas, no se permiten 
+                               ninguno de los siguientes caracteres: 
+                    
+                                    !, @, #, $, %, (, ), +, =, /, | .-->
+                    <StackLayout Grid.Row="5">
+
+                        <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="3)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" La contraseña o clave debe poseer un minimo de" />
+                                    <Span   Text=" seis (6) caracteres."
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Caracteres}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--6) NUMERO CUATRO-->
+                    <!--TEXTO:  El nombre de usuario se genera automaticamente bajo el siguiente formato: 
+                                
+                                       - Username = Inicial Primer Nombre + Apellido
+                    
+                                Si al momento de generar el nombre de usuario se detecta que ya existe 
+                                un registro que contenga un nombre de usuario similar se vuelve a generar 
+                                el nombre bajo el siguiente formato: 
+                    
+                                       -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido-->
+                    <StackLayout Grid.Row="6">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+
+                                HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="4)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" El nombre de usuario se genera automaticamente bajo el siguiente formato: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width = "5" />
+                                <ColumnDefinition Width = "auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="       - Username = Inicial Primer Nombre + Apellido"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    Grid.Column="1" />
+                        </Grid>
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+
+                                HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span Text="Si al momento de generar el nombre de usuario se detecta que ya existe un registro
+                                          que contenga un nombre de usuario similar se vuelve a generar el nombre bajo el siguiente formato: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width = "5" />
+                                <ColumnDefinition Width = "auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="       -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    Grid.Column="1" />
+                        </Grid>
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--7) NUMERO CINCO-->
+                    <!--TEXTO: El nivel de usuario es definido en la seccion de Datos de Usuario. Existen tres (3) niveles 
+                               jerarquizados en una escala del uno (1) al diez (10): 
+                    
+                               -Nivel Bajo (0)
+                               -Nivel Medio (5)
+                               -Nivel Alto (10)-->
+                    <StackLayout Grid.Row="7">
+
+                        <Label TextColor="Black"
+                               FontSize="{Binding EntryFontSize}"
+
+                               HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span Text="5)"
+                                          FontAttributes="Bold"
+                                          FontSize="{Binding EntryFontSize}" />
+                                    <Span Text=" El nivel de usuario es definido en la seccion de"/>
+                                    <Span Text=" Datos de Usuario."
+                                          FontAttributes="Bold"
+                                          FontSize="{Binding EntryFontSize}" />
+                                    <Span Text=" Existen tres (3) niveles jerarquizados en una escala del uno (1) al diez (10): "/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width = "5" />
+                                <ColumnDefinition Width = "auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label  Text="{Binding ListaNivelesUsuario}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    Grid.Column="1" />
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+                
+            </StackLayout>
+            
+        </ScrollView>
+        
+    </Frame>
+    
+</pages:PopupPage>

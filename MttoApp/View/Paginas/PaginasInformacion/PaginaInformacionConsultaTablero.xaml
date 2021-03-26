@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="MttoApp.View.Paginas.PaginasInformacion.PaginaInformacionConsultaTablero">
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation  PositionIn="Center"
+                                    PositionOut="Center"
+                                    ScaleIn="1.4"
+                                    ScaleOut="1.0"
+                                    DurationIn="500"
+                                    DurationOut="500"
+                                    EasingIn="SinOut"
+                                    EasingOut="SinIn"
+                                    HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
+    <Frame BorderColor="{Binding FrameColor}"
+           BackgroundColor="{Binding BackGroundColor}"
+           CornerRadius="10"
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+
+        <ScrollView>
+
+            <StackLayout Orientation="Vertical"
+                         BackgroundColor="{Binding BackGroundColor}">
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
+
+                <ImageButton    Source="Cerrar24px2.png"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start"
+                                Clicked="OnClose"
+                                Aspect="AspectFit" />
+
+                <!--https://iconos8.es/icons/set/close-window"
+                    Cerrar ventana  icon by a target="_blank"
+                    href "https://iconos8.es"-->
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--CONTENIDO
+                    TEXTO: INFORMACION
+                
+                           Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
+                           a conficiones minimas para poder realizar consulta de tableros dentro de la plataforma.
+                
+                           1) Existen dos metodos para la busqueda o consulta de un tablero especifico:
+                    
+                                      -Consulta por escaneo
+                                      -Consulta por ID (ID del tablero o ID Sap)
+                            
+                           2) Para realizar una consulta por escaneo solo es necesario presionar el boton "ESCANEAR CODIGO".
+                              Esto generará un salto a la pagina de escaneo y aperturara la camara del dispositivo. Luego, 
+                              posicione el telefono frente al codigo QR que desea escanear
+                
+                           3) Para realizar una consulta por ID solo es necesario seleccionar cual ID desea consultar 
+                              (Tablero ID o SAP ID), luego ingresar el parametro de consulta y por ultimo presionar el
+                              botón BUSQUEDA POR ID.
+                
+                           4) Luego de realizar (por cualquiera de los dos metodos previamente descritor), si el codigo QR o el 
+                              ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la informacion
+                              general de dicho tablero:
+                    
+                                      -Codigo del Tablero (ID)
+                                      -Filial (filial a la que pertenece)
+                                      -Area (area/zona de la filial)
+                                      -Ultima consulta del tablero (fecha)
+                                      -Items del tablero (lista)
+                                      -Codigo QR asignado al tablero (imagen)-->
+                <Grid>
+
+                    <!--=====================================================================================================-->
+                    <!--DEFINICIÓN DE COLUMNAS-->
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto" />
+                        <!--0) TITULO: INFORMACION-->
+                        <RowDefinition Height="5" />
+                        <!--1) ESPACIO-->
+                        <RowDefinition Height="auto" />
+                        <!--2) TEXTO EXPLICATIVO-->
+                        <RowDefinition Height="auto" />
+                        <!--3) NUMERO UNO-->
+                        <RowDefinition Height="auto" />
+                        <!--4) NUMERO DOS-->
+                        <RowDefinition Height="auto" />
+                        <!--5) NUMERO TRES-->
+                        <RowDefinition Height="auto" />
+                        <!--6) NUMERO CUATRO-->
+                    </Grid.RowDefinitions>
+
+                    <!--=====================================================================================================-->
+                    <!--0) TITULO: INFORMACION-->
+                    <Label  Text="{Binding TituloPH}"
+                            FontSize="{Binding HeaderFontSize}"
+                            FontAttributes="Bold"
+                            TextColor="Black"
+                            Grid.Row="0"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center" />
+
+                    <!--=====================================================================================================-->
+                    <!--2) TEXTO EXPLICATIVO-->
+                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
+                               a conficiones minimas para poder realizar consulta de tableros dentro de la plataforma.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+
+                            Grid.Row="2">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="Bienvenido"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                                <Span   Text="respecta a condiciones minimas para poder realizar consulta de tableros dentro de la plataforma." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--3) NUMERO UNO-->
+                    <!--TEXTO: 1) Existen dos metodos para la busqueda o consulta de un tablero especifico:
+                    
+                                      -Consulta por escaneo
+                                      -Consulta por ID (ID del tablero o ID Sap)-->
+                    <StackLayout Grid.Row="3">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="1)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Existen dos metodos para la busqueda o consulta de un tablero especifico:" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding ListaOpcionesEscaneo}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--4) NUMERO DOS-->
+                    <!--TEXTO: 2) Para realizar una consulta por escaneo solo es necesario presionar el boton "ESCANEAR CODIGO".
+                               Esto generará un salto a la pagina de escaneo y aperturara la camara del dispositivo. Luego, 
+                               posicione el telefono frente al codigo QR que desea escanear.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="4">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="2)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para realizar una " />
+                                <Span   Text=" consulta por escaneo"
+                                        FontSize="{Binding EntryFontSize}"
+                                        FontAttributes="Bold" />
+                                <Span   Text=" solo es necesario presionar" />
+                                <Span   Text=" ESCANEAR CODIGO"
+                                        FontSize="{Binding EntryFontSize}"
+                                        FontAttributes="Bold" />
+                                <Span   Text=". Esto generará un salto a la pagina de escaneo y aperturará la camara del dispositivo." />
+                                <Span   Text=" Luego, posicione el telefono frente al codigo QR que desea escanear." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--5) NUMERO TRES-->
+                    <!--TEXTO: 3) Para realizar una consulta por ID solo es necesario seleccionar cual ID desea consultar 
+                               (Tablero ID o SAP ID), luego ingresar el parametro de consulta y por ultimo presionar el
+                               botón BUSQUEDA POR ID.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="5">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="3)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para realizar una" />
+                                <Span   Text=" consulta por ID"
+                                        FontSize="{Binding EntryFontSize}"
+                                        FontAttributes="Bold" />
+                                <Span   Text=" solo es necesario seleccionar cual ID desea consultar (Tablero ID o SAP ID), luego ingresar EL" />
+                                <Span   Text=" parametro de consulta y por ultimo presiona el botón "/>
+                                <Span   Text=" BUSQUEDA POR ID"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text="." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--6) NUMERO CUATRO-->
+                    <!--TEXTO: 4) Luego de realizar (por cualquiera de los dos metodos previamente descritor), si el codigo QR o el 
+                               ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la informacion
+                               general de dicho tablero:
+                    
+                                      -Codigo del Tablero (ID)
+                                      -Filial (filial a la que pertenece)
+                                      -Area (area/zona de la filial)
+                                      -Ultima consulta del tablero (fecha)
+                                      -Items del tablero (lista)
+                                      -Codigo QR asignado al tablero (imagen)-->
+                    <StackLayout Grid.Row="6">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="4)"
+                                    FontAttributes="Bold"
+                                    FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos metodos previamente descritos)," />
+                                    <Span   Text=" si el codigo QR o el ID ingresado pertenecen a un tablero registrado en la plataforma" />
+                                    <Span   Text=" se mostrará la información general de dicho tablero: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding ListaInformacionTablero}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </Frame>
+</pages:PopupPage>

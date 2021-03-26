@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="MttoApp.View.Paginas.PaginasInformacion.PaginaInformacionConfiguracion">
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation  PositionIn="Center"
+                                    PositionOut="Center"
+                                    ScaleIn="1.4"
+                                    ScaleOut="1.0"
+                                    DurationIn="500"
+                                    DurationOut="500"
+                                    EasingIn="SinOut"
+                                    EasingOut="SinIn"
+                                    HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
+    <Frame BorderColor="Black"
+           BackgroundColor="{Binding BackGroundColor}"
+           CornerRadius="10"
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+
+        <ScrollView>
+
+            <StackLayout Orientation="Vertical"
+                         BackgroundColor="{Binding BackGroundColor}">
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
+
+                <ImageButton    Source="Cerrar24px2.png"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start"
+                                Clicked="OnClose"
+                                Aspect="AspectFit" />
+
+                <!--https://iconos8.es/icons/set/close-window"
+                    Cerrar ventana  icon by a target="_blank"
+                    href "https://iconos8.es"-->
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--COTENIDO
+                    TEXTO: INFORMACION
+                           
+                           Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
+                           a las condiciones minimas para realizar modificaciones sobre los atributos de un usuario
+                
+                           1) Son modificables lo siguientes campos:
+                                
+                                         -Nombre(s).
+                                         -Apellido(s).
+                                         -Fecha de nacimiento.
+                                         -Numero telefonico.
+                                         -Correo electronico.
+                                         -Nivel de Usuario.
+                                         -Contraseña.
+                           
+                           2) Cada que se modifique y actualice uno o varios atributos de algun usuario se generará un
+                              un registro que notificara:
+                    
+                                         -ID del usuario que acaba de ser modificado.
+                                         -ID del usuario que realizo la modificación.
+                                         -Fecha en la que se realizo la modificación.
+                                         -Atributo(s)/campo(s) modificado.
+                
+                           3) En los renglones Correo y Contraseña no se permiten espacios en blanco.
+                
+                           4) La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas no se permiten 
+                              ninguno de los siguientes caracteres:
+                    
+                                         !, @, #, $, %, (, ), +, =, /, | .
+                
+                           5) Para que los datos sean actualizados/modificados satisfactoriamente el usuario debera
+                              confirmar su almacenamiento mediante el boton Guardar.-->
+                <Grid>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="auto" />
+                        <!--0) TITULO-->
+                        <RowDefinition Height="10" />
+                        <!--1) ESPACIO-->
+                        <RowDefinition Height="auto" />
+                        <!--2) TEXTO INFORMATIVO-->
+                        <RowDefinition Height="auto" />
+                        <!--3) NUMERO UNO -->
+                        <RowDefinition Height="auto" />
+                        <!--4) NUMERO DOS-->
+                        <RowDefinition Height="auto" />
+                        <!--5) NUMERO TRES-->
+                        <RowDefinition Height="auto" />
+                        <!--6) NUMERO CUATRO-->
+                        <RowDefinition Height="auto" />
+                        <!--7) NUMERO CINCO-->
+                    </Grid.RowDefinitions>
+
+                    <!--=====================================================================================================-->
+                    <!--0) TITULO: INFORMACION-->
+                    <Label  Text="{Binding TituloPH}"
+
+                            FontSize="{Binding HeaderFontSize}"
+                            FontAttributes="Bold"
+                            TextColor="Black"
+
+                            Grid.Row="0"
+
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center" />
+
+                    <!--=====================================================================================================-->
+                    <!--2) TEXTO EXPLICATIVO-->
+                    <!--TEXTP: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
+                               a las condiciones minimas para realizar modificaciones sobre los atributos de un usuario-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="2"
+
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="Bienvenido"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                                <Span   Text="respecta a las condiciones para poder realizar modificaciones" />
+                                <Span   Text=" sobre los atributos de un usuario" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--3) NUMERO UNO-->
+                    <!--TEXTO: 1) Son modificables lo siguientes campos:
+                                
+                                         -Nombre(s).
+                                         -Apellido(s).
+                                         -Fecha de nacimiento.
+                                         -Numero telefonico.
+                                         -Correo electronico.
+                                         -Nivel de Usuario.
+                                         -Contraseña.-->
+                    <StackLayout Grid.Row="3">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+                                HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="1)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Son modificables los siguientes campos: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="10" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding ListaDatosModificables}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding LabelFontSize}"
+                                HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span Text="   Los cuales estan identificados mediante un " />
+                                    <Span Text="*"
+                                          TextColor="Red"
+                                          FontSize="{Binding EntryFontSize}"
+                                          FontAttributes="Bold" />
+                                    <Span Text=" en la pagina de " />
+                                    <Span Text="configuración"
+                                          FontSize="{Binding EntryFontSize}"
+                                          FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--4) NUMERO DOS-->
+                    <!--TEXTO: 2) Cada que se modifique y actualice uno o varios atributos de algun usuario se generará un
+                                  un registro que notificara:
+                    
+                                         -ID del usuario que acaba de ser modificado.
+                                         -ID del usuario que realizo la modificación.
+                                         -Fecha en la que se realizo la modificación.
+                                         -Atributo(s)/campo(s) modificado.-->
+                    <StackLayout Grid.Row="4">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+                                HorizontalTextAlignment="Start">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="2)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Cada que se modifique y actualice uno o varios atributos de algun usuario" />
+                                    <Span   Text=" se generara un registro que notifica:" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="10" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding ListaUltimasModificaciones}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--5) NUMERO TRES-->
+                    <!--TEXTO: 3) En los renglones Correo y Contraseña no se permiten espacios en blanco.-->
+                    <Label  TextColor="Black"
+                        FontSize="{Binding EntryFontSize}"
+
+                        Grid.Row="5">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="3)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" En los renglones" />
+                                <Span   Text=" Correo"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" y"/>
+                                <Span   Text=" Contraseña"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" no se permiten"/>
+                                <Span   Text="espacios en blanco"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text="."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--6) NUMERO CUATRO-->
+                    <!--TEXTO: 4) La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas no se permiten 
+                                  ninguno de los siguientes caracteres:
+                    
+                                         !, @, #, $, %, (, ), +, =, /, | .-->
+                    <StackLayout Grid.Row="6">
+
+                        <Label  TextColor="Black"
+                                FontSize="{Binding EntryFontSize}">
+
+                            <Label.FormattedText>
+
+                                <FormattedString>
+
+                                    <Span   Text="4)"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" La contraseña o clave debe poseer un minimo de " />
+                                    <Span   Text="seis (6) caracteres"
+                                            FontAttributes="Bold"
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=". Ademas, no se permiten ninguno de los siguientes caracteres: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
+
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Caracteres}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
+                    </StackLayout>
+
+                    <!--=====================================================================================================-->
+                    <!--7) NUMERO CINCO-->
+                    <!--TEXTO: 5) Para que los datos sean actualizados/modificados satisfactoriamente el usuario debera
+                                  confirmar su almacenamiento mediante el boton Guardar.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+
+                            Grid.Row="7">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="5)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para que los datos sean actualizados/modificados satisfactoriamente" />
+                                <Span   Text=" el usuario debera confirmar su almacenamiento mediante el boton" />
+                                <Span   Text=" Guardar"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text="."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </Frame>
+</pages:PopupPage>

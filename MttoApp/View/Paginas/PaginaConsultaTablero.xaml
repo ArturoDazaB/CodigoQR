@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MttoApp.View.Paginas.PaginaConsultaTablero"
+             Title="{Binding TituloConsulta}"
+             BackgroundColor="{Binding BackGroundColor}">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="INFO"
+                     Clicked = "OnInfoClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Margin="5,5,5,5">
+
+        <StackLayout>
+
+            <Frame BorderColor="Black"
+                   CornerRadius="0">
+
+                <StackLayout>
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--CONSULTA POR SCANEO-->
+
+                    <Frame BorderColor="Black"
+                           CornerRadius="10"
+                           BackgroundColor="{Binding BackGroundColor}"
+                           x:Name="FrameScan">
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+
+                                <!--0) TITULO: CONSULTA POR SCAN-->
+                                <RowDefinition Height="auto" />
+                                <!--1) BOTON: SCANEAR-->
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--TITULO: CONSULTA POR SCAN-->
+                            <Label  Text="Consulta por QR"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="0" />
+
+                            <!--BOTON: ESCANEAR-->
+                            <Button VerticalOptions="Center"
+                                    Text="{Binding BotonScanPH}"
+                                    Margin="2,2,2,4"
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    BackgroundColor="{Binding ButtonColor}"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    HeightRequest="35"
+                                    CornerRadius="10"
+
+                                    x:Name="BotonScan"
+                                    Clicked="Escanear"
+                                    Grid.Row="1" />
+                        </Grid>
+                    </Frame>
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--CONSULTA POR ID-->
+
+                    <Frame  BorderColor="Black"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding BackGroundColor}"
+                            x:Name="FrameConsultaID">
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+
+                                <!--0) TITULO BUSQUEDA POR ID-->
+                                <RowDefinition Height="auto" />
+                                <!--1) PICKER: TABLERO ID / SAP ID-->
+                                <RowDefinition Height="auto" />
+                                <!--2) ENTRY: INGRESE EL ID-->
+                                <RowDefinition Height="auto" />
+                                <!--3) BOTON: BOTON CONSULTA ID-->
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--===========================================================-->
+                            <!--0) TITULO BUSQUEDA POR ID-->
+                            <Label  Text="Consulta por ID"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="0" />
+
+                            <!--===========================================================-->
+                            <!--1) PICKER: TABLERO ID / SAP ID-->
+                            <Picker Title="Opciones de Busqueda"
+                                    ItemsSource="{Binding Opciones}"
+                                    FontSize="15"
+                                    Grid.Row="1"
+                                    x:Name="PickerOpciones" />
+
+                            <!--===========================================================-->
+                            <!--2) ENTRY: INGRESE EL ID-->
+                            <Entry  x:Name="entryTableroID"
+                                    Placeholder="{Binding ConsultaTableroIDPH}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+
+                                    Grid.Row="2" />
+
+                            <!--===========================================================-->
+                            <!--3) BOTON: BOTON CONSULTA ID-->
+                            <Button VerticalOptions="Center"
+                                    Text="{Binding BotonConsultaIDPH}"
+                                    Margin="2,2,2,4"
+
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    BackgroundColor="{Binding ButtonColor}"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    HeightRequest="35"
+                                    CornerRadius="10"
+
+                                    x:Name="BotonConsultaID"
+                                    Clicked="ConsultaID"
+                                    Grid.Row="3" />
+                        </Grid>
+                    </Frame>
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--ACTIVITY INDICATOR-->
+                    <ActivityIndicator  x:Name="ActivityIndicator"
+                                        HeightRequest="30" />
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--INFORMACION DEL CODIGO QR-->
+                    <Frame  BackgroundColor="{Binding BackGroundColor}"
+                            BorderColor="Black"
+                            CornerRadius="10"
+                            x:Name="FrameResultado">
+
+                        <StackLayout>
+
+                            <!--TITULO: INFORMACION DEL TABLERO-->
+                            <Label  FontSize="{Binding HeaderFontSize}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+
+                                    Text="Informacion General"
+
+                                    HorizontalTextAlignment="Center" />
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="auto" />
+                                    <!--0) TITULO: ID DEL TABLERO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--1) ID DEL TABLERO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--2) Label: SAP ID-->
+                                    <RowDefinition Height="auto" />
+                                    <!--3) SAP ID-->
+                                    <RowDefinition Height="auto" />
+                                    <!--4) LABEL: FILIAL-->
+                                    <RowDefinition Height="auto" />
+                                    <!--5) FILIAL DEL TABLERO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--6) LABEL: AREA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--7) AREA DEL TABLERO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--8) LABEL: ULTIMA FECHA DE CONSULTA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--9) ULTIMA FECHA DE CONSULTA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--10) LABEL: CODIGO QR (IMAGEN)-->
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="10" />
+                                    <!--0) SANGRIA/ESPACIO-->
+                                    <ColumnDefinition Width="auto" />
+                                    <!--1) INICIO-->
+                                </Grid.ColumnDefinitions>
+
+                                <!--=============================================================-->
+                                <!--0) TITULO: ID DEL TABLERO-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+
+                                        Text="Codigo del Tablero (ID):"
+
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" />
+
+                                <!--=============================================================-->
+                                <!--1) ID DEL TABLERO-->
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        x:Name="idtablero"
+
+                                        Grid.Row="1"
+                                        Grid.Column="1" />
+
+                                <!--=============================================================-->
+                                <!--2) LABEL: SAP ID-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+
+                                        Text="SAP ID: "
+
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" />
+
+                                <!--=============================================================-->
+                                <!--3) SAP ID-->
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        x:Name="sapid"
+
+                                        Grid.Row="3"
+                                        Grid.Column="1" />
+
+                                <!--=============================================================-->
+                                <!--4) TITULO: FILIAL-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+
+                                        Text="Filial: "
+
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" />
+
+                                <!--=============================================================-->
+                                <!--5) FILIAL DEL TABLERO-->
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        x:Name="filialtablero"
+
+                                        Grid.Row="5"
+                                        Grid.Column="1" />
+
+                                <!--=============================================================-->
+                                <!--6) TITULO: AREA-->
+                                <Label FontSize="{Binding LabelFontSize}"
+                                       FontAttributes="Bold"
+                                       TextColor="Black"
+
+                                       Text="Area: "
+
+                                       Grid.Row="6"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2" />
+
+                                <!--=============================================================-->
+                                <!--7) AREA DE LA FILIAL-->
+                                <Label  FontAttributes="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        x:Name="areatablero"
+
+                                        Grid.Row="7"
+                                        Grid.Column="1" />
+
+                                <!--=============================================================-->
+                                <!--8) TITULO: ULTIMA CONSULTA DEL TABLERO-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+
+                                        Text="Ultima consulta del tablero: "
+
+                                        Grid.Row="8"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" />
+
+                                <!--=============================================================-->
+                                <!--9) ULTIMA CONSULTA DEL TABLERO (FECHA)-->
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        x:Name="ultimaconsultatablero"
+
+                                        Grid.Row="9"
+                                        Grid.Column="1" />
+
+                                <!--=============================================================-->
+                                <!--10) TITULO: Items del Tablero-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+
+                                        Text="Items del tablero: "
+
+                                        Grid.Row="10"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2" />
+                            </Grid>
+
+                            <Frame BorderColor="Black"
+                                   Margin="0,5,0,0">
+
+                                <StackLayout>
+
+                                    <Grid ColumnSpacing="10"
+                                          HorizontalOptions="StartAndExpand">
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition Width="100" />
+                                            <!--0) COLUMNA CANTIDAD-->
+                                            <ColumnDefinition Width="auto" />
+                                            <!--1) COLUMNA DESCRIPCION-->
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--===========================================================================================-->
+                                        <!--0) COLUMNA CEDULA-->
+                                        <Label  Text="{Binding ColumnaCant}"
+                                                FontSize="15"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                TextColor="Black"
+                                                Grid.Column="0" />
+
+                                        <!--===========================================================================================-->
+                                        <!--0) COLUMNA NOMBRES-->
+                                        <Label  Text="{Binding ColumnaDescripcion}"
+                                                FontSize="15"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                TextColor="Black"
+                                                Grid.Column="1" />
+                                    </Grid>
+
+                                    <ListView x:Name="listViewItems"
+                                          SeparatorColor="Black"
+                                          SelectionMode="None">
+
+                                        <ListView.ItemTemplate>
+
+                                            <DataTemplate>
+
+                                                <ViewCell>
+
+                                                    <Grid   ColumnSpacing="10"
+                                                        HorizontalOptions="StartAndExpand">
+
+                                                        <Grid.ColumnDefinitions>
+
+                                                            <ColumnDefinition Width="100" />
+                                                            <!--0) CANTIDAD-->
+                                                            <ColumnDefinition Width="auto" />
+                                                            <!--1) DESCRIPCION-->
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <!--=======================================================-->
+                                                        <!--1) DESCRIPCION-->
+                                                        <Label  Text="{Binding Descripcion}"
+                                                            FontSize="15"
+                                                            HorizontalOptions="Start"
+                                                            TextColor="Black"
+                                                            Grid.Column="1" />
+
+                                                        <!--=======================================================-->
+                                                        <!--0) CANTIDAD-->
+                                                        <Label  Text="{Binding Cantidad}"
+                                                            FontSize="15"
+                                                            HorizontalOptions="Start"
+                                                            TextColor="Black"
+                                                            Grid.Column="0" />
+                                                    </Grid>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    
+                                </StackLayout>
+                            </Frame>
+
+                            <Label FontSize="{Binding LabelFontSize}"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"
+
+                                   Text="Codigo QR del tablero: " />
+
+                            <Frame BorderColor="Black"
+                                   Margin="0,5,0,0">
+
+                                <!--CODIGO QR DEL TABLERO-->
+                                <Image  x:Name="codigoqrtablero"
+
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                            </Frame>
+
+                            <!--BOTON PARA GUARDADO DE LA IMAGEN EN LA GALERIA DEL TELEFONO-->
+                            <Button VerticalOptions="Center"
+                                    Text="{Binding GuardarTableroPH}"
+                                    Margin="2,2,2,4"
+
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    BackgroundColor="{Binding ButtonColor}"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    HeightRequest="35"
+                                    CornerRadius="10"
+
+                                    x:Name="BotonGuardar"
+                                    Clicked="GuardarCodigoQR" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+
+                <!--====================================================================================================>
+                <=====================================================================================================-->
+            </Frame>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

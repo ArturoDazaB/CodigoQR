@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="MttoApp.View.Paginas.PaginaConfiguracion"
+             Title="{Binding ConfiguracionPH}"
+             BackgroundColor="{Binding BackGroundColor}">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="INFO"
+                     Clicked="OnInfoClicked"/>
+        
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Margin="0,0,0,5">
+
+        <StackLayout>
+
+            <Frame BorderColor="Black"
+                   Margin="5,5,5,5"
+                   CornerRadius="0">
+
+                <StackLayout>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--SECCION DE INFORMACION PERSONAL-->
+
+                    <Frame  BorderColor="Black"
+                        CornerRadius="10"
+                        Margin="0,0,0,5"
+                        BackgroundColor="{Binding BackGroundColor}">
+
+                        <StackLayout>
+
+                            <!--EN ESTA SECCION SE LISTARA TODA LA INFORMACION (PERSONAL Y DE USUARIO)
+                                    DEL USUARIO QUE SE ENCUENTRE LOGGEADO EN EL MOMENTO-->
+
+                            <!--INFORMACION PERSONAL-->
+                            <!--FECHA DE REGISTRO      (INMODIFICABLE)-->
+                            <!--NOMBRE                 (INMODIFICABLE)-->
+                            <!--APELLIDO               (INMODIFICABLE)-->
+                            <!--CEDULA                 (SOLO MODIFICABLE POR EL ADMINISTRATOR)-->
+                            <!--FECHA DE NACIMIENTO    (MODIFICABLE)-->
+                            <!--TELEFONO               (MODIFICABLE)-->
+                            <!--CORREO                 (MODIFICABLE)-->
+
+                            <!--TITULO DE LA SECCION: "DATOS PERSONALES"-->
+                            <Label Text="{Binding InformacionP}"
+                               TextColor="Black"
+                               FontSize="{Binding HeaderFontSize}"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center" />
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="auto" />
+                                    <!--0) TITULO: FECHA DE REGISTRO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--1) FECHA DE REGISTRO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--2) TITULO: NOMBRE(S)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--3) NOMBRE(S)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--4) TITULO: APELLIDO(S)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--5) APELLIDO(S)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--6) TITULO: CEDULA DE IDENTIDAD (ID)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--7) CEDULA (ID)-->
+                                    <RowDefinition Height="auto" />
+                                    <!--8) TITULO: NUMERO DE FICHA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--9) NUMERO DE FICHA-->
+                                    <RowDefinition Height="auto" />
+                                    <!--10) TITULO: FECHA DE NACIMIENTO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--11) FECHA DE NACIMIENTO-->
+                                    <RowDefinition Height="auto" />
+                                    <!--12) TITULO: TELEFONO CELULAR-->
+                                    <RowDefinition Height="auto" />
+                                    <!--13) TELEFONO CELULAR-->
+                                    <RowDefinition Height="auto" />
+                                    <!--14) TITULO: CORREO -->
+                                    <RowDefinition Height="auto" />
+                                    <!--15) CORREO-->
+                                </Grid.RowDefinitions>
+
+                                <!--0) TITULO FECHA DE REGISTRO-->
+                                <Label  Text="{Binding FechaRegistroPH}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="0" />
+
+                                <!--1) FECHA DE REGISTRO-->
+                                <DatePicker Date="{Binding FechaCreacion}"
+                                        TextColor="Black"
+                                        FontSize="{Binding EntryFontSize}"
+                                        Grid.Row="1"
+                                        IsEnabled="False" />
+
+                                <!--2) TITULO NOMBRE(s)-->
+                                <Label  Text="{Binding NombresPH}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="2" />
+
+                                <!--3) NOMBRE(S)-->
+                                <Label  Text="{Binding Nombres}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="3" />
+
+                                <!--4) TITULO APELLIDO(S)-->
+                                <Label  Text="{Binding ApellidosPH}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="4" />
+
+                                <!--5) APELLIDO(S)-->
+                                <Label  Text="{Binding Apellidos}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="5" />
+
+                                <!--6) TITULO CEDULA(ID)-->
+                                <Label  Text="{Binding CedulaPH}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="6" />
+
+                                <!--7) CEDULA(ID)-->
+                                <Label  Text="{Binding Cedula}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="7" />
+
+                                <!--8) TITULO: NUMERO DE FICHA-->
+                                <Label  Text="{Binding NumeroFichaPH}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="8" />
+
+                                <!--9) NUMERO DE FICHA-->
+                                <Label  Text="{Binding NumeroFicha}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="9" />
+
+                                <!--10) TITULO FECHA DE NACIMIENTO-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                    Text="{Binding FechaNacimientoPH}"
+                                    Grid.Row="10" />
+
+                                <!--11) FECHA DE NACIMIENTO-->
+                                <DatePicker x:Name="pickerFechaNacimiento"
+                                        Date="{Binding FechaNacimiento}"
+                                        TextColor="Black"
+                                        FontSize="{Binding EntryFontSize}"
+                                        Grid.Row="11"
+                                        IsEnabled="False" />
+
+                                <!--12) TITULO TELEFONO-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="12">
+
+                                    <Label.FormattedText>
+
+                                        <FormattedString>
+
+                                            <Span   Text="{Binding TelefonoPH}" />
+                                            <Span   Text="*"
+                                                FontSize="{Binding LabelFontSize}"
+                                                FontAttributes="Bold"
+                                                TextColor="Red" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!--13) TELEFONO-->
+                                <Entry  x:Name="entryTelefono"
+                                    Text="{Binding Telefono}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    MaxLength="{Binding TelefonoMaxLegnt}"
+                                    Grid.Row="13"
+                                    Unfocused="OnUnfocusedTelefono" />
+
+                                <!--14) TITULO CORREO/EMAIL-->
+                                <Label  FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="14">
+
+                                    <Label.FormattedText>
+
+                                        <FormattedString>
+
+                                            <Span   Text="{Binding CorreoPH}" />
+                                            <Span   Text="*"
+                                                FontSize="{Binding LabelFontSize}"
+                                                FontAttributes="Bold"
+                                                TextColor="Red" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!--15) CORREO-->
+                                <Entry  x:Name="entryCorreo"
+                                    Text="{Binding Correo}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="15"
+                                    Unfocused="OnUnfocusedCorreo" />
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--SECCION DE INFORMACION DE USUARIO-->
+
+                    <Frame BorderColor="Black"
+                       CornerRadius="10"
+                       Margin="0,0,0,5"
+                       BackgroundColor="{Binding BackGroundColor}">
+
+                        <!--INFORMACION DE USUARIO-->
+                        <!--USERNAME               (SOLO MODIFICABLE POR EL ADMINISTRATOR)-->
+                        <!--CONTRASEÑA             (MODIFICABLE)-->
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="auto" />
+                                <!--0) TITULO DE LA SECCION: INFORMACION PERSONAL-->
+                                <RowDefinition Height="5" />
+                                <RowDefinition Height="auto" />
+                                <!--2) TITULO: NOMBRE DE USUARIO-->
+                                <RowDefinition Height="auto" />
+                                <!--3) USERNAME-->
+                                <RowDefinition Height="auto" />
+                                <!--4) TITULO: NIVEL DE USUARIO-->
+                                <RowDefinition Height="auto" />
+                                <!--5) NIVEL DE USUARIO-->
+                                <RowDefinition Height="auto" />
+                                <!--6) TITULO: CONTRASEÑA-->
+                                <RowDefinition Height="auto" />
+                                <!--7) CONTRASEÑA-->
+                                <RowDefinition Height="5" />
+                            </Grid.RowDefinitions>
+
+                            <!--TITULO INFORMACION DE USUARIO-->
+                            <Label  Text="{Binding InformacionU}"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                FontSize="{Binding HeaderFontSize}"
+                                HorizontalOptions="Center"
+                                Grid.Row="0" />
+
+                            <!--TITULO USERNAME-->
+                            <Label  Text="{Binding UsernamePH}"
+                                FontSize="{Binding LabelFontSize}"
+                                Grid.Row="2" />
+
+                            <!--USERNAME-->
+                            <Label  Text="{Binding Username}"
+                                TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+                                Grid.Row="3" />
+
+                            <!--TITULO: NIVEL DE USUARIO-->
+                            <Label Text="{Binding NivelUsuarioPH}"
+                               FontSize="{Binding LabelFontSize}"
+                               Grid.Row="4" />
+
+                            <!--NIVEL DE USUARIO-->
+                            <Picker x:Name="nivelusuarioPicker"
+                                Title="{Binding PickerTitulo}"
+                                ItemsSource="{Binding NivelUsuarioList}"
+                                FontSize="{Binding EntryFontSize}"
+                                TextColor="Black"
+                                Grid.Row="5"
+                                IsEnabled="False" />
+
+                            <!--TITULO PASSWORD-->
+                            <Label  FontSize="{Binding LabelFontSize}"
+                                Grid.Row="6">
+
+                                <Label.FormattedText>
+
+                                    <FormattedString>
+
+                                        <Span   Text="{Binding PasswordPH}" />
+                                        <Span   Text="*"
+                                            FontSize="{Binding LabelFontSize}"
+                                            FontAttributes="Bold"
+                                            TextColor="Red" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <!--PASSWORD-->
+                            <Entry  x:Name="entryPassword"
+                                Text="{Binding Password}"
+                                TextColor="Black"
+                                FontSize="{Binding EntryFontSize}"
+                                Grid.Row="7"
+                                IsPassword="True"
+                                Focused="FocusedPassword"
+                                Unfocused="UnFocusedPassword"
+                                MaxLength="{Binding PasswordMaxLegnt}" />
+                        </Grid>
+                    </Frame>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--BOTON DE GUARDADO-->
+                    <Button VerticalOptions="Center"
+                            Text="{Binding Actualizar}"
+                            Clicked="OnActualizar"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            BackgroundColor="{Binding ButtonColor}"
+                            TextColor="White"
+                            HeightRequest="35"
+                            CornerRadius="10"/>
+
+                    <!--================================================================================>
+                    <=================================================================================-->
+                    <!--ACTIVITY INDICATOR-->
+                    <ActivityIndicator  x:Name = "ActivityIndicator"
+                                        HeightRequest = "30" />
+
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+        
+    </ScrollView>
+    
+</ContentPage>
