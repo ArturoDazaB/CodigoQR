@@ -4,109 +4,109 @@
       "scale": "2x",
       "size": "20x20",
       "idiom": "iphone",
-      "filename": "MTTO APP 1.png"
+      "filename": "Icon40.png"
     },
     {
       "scale": "3x",
       "size": "20x20",
       "idiom": "iphone",
-      "filename": "MTTO APP 12.png"
+      "filename": "Icon60.png"
     },
     {
       "scale": "2x",
       "size": "29x29",
       "idiom": "iphone",
-      "filename": "MTTO APP 11.png"
+      "filename": "Icon58.png"
     },
     {
       "scale": "3x",
       "size": "29x29",
       "idiom": "iphone",
-      "filename": "MTTO APP 13.png"
+      "filename": "Icon87.png"
     },
     {
       "scale": "2x",
       "size": "40x40",
       "idiom": "iphone",
-      "filename": "MTTO APP 14.png"
-    },
-    {
-      "scale": "2x",
-      "size": "20x20",
-      "idiom": "ipad",
-      "filename": "MTTO APP 15.png"
-    },
-    {
-      "scale": "1x",
-      "size": "40x40",
-      "idiom": "ipad",
-      "filename": "MTTO APP 16.png"
-    },
-    {
-      "scale": "2x",
-      "size": "40x40",
-      "idiom": "ipad",
-      "filename": "MTTO APP 17.png"
+      "filename": "Icon80.png"
     },
     {
       "scale": "3x",
       "size": "40x40",
       "idiom": "iphone",
-      "filename": "MTTO APP 112.png"
+      "filename": "Icon120.png"
     },
     {
       "scale": "2x",
       "size": "60x60",
       "idiom": "iphone",
-      "filename": "MTTO APP 113.png"
+      "filename": "Icon120.png"
     },
     {
       "scale": "3x",
       "size": "60x60",
       "idiom": "iphone",
-      "filename": "MTTO APP 116.png"
+      "filename": "Icon180.png"
     },
     {
       "scale": "1x",
       "size": "20x20",
       "idiom": "ipad",
-      "filename": "MTTO APP 18.png"
+      "filename": "Icon20.png"
+    },
+    {
+      "scale": "2x",
+      "size": "20x20",
+      "idiom": "ipad",
+      "filename": "Icon40.png"
     },
     {
       "scale": "1x",
       "size": "29x29",
       "idiom": "ipad",
-      "filename": "MTTO APP 19.png"
+      "filename": "Icon29.png"
     },
     {
       "scale": "2x",
       "size": "29x29",
       "idiom": "ipad",
-      "filename": "MTTO APP 110.png"
+      "filename": "Icon58.png"
+    },
+    {
+      "scale": "1x",
+      "size": "40x40",
+      "idiom": "ipad",
+      "filename": "Icon40.png"
+    },
+    {
+      "scale": "2x",
+      "size": "40x40",
+      "idiom": "ipad",
+      "filename": "Icon80.png"
     },
     {
       "scale": "1x",
       "size": "76x76",
       "idiom": "ipad",
-      "filename": "MTTO APP 111.png"
+      "filename": "Icon76.png"
     },
     {
       "scale": "2x",
       "size": "76x76",
       "idiom": "ipad",
-      "filename": "MTTO APP 114.png"
+      "filename": "Icon152.png"
     },
     {
       "scale": "2x",
       "size": "83.5x83.5",
       "idiom": "ipad",
-      "filename": "MTTO APP 115.png"
+      "filename": "Icon167.png"
     },
     {
       "scale": "1x",
       "size": "1024x1024",
       "idiom": "ios-marketing",
-      "filename": "MTTO APP 117.png"
+      "filename": "Icon1024.png"
     }
   ],
   "properties": {},
