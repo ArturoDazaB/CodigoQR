@@ -329,28 +329,29 @@
 
                                 <!--4) TITULO: NIVEL DE USUARIO-->
                                 <Label  FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="4">
+                                        Grid.Row="4">
 
                                     <Label.FormattedText>
 
                                         <FormattedString>
 
                                             <Span   Text="{Binding NivelUsuarioPH}" />
-                                            <Span   Text="*"
+                                            <!--Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red" />
+                                                TextColor="Red" /-->
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
 
                                 <!--5) NIVEL DE USUARIO-->
                                 <Picker x:Name="nivelusuarioPicker"
-                                    Title="{Binding PickerTitulo}"
-                                    ItemsSource="{Binding NivelUsuarioList}"
-                                    FontSize="{Binding EntryFontSize}"
-                                    TextColor="Black"
-                                    Grid.Row="5" />
+                                        Title="{Binding PickerTitulo}"
+                                        ItemsSource="{Binding NivelUsuarioList}"
+                                        FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+                                        Grid.Row="5"
+                                        IsEnabled="False"/>
 
                                 <!--TITULO PASSWORD-->
                                 <Label  FontSize="{Binding LabelFontSize}"

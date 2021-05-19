@@ -75,7 +75,7 @@ namespace MttoApp
             InitializeComponent();
             //SE CONFIGURA A LA PAGINA "PaginaPrincipal" COMO LA PAGINA INICIAL QUE
             //APARECERA AL MOMENTO DE INICIAR LA APLICACION
-            MainPage = new NavigationPage(new PaginaDePrueba());
+            MainPage = new NavigationPage(new PaginaPrincipal());
         }
 
         //===============================================================================================
