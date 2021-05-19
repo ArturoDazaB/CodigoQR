@@ -43,7 +43,7 @@ namespace MttoApp
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        public const string BaseUrl = "https://192.168.0.99:8000/mttoapp";
+        public const string BaseUrl = "https://10.10.0.83:5001/mttoapp";
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
         public const int TimeInSeconds = 5;
@@ -75,7 +75,6 @@ namespace MttoApp
             InitializeComponent();
             //SE CONFIGURA A LA PAGINA "PaginaPrincipal" COMO LA PAGINA INICIAL QUE
             //APARECERA AL MOMENTO DE INICIAR LA APLICACION
-            //MainPage = new NavigationPage(new PaginaPrincipal());
             MainPage = new NavigationPage(new PaginaDePrueba());
         }
 
@@ -96,13 +95,7 @@ namespace MttoApp
             InitializeComponent();
             //SE CONFIGURA A LA PAGINA "PaginaPrincipal" COMO LA PAGINA INICIAL QUE
             //APARECERA AL MOMENTO DE INICIAR LA APLICACION
-<<<<<<< HEAD
             MainPage = new NavigationPage(new PaginaPrincipal());
-            //MainPage = new NavigationPage(new PaginaDePrueba());
-=======
-            //MainPage = new NavigationPage(new PaginaPrincipal());
-            MainPage = new NavigationPage(new PaginaDePrueba());
->>>>>>> parent of e5089fe (-R2d2 was here)
             FileName = fileName;
         }
 
