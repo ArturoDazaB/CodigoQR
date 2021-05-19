@@ -320,7 +320,7 @@ namespace MttoApp.View.Paginas
             //EVALUAMOS EL VALOR DE LA POSICION DE LA OPCION SELECCIONADA
             switch (picker.SelectedIndex)
             {
-                //NIVEL BAJO (0)
+                //NIVEL BAJO (1)
                 case 0:
                     ConexionDatos.nivelusuario = 0;
                     break;
@@ -328,9 +328,9 @@ namespace MttoApp.View.Paginas
                 case 1:
                     ConexionDatos.nivelusuario = 5;
                     break;
-                //NIVEL ALTO (10)
+                //NIVEL ALTO (8)
                 case 2:
-                    ConexionDatos.nivelusuario = 10;
+                    ConexionDatos.nivelusuario = 8;
                     break;
             }
         }

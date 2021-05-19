@@ -261,9 +261,9 @@ namespace MttoApp.Model
         {
             return new List<string>()
             {
-                "Nivel bajo (0)",
-                "Nivel medio (5)",
-                "Nivel alto (10)",
+                "Nivel bajo",
+                "Nivel medio",
+                "Nivel superior",
             };
         }
     }
