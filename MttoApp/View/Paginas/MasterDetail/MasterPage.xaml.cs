@@ -207,7 +207,7 @@ namespace MttoApp.View.Paginas.MasterDetail
                     {
                         //===================================================================
                         //===================================================================
-                        //PAGINA DE CONSULTA
+                        //PAGINA DE CONSULTA DE TABELROS
                         case 0:
                             //SE OCULTA EL MENÚ DE OPCIONES
                             App.MasterDetail.IsPresented = false;
@@ -218,12 +218,12 @@ namespace MttoApp.View.Paginas.MasterDetail
                             break;
                         //===================================================================
                         //===================================================================
-                        //PAGINA DE REGISTRO DE USUARIOS
+                        //PAGINA DE REGISTRO DE TABLEROS
                         case 1:
                             //SE OCULTA EL MENÚ DE OPCIONES
                             App.MasterDetail.IsPresented = false;
                             //SE HACE EL LLAMADO A LA PAGINA DE REGISTRO DE USUARIOS
-                            await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaRegistro(Persona, Usuario));
+                            await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaRegistroTablero(Persona, Usuario));
                             //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
                             ((ListView)sender).SelectedItem = null;
                             break;
@@ -293,11 +293,11 @@ namespace MttoApp.View.Paginas.MasterDetail
                             break;
                         //===================================================================
                         //===================================================================
-                        //PAGINA DE CONFIGURACION DE USUARIOS
+                        //PAGINA DE CONFIGURACION DE DATOS PERSONALES
                         case 3:
                             //SE OCULTA EL MENU DE OPCIONES
                             App.MasterDetail.IsPresented = false;
-                            //SE HACE EL LLAMADO A LA PAGINA DE CONFIGURACION DE USUARIOS (PAGINA QUERY ADMIN)
+                            //SE HACE EL LLAMADO A LA PAGINA DE CONFIGURACION DE DATOS PERSONALES
                             await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaConfiguracion(Persona, Usuario));
                             //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO 
                             ((ListView)sender).SelectedItem = null;
