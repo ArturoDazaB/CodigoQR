@@ -87,6 +87,8 @@ namespace MttoApp.ViewModel
         //TEXTO DEL BOTON USADO PARA INGRESAR 
         public string ButtonPH { get { return "INGRESAR"; } }
         //MENSAJE EMERGENTE CUANDO LA APLICACION DETECTE QUE NO HAY ACCESO A INTERNET 
+
+        public string SignText { get { return "Digitalización Industrial, 2020"; } }
         public string NetWorkConnectivityChangeMessage 
         { 
             get { return App.NoNetworkAccessMessage; } 
@@ -236,7 +238,7 @@ namespace MttoApp.ViewModel
                     //SE MANDA A IMPRIMIR POR CONSOLA EL ERROR OBTENIDO (EJECUTADO SOLO CUANDO SE DEPURA EL PROYECTO)
                     ConsoleWriteline("\nOcurrio un error => \n\n" + ex.Message.ToString());
                     //SE NOTIFICA AL USUARIO QUE NO SE PUDO REALIZAR LA SOLICITUD WEB.
-                    result = "\nProblemas de conexion con el servidor";
+                    result = "\nProblemas de conexión con el servidor";
                     //PUESTO QUE NO SE OBTUVO EL CODIGO 200 OK RETORNAREMOS NULL COMO RESPUESTA AL LLAMADO DEL METODO
                     return null;
                 }
@@ -244,7 +246,7 @@ namespace MttoApp.ViewModel
             else
             {
                 //EL EQUIPO NO ENCUENTRA CONECTADO A INTERNET, SE LE NOTIFICA AL USUARIO.
-                result = "No hay conexion a internet";
+                result = "No hay conexión a internet";
                 //PUESTO QUE NO SE OBTUVO EL CODIGO 200 OK RETORNAREMOS NULL COMO RESPUESTA AL LLAMADO DEL METODO
                 return null;
             }
