@@ -49,7 +49,7 @@ namespace MttoApp
         public const int TimeInSeconds = 5;
 
         //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET 
-        public const string NoNetworkAccessMessage = "Sin Acceso a Internet Enciende el WIFI o la Red Movil para poder acceder";
+        public const string NoNetworkAccessMessage = "Sin Acceso a Internet Enciende el WIFI o la Red Móvil para poder acceder";
         //DIRECCION IP DEL DISPOSITIVO
         public static string IPAddress { get { return DependencyService.Get<MttoApp.Servicios.IIPAddressManager>().GetIPAddress(); } }
 

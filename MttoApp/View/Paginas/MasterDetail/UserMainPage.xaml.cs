@@ -116,12 +116,5 @@ namespace MttoApp.View.Paginas
             //SE GENERA EL MENSAJE "Bienvenido" AL MOMENTO DE INGRESAR
             Toast.MakeText(Android.App.Application.Context, "Bienvenido " + Usuario.Username, ToastLength.Short).Show();
         }
-
-        
-
-        private void LogInStandAlone(Personas Persona, Usuarios Usuario)
-        {
-            
-        }
     }
 }
