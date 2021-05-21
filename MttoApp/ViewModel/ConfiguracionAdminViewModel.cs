@@ -586,29 +586,29 @@ namespace MttoApp.ViewModel
         //---------------------------------------------------------------------------------------------------------
         //TEXTOS
         //=> TEXTOS UTILIZADOS EN LOS PlaceHolder DE LOS ELEMENTOS DE LA PAGINA
-        public string RegistroPH { get { return "Pagina de Registro"; } }
-        public string ConfiguracionPH { get { return "Pagina de Configuracion"; } }
+        public string RegistroPH { get { return "Página de Registro"; } }
+        public string ConfiguracionPH { get { return "Página de Configuración"; } }
         public string InformacionP { get { return "Datos Personales"; } }
         public string InformacionU { get { return "Datos de Usuario"; } }
         public string FechaRegistroPH { get { return "Fecha de Registro: "; } }
         public string NombresPH { get { return "Nombre(s): "; } }
         public string ApellidosPH { get { return "Apellido(s): "; } }
         public string CedulaPH { get { return "Cedula: "; } }
-        public string NumeroFichaPH { get { return "Numero de Ficha"; } }
+        public string NumeroFichaPH { get { return "Número de Ficha"; } }
         public string FechaNacimientoPH { get { return "Fecha de Nacimiento: "; } }
-        public string TelefonoPH { get { return "Telefono celular/movil: "; } }
-        public string CorreoPH { get { return "Correo electronico (email): "; } }
+        public string TelefonoPH { get { return "Teléfono celular/móvil: "; } }
+        public string CorreoPH { get { return "Correo electrónico (email): "; } }
         public string UsernamePH { get { return "Nombre de usuario (username): "; } }
-        public string NivelUsuarioPH { get { return "Nivel de Usuario"; } }
+        public string NivelUsuarioPH { get { return "Nivel de Usuario: "; } }
         public string PickerTitulo { get { return "Opciones"; } }
         public string PasswordPH { get { return "Contraseña (password): "; } }
         public string Actualizar { get { return "ACTUALIZAR"; } }
         public string Registrar { get { return "REGISTRAR"; } }
         //_______________________________________________________________________________________________________________________________________________________________________________________
         //TEXTO UTILIZADO EN LA FUNCION "OnActualizar" => FUNCION ACTIVADA CUANDO SE MODIFICAN LOS DATOS DE UN USUARIO EN LA PAGINA "PaginaConfiguracion"
-        public string OnActualizarMethodMessage { get { return "Esta a punto de realizar una modificación de datos.Toda la informacion suministrada será modificada.\n\n¿Desea continuar?"; } }
+        public string OnActualizarMethodMessage { get { return "Está a punto de realizar una modificación de datos. Toda la información suministrada será modificada.\n\n¿Desea continuar?"; } }
         //TEXTO UTILIZADO EN LA FUNCION "OnButtonPuch" => FUNCION ACTIVADA CUANDO SE DESEA REGISTRAR UN USUARIO DENTRO DE LA PLATAFORMA
-        public string OnButtonPushMethodMessage { get { return "Esta a punto de relizar un nuevo registro de usuario.\n\n¿Desea continuar?"; } }
+        public string OnButtonPushMethodMessage { get { return "Está a punto de realizar un nuevo registro de usuario.\n\n¿Desea continuar?"; } }
         //TEXTO UTILIZADO EN LAS FUNCIONES "OnCompletedPassword1" y "OnCompletedPassword2" => FUNCIONES ACTIVADAS CUANDO SE TERMINA DE INGRESAR 
         //TEXTO EN LOS CAMPOS ASIGNADOS A LA CONTRASEÑA Y LA CONFIRMACION DE LA CONTRASEÑA
         public string OnCompletePasswordWhiteSpace { get { return "La contraseña no puede contener espacios en blanco."; } }
@@ -639,7 +639,7 @@ namespace MttoApp.ViewModel
 
                 //SE EVALUA SI LA FECHA SELECCIONADA ES MAYOR A LA FECHA ACTUAL
                 if (FechaNacimiento > DateTime.Today) //=> true => Se selecciono una fecha superior a la fecha actual
-                    text = "No se permite seleccionar una fecha que no a existido todavía.";
+                    text = "No se permite seleccionar una fecha que no ha existido todavía.";
 
                 if (flagsameFecha)
                     text = "La fecha seleccionada es igual a la que se encuentra registrada actualmente.";
@@ -663,13 +663,13 @@ namespace MttoApp.ViewModel
         public string OnCompletedApellidoSameApellido { get { return "El/los apellido(s) ingresado(s) es igual al que se encuentra actualmente registrado."; } }
         //TEXTO UTILIZADO PARA INFORMAR AL USUARIO QUE SOBRE EL INGRESO DE LA MISMA INFORMACION YA ALMACENADA => PROPIEDAD USADA EN LAS FUNCIONES
         //"OnUnfocusedTelefono" DE LA CLASE "PaginaConfiguracionAdmin".
-        public string OnCompletedTelefonoSameTelefono { get { return "El número de telefono ingresado es igual al que se encuentra registrado."; } }
+        public string OnCompletedTelefonoSameTelefono { get { return "El número de teléfono ingresado es igual al que se encuentra registrado."; } }
         //TEXTO UTILIZADO PARA INFORMAR AL USUARIO SOBRE EL INGRESO DE LA MISMA INFORMACION YA ALMACENADA => PROPIEDAD USADA EN LAS FUNCIONES
         //"OnUnfocusedCorreo" DE LAS CLASES "PaginaConfiguracion" Y "PaginaConfiguracionAdmin".
         public string OnCompletedCorreoSameCorreo { get { return "El correo ingresado es igual al que se encuentra registrado."; } }
         //TEXTO UTILIZADO PARA INFORMAR AL USUARIO SOBRE EL INGRESO DE LA MISMA INFORMACION YA ALMACENADA => PROPIEDAD USADA EN LAS FUNCIONES
         //"OnUnfocusedUsername" DE LA CLASE "PaginaConfiguracionAdmin".
-        public string OnCompletedUsernameSameUsername { get { return "El nombre de usuaro ingresado es igual al que se encuentra actualmente registrado."; } }
+        public string OnCompletedUsernameSameUsername { get { return "El nombre de usuario ingresado es igual al que se encuentra actualmente registrado."; } }
         //TEXTO UTILIZADO PARA INFORMAR AL USUARIO SOBRE EL INGRESO DE LA MISMA INFORMACION YA ALMACENADA => PROPIEDAD USADA EN LAS FUNCIONES
         //"OnUnfocusedPassword" DE LA CLASE "PaginaConfiguracion" Y "PaginaConfiguracionAdmin".
         public string OnCompletedPasswordSamePassword { get { return "La contraseña ingresada es igual a la que se encuentra registrada."; } }
@@ -896,15 +896,15 @@ namespace MttoApp.ViewModel
                             respuesta = "El nombre de usuario no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
 
                         if (Metodos.Caracteres(Nombres)) //=> true => El/los Nombre(s) tiene(n) caracteres prohibidos
-                            respuesta = "El nombre no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
+                            respuesta = "El/los nombre(s) no puede(n) contener los siguientes caracteres: " + App.ForbiddenCharacters;
 
                         if (Metodos.Caracteres(Apellidos)) //=> true => El/los Apellido(s) tiene(n) caracteres prohibidos
-                            respuesta = "El apellido no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
+                            respuesta = "El/los apellido(s) no puede(n) contener los siguientes caracteres: " + App.ForbiddenCharacters;
                     }
                 }
                 else
                 {
-                    respuesta = "Ningun campo debe quedar en blanco";
+                    respuesta = "Ningún campo debe quedar en blanco";
                 }
             }
             else
@@ -1100,121 +1100,6 @@ namespace MttoApp.ViewModel
         public void MensajePantalla(string mensaje)
         {
             Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
-        }
-
-        //==================================================================================
-        //==================================================================================
-        //METODOS PARA EL REGISTRO Y MODIFICACION DE USUARIOS CUANDO LA APLICACION
-        //SE ENCUENTRA FUNCIONANDO STAND ALONE
-       /* protected string RegisterUserStandAlone()
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
-            {
-                //----------------------------------------------------------------------------------------------------
-                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
-                //------------------------API CONTROLLER CLASS: "RegistroUsuariosController"--------------------------
-                //----------------------------------------------------------------------------------------------------
-                //SE CREAN LAS TABLAS. LA LIBRERIA SQLite EVITA ESTA FUNCION DE
-                //YA EXISTIR UNA TABLA DEL TIPO <objeto> YA CREADA PREVIAMENTE
-                connection.CreateTable<Personas>();
-                connection.CreateTable<Usuarios>();
-
-                //SE VERIFICA UN ATRIBUTO DE CADA UNO DE LOS ITEMS Y SE COMPARA
-                //CON EL VALOR DEL ATRIBUTO DEL NUEVO ITEM A REGISTRAR, DE EXISTIR
-                //UN MATCH SE CANCELA EL REGISTRO
-                flagExistingCedula = Metodos.MatchCedula(connection.Table<Personas>().ToList(), Cedula);
-                flagExistingUsername = Metodos.MatchUsername(connection.Table<Usuarios>().ToList(), Username.ToLower());
-                flagExistingNumeroFicha = Metodos.MatchNumeroFicha(connection.Table<Personas>().ToList(), NumeroFicha);
-
-                if (!flagExistingCedula &&      //TRUE: SE ENCONTRO UN REGISTRO CON LA MISMA CEDULA (ID)
-                    !flagExistingUsername &&    //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NOMBRE DE USUARIO
-                    !flagExistingNumeroFicha)   //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NUMERO DE FICHA
-                {
-                    //SE INSERTAN LOS NUEVOS REGISTROS EN SUS RESPECTIVAS TABLAS
-                    //TABLA PERSONAS:
-                    connection.Insert(new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                        Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo.ToLower()));
-
-                    //TABLA USUARIOS
-                    connection.Insert(new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario));
-
-                    //SE GENERA UN MENSAJE DE NOTIFICACION DE ALMACENAMIENTO
-                    MensajePantalla("Registro completado satisfactoriamente");
-
-                    //SE MANDA A IMPRIMIR POR CONSOLA LOS RESULTADOS ALMACENADOS
-                    NotificacionRegistro();
-
-                    //SE NOTIFICA QUE SE REALIZO UN NUEVO REGISTRO
-                    App.RegistroFlag = true;
-
-                    //SE CIERRA LA BASE DE DATOS
-                    connection.Close();
-                }
-                else
-                {
-                    //SI ALGUNA DE LAS BANDERAS SE DISPARA SE GENERARA UN MENSAJE DE NOTIFICACION DEPENDIENTO DE
-                    //CUAL DE ELLAS SE HAYA DISPARADO
-                    if (flagExistingCedula)
-                        return "El numero de cedula que desea registrar ya ha sido previamente registrado." +
-                            "\nVerifique la cedula e intente nuevamente";
-
-                    if (flagExistingUsername)
-                        return "El nombre de usuario que intenta registrar ya ha sido previamente registrado. " +
-                            "\nIntente con un nombre distinto";
-
-                    if (flagExistingNumeroFicha)
-                        return "El Numero de Ficha que intenta registrar ya ha sido previamente registrado. " +
-                            "\nIntente con un numero de ficha distinto";
-                }
-
-                //----------------------------------------------------------------------------------------------------
-                //----------------------------------------------------------------------------------------------------
-
-                return string.Empty;
-            }
-        }*/
-
-        protected void ModifyUserStandAlone()
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
-            {
-                //----------------------------------------------------------------------------------------------------
-                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
-                //---------------------------API CONTROLLER CLASS: "ConfiguracionController"--------------------------
-                //----------------------------------------------------------------------------------------------------
-                //DE NO EXISTIR SE CREA LA TABLA "ModificacionesUsuarios"
-                connection.CreateTable<ModificacionesUsuarios>();
-
-                //SE CREAN LOS OBJETOS QUE CONTENDRAN LA INFORMACION ACTUALIZADA
-                Personas NewPersona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                    Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo);
-                Usuarios NewUsuario = new Usuarios().NewUsuario(Username, Password, Cedula, FechaCreacion, NivelUsuario);
-
-                //SE ACTUALIZAN LOS OBJETOS DENTRO DE SU RESPECTIVA TABLA
-                connection.Update(NewPersona);
-                connection.Update(NewUsuario);
-
-                //SE CREA UN NUEVO OBJETO QUE ALMACENARA LA INFORMACION DEL REGISTRO DE UNA
-                //NUEVA ENTRADA DE MODIFICACIONES
-                ModificacionesUsuarios Modificaciones = new ModificacionesUsuarios()
-                    .NewModificacionesUsuarios(NewPersona, Persona, NewUsuario, Usuario, DateTime.Now, UserId);
-
-                //SE INSERTA EN LA TABLA EL NUEVO REGISTRO DE LAS MODIFICACIONES
-                connection.Insert(Modificaciones);
-
-                //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                connection.Close();
-
-                //SE GENERA UN MENSAJE TOAST (System Message) EL CUAL NOTIFICA AL USUARIO QUE LOS DATOS
-                //HAN SIDO MODIFICADOS SATISFACTORIAMENTE
-                MensajePantalla("Datos Modificados Satisfactoriamente");
-
-                //SE ACTIVA LA BANDERA DE CAMBIO DE DATOS PARA EXPULSAR AL USUARIO LOGGEADO
-                //ASI CUANDO EL USUARIO VUELVA LOGGEARSE LOS NUEVOS DATOS SE VERAN DESPLEGADOS
-                //App.ConfigChangedFlag = true;
-                //----------------------------------------------------------------------------------------------------
-                //----------------------------------------------------------------------------------------------------
-            }
         }
 
         //==================================================================================
