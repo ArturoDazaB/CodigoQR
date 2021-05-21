@@ -114,8 +114,8 @@
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
-                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
-                               a condiciones minimas para poder realizar la busqueda de un usuario en especifico.-->
+                    <!--TEXTO: Bienvenido, en la siguiente página obtendrá toda la información necesaria en lo que respecta
+                               a condiciones mínimas para poder realizar la búsqueda de un usuario en específico.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"
@@ -191,6 +191,7 @@
                     <!--4) NUMERO DOS-->
                     <!--TEXTO: 2) Luego de seleccionar el método de búsqueda debe ingresar el parámetro que será usado como
                                   referencia para la búsqueda.-->
+                    
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"

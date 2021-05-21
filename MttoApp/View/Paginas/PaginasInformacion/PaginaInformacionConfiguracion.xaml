@@ -125,8 +125,8 @@
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
-                    <!--TEXTP: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
-                               a las condiciones minimas para realizar modificaciones sobre los atributos de un usuario-->
+                    <!--TEXTP: Bienvenido, en la siguiente página obtendrá toda la información necesaria en lo que respecta
+                               a las condiciones mínimas para realizar modificaciones sobre los atributos de un usuario.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
 
@@ -142,9 +142,9 @@
                                 <Span   Text="Bienvenido"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
-                                <Span   Text="respecta a las condiciones para poder realizar modificaciones" />
-                                <Span   Text=" sobre los atributos de un usuario" />
+                                <Span   Text=", en la siguiente página obtendrá toda la información necesaria en lo que " />
+                                <Span   Text="respecta a las condiciones mínimas para realizar modificaciones" />
+                                <Span   Text=" sobre los atributos de un usuario." />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -156,10 +156,12 @@
                                          -Nombre(s).
                                          -Apellido(s).
                                          -Fecha de nacimiento.
-                                         -Numero telefonico.
-                                         -Correo electronico.
+                                         -Número telefónico.
+                                         -Correo electrónico.
                                          -Nivel de Usuario.
-                                         -Contraseña.-->
+                                         -Contraseña.
+                    
+                                Los cuales estan identificados mediante un * en la página de configuración-->
                     <StackLayout Grid.Row="3">
 
                         <Label  TextColor="Black"
@@ -212,7 +214,7 @@
                                           TextColor="Red"
                                           FontSize="{Binding EntryFontSize}"
                                           FontAttributes="Bold" />
-                                    <Span Text=" en la pagina de " />
+                                    <Span Text=" en la página de " />
                                     <Span Text="configuración"
                                           FontSize="{Binding EntryFontSize}"
                                           FontAttributes="Bold" />
@@ -223,12 +225,12 @@
 
                     <!--=====================================================================================================-->
                     <!--4) NUMERO DOS-->
-                    <!--TEXTO: 2) Cada que se modifique y actualice uno o varios atributos de algun usuario se generará un
+                    <!--TEXTO: 2) Cada que se modifique y actualice uno o varios atributos de algún usuario se generará un
                                   un registro que notificara:
-                    
+                   
                                          -ID del usuario que acaba de ser modificado.
                                          -ID del usuario que realizo la modificación.
-                                         -Fecha en la que se realizo la modificación.
+                                         -Fecha en la que se realizó la modificación.
                                          -Atributo(s)/campo(s) modificado.-->
                     <StackLayout Grid.Row="4">
 
@@ -243,8 +245,8 @@
                                     <Span   Text="2)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Cada que se modifique y actualice uno o varios atributos de algun usuario" />
-                                    <Span   Text=" se generara un registro que notifica:" />
+                                    <Span   Text=" Cada que se modifique y actualice uno o varios atributos de algún usuario" />
+                                    <Span   Text=" se generará un registro que notificara:" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -305,7 +307,7 @@
 
                     <!--=====================================================================================================-->
                     <!--6) NUMERO CUATRO-->
-                    <!--TEXTO: 4) La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas no se permiten 
+                    <!--TEXTO: 4) La contraseña o clave debe poseer un mínimo de seis (6) caracteres. Además no se permiten 
                                   ninguno de los siguientes caracteres:
                     
                                          !, @, #, $, %, (, ), +, =, /, | .-->
@@ -321,11 +323,11 @@
                                     <Span   Text="4)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" La contraseña o clave debe poseer un minimo de " />
+                                    <Span   Text=" La contraseña o clave debe poseer un mínimo de " />
                                     <Span   Text="seis (6) caracteres"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=". Ademas, no se permiten ninguno de los siguientes caracteres: " />
+                                    <Span   Text=". Además no se permiten ninguno de los siguientes caracteres:" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>

@@ -58,8 +58,8 @@
                         case "CONFIGURACION":
                             //EN LA PAGINA "PaginaConfiguracion" EL USUARIO QUE SE ENCUENTRE LOGEADO SOLO PODRA MODIFICAR
                             //LOS SIGUIENTES CAMPOS QUE CONTIENEN INFORMACION DEL MISMO USUARIO
-                            Lista = "       -Numero telefonico.\n" +
-                                    "       -Correo electronico.\n" +
+                            Lista = "       -Número telefónico.\n" +
+                                    "       -Correo electrónico.\n" +
                                     "       -Contraseña.";
                             break;
                         //"CONFIGURACION" => "PaginaInformacionConfiguracion" INVOCADA DESDE LA CLASE "PaginaConfiguacionAdmin"
@@ -69,8 +69,8 @@
                             Lista = "       -Nombre(s).\n" +
                                     "       -Apellido(s).\n" +
                                     "       -Fecha de nacimiento.\n" +
-                                    "       -Numero telefonico.\n" +
-                                    "       -Correo electronico.\n" +
+                                    "       -Número telefónico.\n" +
+                                    "       -Correo electrónico.\n" +
                                     "       -Nivel de Usuario.\n" +
                                     "       -Contraseña.";
                             break;
@@ -116,7 +116,7 @@
             {
                 return "       -ID del usuario que acaba de ser modificado.\n" +
                        "       -ID del usuario que realizo la modificación.\n" +
-                       "       -Fecha en la que se realizo la modificación.\n" +
+                       "       -Fecha en la que se realizó la modificación.\n" +
                        "       -Atributo(s)/campo(s) modificado."; ;
             }
         }
@@ -131,9 +131,9 @@
             //-----------------------------------------------------------------------------------------------------------------
             get
             {
-                return "       -Nivel Bajo (0).\n" +
+                return "       -Nivel Bajo (1).\n" +
                        "       -Nivel Medio (5).\n" +
-                       "       -Nivel Alto (10).\n";
+                       "       -Nivel Superior (8).\n";
             }
         }
 
@@ -163,12 +163,12 @@
             //-----------------------------------------------------------------------------------------------------------------
             get
             {
-                return "       -Codigo del Tablero (ID).\n" +
+                return "       -Código del Tablero (ID).\n" +
                        "       -Filial (filial a la que pertenece).\n" +
-                       "       -Area (area/zona de la filial).\n" +
-                       "       -Ultima consulta del tablero (fecha).\n" +
-                       "       -Items del tablero (lista).\n"+
-                       "       -Codigo QR asignado al tablero (imagen).";
+                       "       -Área (área/zona de la filial)\n" +
+                       "       -Última consulta del tablero (fecha).\n" +
+                       "       -Ítems del tablero (lista)\n" +
+                       "       -Código QR asignado al tablero (imagen).";
             }
         }
 

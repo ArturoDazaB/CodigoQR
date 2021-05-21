@@ -81,11 +81,11 @@
                                        -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido
                 
                            5) El nivel de usuario es definido en la seccion de Datos de Usuario. Existen tres (3) niveles 
-                              jerarquizados en una escala del uno (1) al diez (10): 
+                              jerarquizados en una escala del uno (0) al diez (10): 
                     
-                               -Nivel Bajo (0)
+                               -Nivel Bajo (1)
                                -Nivel Medio (5)
-                               -Nivel Alto (10)-->
+                               -Nivel Superior (8)-->
 
                 <Grid>
 
@@ -124,8 +124,8 @@
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
-                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que 
-                               respecta a las condiciones minimas para poder realizar un registro de usuario exitoso.-->
+                    <!--TEXTO: Bienvenido, en la siguiente página obtendrá toda la información necesaria en lo que 
+                               respecta a las condiciones mínimas para poder realizar un registro de usuario exitoso.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"
@@ -140,8 +140,8 @@
                                 <Span   Text="Bienvenido "
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
-                                <Span   Text="respecta a las condiciones minimas para poder realizar un registro de usuario exitoso." />
+                                <Span   Text=", en la siguiente página obtendrá toda la información necesaria en lo que " />
+                                <Span   Text="respecta a las condiciones mínimas para poder realizar un registro de usuario exitoso." />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -211,7 +211,7 @@
 
                     <!--=====================================================================================================-->
                     <!--5) NUMERO TRES-->
-                    <!--TEXTO: La contraseña o clave debe poseer un minimo de seis (6) caracteres. Ademas, no se permiten 
+                    <!--TEXTO: La contraseña o clave debe poseer un mínimo de seis (6) caracteres. Además, no se permiten 
                                ninguno de los siguientes caracteres: 
                     
                                     !, @, #, $, %, (, ), +, =, /, | .-->
@@ -228,11 +228,11 @@
                                     <Span   Text="3)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" La contraseña o clave debe poseer un minimo de" />
+                                    <Span   Text=" La contraseña o clave debe poseer un mínimo de" />
                                     <Span   Text=" seis (6) caracteres."
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
+                                    <Span   Text=" Además, no se permiten ninguno de los siguientes caracteres: " />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -261,7 +261,7 @@
 
                     <!--=====================================================================================================-->
                     <!--6) NUMERO CUATRO-->
-                    <!--TEXTO:  El nombre de usuario se genera automaticamente bajo el siguiente formato: 
+                    <!--TEXTO:  El nombre de usuario se genera automáticamente bajo el siguiente formato: 
                                 
                                        - Username = Inicial Primer Nombre + Apellido
                     
@@ -284,7 +284,7 @@
                                     <Span   Text="4)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" El nombre de usuario se genera automaticamente bajo el siguiente formato: " />
+                                    <Span   Text=" El nombre de usuario se genera automáticamente bajo el siguiente formato: " />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -338,11 +338,11 @@
                     <!--=====================================================================================================-->
                     <!--7) NUMERO CINCO-->
                     <!--TEXTO: El nivel de usuario es definido en la seccion de Datos de Usuario. Existen tres (3) niveles 
-                               jerarquizados en una escala del uno (1) al diez (10): 
+                              jerarquizados en una escala del uno (0) al diez (10):
                     
-                               -Nivel Bajo (0)
+                               -Nivel Bajo (1)
                                -Nivel Medio (5)
-                               -Nivel Alto (10)-->
+                               -Nivel Superior (8)-->
                     <StackLayout Grid.Row="7">
 
                         <Label TextColor="Black"
@@ -357,7 +357,7 @@
                                     <Span Text="5)"
                                           FontAttributes="Bold"
                                           FontSize="{Binding EntryFontSize}" />
-                                    <Span Text=" El nivel de usuario es definido en la seccion de"/>
+                                    <Span Text=" El nivel de usuario es definido en la sección de"/>
                                     <Span Text=" Datos de Usuario."
                                           FontAttributes="Bold"
                                           FontSize="{Binding EntryFontSize}" />

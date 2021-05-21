@@ -118,8 +118,8 @@
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
-                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
-                               a conficiones minimas para poder realizar consulta de tableros dentro de la plataforma.-->
+                    <!--TEXTO: Bienvenido, en la siguiente página obtendrá toda la información necesaria en lo que respecta
+                               a condiciones mínimas para poder realizar consulta de tableros dentro de la plataforma.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"
@@ -134,18 +134,18 @@
                                 <Span   Text="Bienvenido"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
-                                <Span   Text="respecta a condiciones minimas para poder realizar consulta de tableros dentro de la plataforma." />
+                                <Span   Text=", en la siguiente página obtendrá toda la información necesaria en lo que " />
+                                <Span   Text="respecta a condiciones mínimas para poder realizar consulta de tableros dentro de la plataforma." />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
                     <!--=====================================================================================================-->
                     <!--3) NUMERO UNO-->
-                    <!--TEXTO: 1) Existen dos metodos para la busqueda o consulta de un tablero especifico:
+                    <!--TEXTO: 1) Existen dos métodos para la búsqueda o consulta de un tablero específico:
                     
-                                      -Consulta por escaneo
-                                      -Consulta por ID (ID del tablero o ID Sap)-->
+                                      -Consulta por escaneo.
+                                      -Consulta por ID (ID del tablero o ID Sap).-->
                     <StackLayout Grid.Row="3">
 
                         <Label  TextColor="Black"
@@ -158,7 +158,7 @@
                                     <Span   Text="1)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Existen dos metodos para la busqueda o consulta de un tablero especifico:" />
+                                    <Span   Text=" Existen dos métodos para la búsqueda o consulta de un tablero específico:" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -187,9 +187,9 @@
 
                     <!--=====================================================================================================-->
                     <!--4) NUMERO DOS-->
-                    <!--TEXTO: 2) Para realizar una consulta por escaneo solo es necesario presionar el boton "ESCANEAR CODIGO".
-                               Esto generará un salto a la pagina de escaneo y aperturara la camara del dispositivo. Luego, 
-                               posicione el telefono frente al codigo QR que desea escanear.-->
+                    <!--TEXTO: 2) Para realizar una consulta por escaneo solo es necesario presionar el botón "ESCANEAR CODIGO".
+                               Esto generará un salto a la página de escaneo y aperturará la cámara del dispositivo. Luego, 
+                               posicione el teléfono frente al código QR que desea escanear.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
 
@@ -206,12 +206,12 @@
                                 <Span   Text=" consulta por escaneo"
                                         FontSize="{Binding EntryFontSize}"
                                         FontAttributes="Bold" />
-                                <Span   Text=" solo es necesario presionar" />
+                                <Span   Text=" solo es necesario presionar el botón" />
                                 <Span   Text=" ESCANEAR CODIGO"
                                         FontSize="{Binding EntryFontSize}"
                                         FontAttributes="Bold" />
-                                <Span   Text=". Esto generará un salto a la pagina de escaneo y aperturará la camara del dispositivo." />
-                                <Span   Text=" Luego, posicione el telefono frente al codigo QR que desea escanear." />
+                                <Span   Text=". Esto generará un salto a la página de escaneo y aperturará la cámara del dispositivo." />
+                                <Span   Text=" Luego, posicione el teléfono frente al código QR que desea escanear." />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -219,7 +219,7 @@
                     <!--=====================================================================================================-->
                     <!--5) NUMERO TRES-->
                     <!--TEXTO: 3) Para realizar una consulta por ID solo es necesario seleccionar cual ID desea consultar 
-                               (Tablero ID o SAP ID), luego ingresar el parametro de consulta y por ultimo presionar el
+                               (Tablero ID o SAP ID), luego ingresar el parámetro de consulta y por ultimo presionar el
                                botón BUSQUEDA POR ID.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
@@ -238,7 +238,7 @@
                                         FontSize="{Binding EntryFontSize}"
                                         FontAttributes="Bold" />
                                 <Span   Text=" solo es necesario seleccionar cual ID desea consultar (Tablero ID o SAP ID), luego ingresar EL" />
-                                <Span   Text=" parametro de consulta y por ultimo presiona el botón "/>
+                                <Span   Text=" parámetro de consulta y por ultimo presiona el botón "/>
                                 <Span   Text=" BUSQUEDA POR ID"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
@@ -249,8 +249,8 @@
 
                     <!--=====================================================================================================-->
                     <!--6) NUMERO CUATRO-->
-                    <!--TEXTO: 4) Luego de realizar (por cualquiera de los dos metodos previamente descritor), si el codigo QR o el 
-                               ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la informacion
+                    <!--TEXTO: 4) Luego de realizar (por cualquiera de los dos métodos previamente descritos), si el código QR o el 
+                               ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la información
                                general de dicho tablero:
                     
                                       -Codigo del Tablero (ID)
@@ -271,8 +271,8 @@
                                     <Span   Text="4)"
                                     FontAttributes="Bold"
                                     FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos metodos previamente descritos)," />
-                                    <Span   Text=" si el codigo QR o el ID ingresado pertenecen a un tablero registrado en la plataforma" />
+                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos métodos previamente descritos)," />
+                                    <Span   Text=" si el código QR o el ID ingresado pertenecen a un tablero registrado en la plataforma" />
                                     <Span   Text=" se mostrará la información general de dicho tablero: " />
                                 </FormattedString>
                             </Label.FormattedText>
