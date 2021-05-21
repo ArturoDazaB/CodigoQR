@@ -32,6 +32,8 @@ namespace MttoApp.ViewModel
         public string ColumnaCedula { get { return "Cedula (ID)"; } }
         public string ColumnaNombres { get { return "Nombre(s)"; } }
         public string ColumnaApellidos { get { return "Apellido(s)"; } }
+        public string ButtonText { get { return "Buscar"; } }
+        public string UserList { get { return "Usuarios encontrados: "; } }
 
         //---------------------------------------------------------------------------------------------------------
         //COLOR DE FONTO Y DE BOTONES

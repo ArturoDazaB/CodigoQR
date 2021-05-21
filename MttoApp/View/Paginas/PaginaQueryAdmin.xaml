@@ -36,6 +36,31 @@
 
                     <!--=================================================================================================================-->
                     <!--=================================================================================================================-->
+                    
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="*" />
+                            <!--0) -->
+                            <RowDefinition Height="auto" />
+                            <!--1) TITULO-->
+                            <RowDefinition Height="*" />
+                            <!--2) -->
+                        </Grid.RowDefinitions>
+
+                        <!--TITULO-->
+                        <Label  Text="{Binding TituloPagina}"
+                                FontSize="{Binding HeaderFontSize}"
+                                FontAttributes="Bold"
+                                TextColor="Black"
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center" />
+                    </Grid>
+
+                    <!--=================================================================================================================-->
+                    <!--=================================================================================================================-->
                     <!--SECCION DE BUSQUEDA-->
                     <Frame BorderColor="Black"
                            CornerRadius="10"
@@ -110,7 +135,7 @@
                                 <!--===========================================================================================-->
                                 <!--3) BOTON DE BUSQUEDA-->
                                 <Button VerticalOptions="Center"
-                                    Text="Buscar"
+                                    Text="{Binding ButtonText}"
                                     Margin="2,2,2,2"
                                     BorderColor="Black"
                                     BorderWidth="1"
@@ -138,7 +163,7 @@
                             <!--=========================================================================-->
                             <!--=========================================================================-->
                             <!--TITULO DE LA LISTA DE PERSONAS OBTENIDAS-->
-                            <Label Text="Personas:"
+                            <Label Text="{Binding UserList}"
                                    TextColor="Black"
                                    FontSize="20"
                                    FontAttributes="Bold"
