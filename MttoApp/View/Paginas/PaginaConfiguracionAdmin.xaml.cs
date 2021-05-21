@@ -51,8 +51,8 @@ namespace MttoApp.View.Paginas
             switch (ConexionDatos.NivelUsuario)
             {
                 //----------------------------------------------
-                //NIVEL BAJO (0)
-                case 0:
+                //NIVEL BAJO (1)
+                case 1:
                     nivelusuarioPicker.SelectedIndex = 0;
                     break;
                 //----------------------------------------------
@@ -61,8 +61,8 @@ namespace MttoApp.View.Paginas
                     nivelusuarioPicker.SelectedIndex = 1;
                     break;
                 //----------------------------------------------
-                //NIVEL ALTO (10)
-                case 10:
+                //NIVEL SUPERIOR  (8)
+                case 8:
                     nivelusuarioPicker.SelectedIndex = 2;
                     break;
             }
@@ -321,6 +321,34 @@ namespace MttoApp.View.Paginas
         private async void OnInfoClicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new PaginaInformacionConfiguracion("CONFIGURACIONADMIN"));
+        }
+
+        private void nivelusuarioUnfocused(object sender, FocusEventArgs e)
+        {
+            Console.WriteLine("\n=================================================");
+            Console.WriteLine("=================================================");
+            Console.WriteLine("\nPOSICION DEL PICKER: " + Convert.ToString(nivelusuarioPicker.SelectedIndex));
+            Console.WriteLine("=================================================");
+            Console.WriteLine("=================================================\n");
+
+            switch (nivelusuarioPicker.SelectedIndex)
+            {
+                //----------------------------------------------
+                //NIVEL BAJO (0)
+                case 0:
+                    ConexionDatos.nivelusuario = 1;
+                    break;
+                //----------------------------------------------
+                //NIVEL MEDIO (5)
+                case 1:
+                    ConexionDatos.nivelusuario = 5;
+                    break;
+                //----------------------------------------------
+                //NIVEL SUPERIOR  (8)
+                case 2:
+                    ConexionDatos.nivelusuario = 8;
+                    break;
+            }
         }
     }
 }

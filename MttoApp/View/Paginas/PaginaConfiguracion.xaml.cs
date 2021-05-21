@@ -51,8 +51,8 @@ namespace MttoApp.View.Paginas
             switch (ConexionDatos.NivelUsuario)
             {
                 //----------------------------------------------
-                //NIVEL BAJO (0)
-                case 0:
+                //NIVEL BAJO (1)
+                case 1:
                     nivelusuarioPicker.SelectedIndex = 0;
                     break;
                 //----------------------------------------------
@@ -61,8 +61,8 @@ namespace MttoApp.View.Paginas
                     nivelusuarioPicker.SelectedIndex = 1;
                     break;
                 //----------------------------------------------
-                //NIVEL ALTO (10)
-                case 10:
+                //NIVEL SUPERIOR (8)
+                case 8:
                     nivelusuarioPicker.SelectedIndex = 2;
                     break;
             }

@@ -43,6 +43,8 @@ namespace MttoApp.Model
         public DateTime FechaNacimiento { get; set; }
         public string Username { get; set; }
 
+        public int NivelUsuario { get; set; }
+
         public static ConfiguracionA NewConfiguracionA(ConfiguracionA newinfo)
         {
             return new ConfiguracionA
@@ -56,6 +58,7 @@ namespace MttoApp.Model
 
                 Username = newinfo.Username,
                 Userpassword = newinfo.Userpassword,
+                NivelUsuario = newinfo.NivelUsuario,
             };
         }
     }

@@ -336,10 +336,10 @@
                                         <FormattedString>
 
                                             <Span   Text="{Binding NivelUsuarioPH}" />
-                                            <!--Span   Text="*"
+                                            <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red" /-->
+                                                TextColor="Red" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
@@ -351,7 +351,8 @@
                                         FontSize="{Binding EntryFontSize}"
                                         TextColor="Black"
                                         Grid.Row="5"
-                                        IsEnabled="False"/>
+                                        Unfocused="nivelusuarioUnfocused"
+                                        IsEnabled="True"/>
 
                                 <!--TITULO PASSWORD-->
                                 <Label  FontSize="{Binding LabelFontSize}"

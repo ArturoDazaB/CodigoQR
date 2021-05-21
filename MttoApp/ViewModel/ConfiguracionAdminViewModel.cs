@@ -1306,6 +1306,7 @@ namespace MttoApp.ViewModel
                     Correo = Correo,
                     Username = Username,
                     Userpassword = Password,
+                    NivelUsuario = NivelUsuario,
                 };
 
                 //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
