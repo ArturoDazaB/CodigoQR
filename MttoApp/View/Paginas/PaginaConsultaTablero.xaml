@@ -23,6 +23,32 @@
 
                 <StackLayout>
 
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--TITULO DE LA PAGINA-->
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="*" />
+                            <!--0) -->
+                            <RowDefinition Height="auto" />
+                            <!--1) TITULO-->
+                            <RowDefinition Height="*" />
+                            <!--2) -->
+                        </Grid.RowDefinitions>
+
+                        <!--TITULO-->
+                        <Label  Text="{Binding TituloConsulta}"
+                                FontSize="{Binding HeaderFontSize}"
+                                FontAttributes="Bold"
+                                TextColor="Black"
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center" />
+                    </Grid>
+
                     <!--====================================================================================================>
                     <=====================================================================================================-->
                     <!--CONSULTA POR SCANEO-->
@@ -152,7 +178,7 @@
                                     FontAttributes="Bold"
                                     TextColor="Black"
 
-                                    Text="Informacion General"
+                                    Text="{Binding InformacionGeneralHeader}"
 
                                     HorizontalTextAlignment="Center" />
 
@@ -198,7 +224,7 @@
                                         FontAttributes="Bold"
                                         TextColor="Black"
 
-                                        Text="Codigo del Tablero (ID):"
+                                        Text="{Binding TableroIDHeader}"
 
                                         Grid.Row="0"
                                         Grid.Column="0"
@@ -220,7 +246,7 @@
                                         FontAttributes="Bold"
                                         TextColor="Black"
 
-                                        Text="SAP ID: "
+                                        Text="{Binding SAPIDHeader}"
 
                                         Grid.Row="2"
                                         Grid.Column="0"
@@ -242,7 +268,7 @@
                                         FontAttributes="Bold"
                                         TextColor="Black"
 
-                                        Text="Filial: "
+                                        Text="{Binding FilialHeader}"
 
                                         Grid.Row="4"
                                         Grid.Column="0"
@@ -264,7 +290,7 @@
                                        FontAttributes="Bold"
                                        TextColor="Black"
 
-                                       Text="Area: "
+                                       Text="{Binding AreaHeader}"
 
                                        Grid.Row="6"
                                        Grid.Column="0"
@@ -286,7 +312,7 @@
                                         FontAttributes="Bold"
                                         TextColor="Black"
 
-                                        Text="Ultima consulta del tablero: "
+                                        Text="{Binding UltimaConsultaHeader}"
 
                                         Grid.Row="8"
                                         Grid.Column="0"
@@ -308,7 +334,7 @@
                                         FontAttributes="Bold"
                                         TextColor="Black"
 
-                                        Text="Items del tablero: "
+                                        Text="{Binding ItemsTableroHeader}"
 
                                         Grid.Row="10"
                                         Grid.Column="0"
@@ -399,7 +425,7 @@
                                    FontAttributes="Bold"
                                    TextColor="Black"
 
-                                   Text="Codigo QR del tablero: " />
+                                   Text="{Binding ImagenCodigoQRHeader}" />
 
                             <Frame BorderColor="Black"
                                    Margin="0,5,0,0">

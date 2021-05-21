@@ -38,7 +38,7 @@ namespace MttoApp.ViewModel
         //--------------------------------------------------------------------------------------------------
         protected string codigoqrfilename;
         protected DateTime ultimafechaconsulta;
-        protected List<ItemTablero> items;  
+        protected List<ItemTablero> items;
         protected string tipodeconsulta;    //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected int opcionconsultaid;     //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string httperrorresponse;
@@ -176,33 +176,41 @@ namespace MttoApp.ViewModel
 
         //--------------------------------------------------------------------------------------------------
         //PROPIEDADES USADAS EXCLUSIVAMENTE EN LA PAGINA "PaginaConsultaTableros"
-        public List<string> Opciones 
+        public List<string> Opciones
         {
             //LISTA DE OPCIONES DE BUSQUEDA CUANDO SE CONSULTA UN TABLERO MEDIANTE CONSULTA DE ID
 
-            get { return new List<string>() { "Tablero ID", "SAP ID" }; } 
+            get { return new List<string>() { "Tablero ID", "SAP ID" }; }
         }
-        public string TipoDeConsulta 
+        public string TipoDeConsulta
         {
             //PROPIEDAD QUE RECIBE QUE TIPO DE CONSULTA SE VA A EFECTUAR:
             //"CONSULTA_ESCANER" => CONSULTA POR MEDIO DE ESCANEO DE CODIGO QR
             //"CONSULTA_POR_ID" => CONSULTA POR MEDIO DEL INGRESO DE UN ID (Tablero ID o SAP ID)
 
-            get { return tipodeconsulta; } 
-            set { tipodeconsulta = value; } 
+            get { return tipodeconsulta; }
+            set { tipodeconsulta = value; }
         }
         public int OpcionConsultaID { set { opcionconsultaid = value; } }
         public string HttpErrorResponse { get { return httperrorresponse; } }
 
         //==================================================================================================
         //===============================PROPIEDADES INTERNAS DE LA PAGINA==================================
-        //----------------------------Place Holder(PH) PaginaRegistroTablero--------------------------------
+        //--------------------Texto (Header y PH - Place Holder) PaginaConsultaTablero----------------------
+        public string TableroIDHeader { get { return "Tablero ID (codigo del tablero)"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL TABLERO ID (PaginaRegistroTablero y PaginaConsultaTablero)
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
-        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO 
+        public string SAPIDHeader { get { return "SAP ID - Codigo SAP"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL SAP ID (PaginaRegistroTablero y PaginaConsultaTablero)
         public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID SAP ASIGNADA AL TABLERO
+        public string FilialHeader { get { return "Filial"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA FILIAL (PaginaRegistroTablero y PaginaConsultaTablero)
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
+        public string AreaHeader { get { return "Area (Filial)"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA AREA (PaginaRegistroTablero y PaginaConsultaTablero)
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL AREA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
         public string DescripcionPH { get { return "Descripcion corta del item"; } }
@@ -213,32 +221,42 @@ namespace MttoApp.ViewModel
         //=> TEXTO DE LA COLUMNA "Cantidad" DE LA LISTA DE ITEMS DEL TABLERO
         public string ColumnaDescripcion { get { return "Descripcion"; } }
         //=> TEXTO DE LA COLUMNA "Descripcion" DE LA LISTA DE ITEMS DEL TABLERO
-        //----------------------------------PH PaginaConsultaTablero----------------------------------------
+        public string ItemsTableroHeader { get { return "Items/Elementos del Tablero: "; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LOS ITEMS DEL TABLERO (PaginaRegistroTablero y PaginaConsultaTablero)
+        public string DescripcionItemHeader { get { return "Descripcion del Item"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA DESCRIPCION DEL ITEM  (PaginaRegistroTablero)
+        public string CantidadItemHeader { get { return "Cantidad (unidades)"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA CANTIDAD DE ITEMS (PaginaRegistroTablero)
+        //-------------------------------Texto (Header) PaginaConsultaTablero-------------------------------
         public string ConsultaTableroIDPH { get { return "Ingresa el ID a consultar (Tablero ID o SapID)"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
-
+        public string InformacionGeneralHeader { get { return "Informacion General"; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA INFORMACION GENERAL DEL TABLERO
+        public string UltimaConsultaHeader { get { return "Ultima consulta del tablero: "; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA ULTIMA FECHA DE CONSULTA
+        public string ImagenCodigoQRHeader { get { return "Codigo QR del tablero: "; } }
+        //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA IMAGEN DEL CODIGO QR
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
         //TEXTO DEL BOTON GENERAR CODIGO QR DE LA PAGINA "PaginaRegistroTablero"
-        public string AddItemPHP { get { return "Añadir Item"; } }
+        public string AddItemPHP { get { return "Añadir Ítem"; } }
         //TEXTO DEL BOTON AÑADIR ITEM DE LA PAGINA "PaginaRegistroTablero"
         public string GuardarTableroPH { get { return "Guardar Imagen"; } }
-        //TEXTO DEL BOTON GUARDAR IMAGEN DE LA PAGINA "PaginaRegistroTablero"
+        //TEXTO DEL BOTON GUARDAR IMAGEN DE LA PAGINA "PaginaRegistroTablero" y "PaginaConsultaTablero"
         public string RegistrarTableroPH { get { return "Registrar"; } }
         //TEXTO DEL BOTON REGISTRAR TABLERO DE LA PAGINA "PaginaRegistroTablero"
-
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
-        public string BotonScanPH { get { return "Escanear Codigo"; } }
+        public string BotonScanPH { get { return "Escanear Código"; } }
         //TEXTO DEL BOTON ESCANEAR DE LA PAGINA "PaginaConsutaTablero"
-        public string BotonConsultaIDPH { get { return "Busqueda por ID"; } }
+        public string BotonConsultaIDPH { get { return "Búsqueda por ID"; } }
         //TEXTO DEL BOTON CONSULTA POR ID DE LA PAGINA "PaginaConsultaTablero"
         //----------------------------------PH Titulo de las Paginas----------------------------------------
-        public string TituloRegistro { get { return "Pagina de Registro"; } }
+        public string TituloRegistro { get { return "Registro de Tableros"; } }
         //TEXTO DEL TITULO DE LA PAGINA "PaginaRegistroTablero"
-        public string TituloConsulta { get { return "Pagina de Consulta"; } }
+        public string TituloConsulta { get { return "Consulta de Tableros"; } }
         //TEXTO DEL TITULO DE LA PAGINA "PaginaConsultaTablero"
         //-----------------------------------TEXTOS MENSAJES POP-UP-----------------------------------------
-        public string RegistrarTableroMethodMessage { get { return "Esta a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
+        public string RegistrarTableroMethodMessage { get { return "Está a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "RegistroTablero" DONDE SE LE CONSULTA AL USUARIO
         //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO
         public string AddItemMessage
@@ -250,7 +268,7 @@ namespace MttoApp.ViewModel
 
                 //SE EVALUA SI LA PROPIEDAD "Descripcion" SE ENCUENTRA VACIA
                 if (string.IsNullOrEmpty(Descripcion))
-                    mensaje = "El campo 'Descripción' no puede estar vacio";
+                    mensaje = "El campo 'Descripción' no puede estar vacío";
 
                 //SE EVALUA SI LA PROPIEDAD "Cantidad" SE ENCUENTRA VACIA
                 if (string.IsNullOrEmpty(Cantidad))
@@ -282,12 +300,12 @@ namespace MttoApp.ViewModel
         //TEXTO USADO EN LA FUNCION "OnUnfocusedTableroID" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string OnUnfocusedFilial { get { return "El nombre de la filial no puede contener los siguientes caracteres:\n "+App.ForbiddenCharacters; } }
         //TEXTO USADO EN LA FUNCION "OnUnfocuseFilial" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
-        public string OnUnfocusedArea { get { return "El nombre del area no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
+        public string OnUnfocusedArea { get { return "El nombre del área no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
         //TEXTO USADO EN LA FUNCION "OnUnfocusedArea" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
-        public string ConsultaID { get { return "Debe ingresar el parametro de consulta"; } }
+        public string ConsultaID { get { return "Debe ingresar el parámetro de consulta"; } }
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA INGRESADO EL ID EL TABLERO A CONSULTAR
-        public string PickerSelectedIndex { get { return "Debe seleccionar la opcion de consulta"; } }
+        public string PickerSelectedIndex { get { return "Debe seleccionar la opción de consulta"; } }
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA SELECCIONADO CUAL METODO DE CONSULTA (CONSULTA POR TABLERO ID
         //O CONSULTAPOR SAP ID) DE TABLEROS

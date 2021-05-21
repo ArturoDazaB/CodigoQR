@@ -43,7 +43,7 @@
                         </Grid.RowDefinitions>
 
                         <!--TITULO-->
-                        <Label  Text="Registro de Tablero"
+                        <Label  Text="{Binding TituloRegistro}"
                                 FontSize="{Binding HeaderFontSize}"
                                 FontAttributes="Bold"
                                 TextColor="Black"
@@ -95,9 +95,9 @@
                                     Grid.Row="1" />
 
                             <!--TITULO: TABLERO ID-->
-                            <Label  Text="Tablero ID (codigo del tablero)"
-                                FontSize="{Binding LabelFontSize}"
-                                Grid.Row="3" />
+                            <Label  Text="{Binding TableroIDHeader}"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="3" />
 
                             <!--TABLERO ID-->
                             <Entry  x:Name="entryTableroID"
@@ -110,7 +110,7 @@
                                     Keyboard="Text" />
 
                             <!--TITULO: SAP ID-->
-                            <Label  Text="SAP ID - Codigo SAP"
+                            <Label  Text="{Binding SAPIDHeader}"
                                     FontSize="{Binding LabelFontSize}"
                                     Grid.Row="5" />
 
@@ -125,7 +125,7 @@
                                     Keyboard="Numeric" />
 
                             <!--TITULO: FILIAL-->
-                            <Label  Text="Filial"
+                            <Label  Text="{Binding FilialHeader}"
                                     FontSize="{Binding LabelFontSize}"
                                     Grid.Row="7" />
 
@@ -140,7 +140,7 @@
                                     Keyboard="Text" />
 
                             <!--TITULO: AREAFILIAL-->
-                            <Label  Text="Area (Filial)"
+                            <Label  Text="{Binding AreaHeader}"
                                     FontSize="{Binding LabelFontSize}"
                                     Grid.Row="9" />
 
@@ -187,7 +187,7 @@
 
                                 <!--=======================================================-->
                                 <!--1) TITULO: Items/Componentes del tablero-->
-                                <Label  Text="Items/Elementos del Tablero"
+                                <Label  Text="{Binding ItemsTableroHeader}"
                                         TextColor="Black"
                                         FontAttributes="Bold"
                                         FontSize="{Binding HeaderFontSize}"
@@ -196,7 +196,7 @@
 
                                 <!--=======================================================-->
                                 <!--3) Titulo: Descripcion-->
-                                <Label  Text="Descripcion del Item"
+                                <Label  Text="{Binding DescripcionItemHeader}"
                                         FontSize="{Binding LabelFontSize}"
                                         Grid.Row="3" />
 
@@ -215,7 +215,7 @@
 
                                 <!--=======================================================-->
                                 <!--5) Titulo: Cantidad-->
-                                <Label  Text="Cantidad (unidades)"
+                                <Label  Text="{Binding CantidadItemHeader}"
                                         FontSize="{Binding LabelFontSize}"
                                         Grid.Row="5" />
 
