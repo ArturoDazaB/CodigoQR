@@ -586,8 +586,8 @@ namespace MttoApp.ViewModel
         //---------------------------------------------------------------------------------------------------------
         //TEXTOS
         //=> TEXTOS UTILIZADOS EN LOS PlaceHolder DE LOS ELEMENTOS DE LA PAGINA
-        public string RegistroPH { get { return "Página de Registro"; } }
-        public string ConfiguracionPH { get { return "Página de Configuración"; } }
+        public string RegistroPH { get { return "Registro de Usuario"; } }
+        public string ConfiguracionPH { get { return "Informacion de Usuario"; } }
         public string InformacionP { get { return "Datos Personales"; } }
         public string InformacionU { get { return "Datos de Usuario"; } }
         public string FechaRegistroPH { get { return "Fecha de Registro: "; } }

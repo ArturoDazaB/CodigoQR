@@ -25,6 +25,30 @@
 
                 <StackLayout>
 
+                    <!--================================================================================>
+                    <=================================================================================-->
+
+                    <!--TITULO Y TEXTO INFORMATIVO-->
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="auto" />
+                            <!--TITULO DE LA PAGINA-->
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+
+                        <!--TITULO DE LA PAGINA-->
+                        <Label  Text="{Binding ConfiguracionPH}"
+                            FontSize="{Binding HeaderFontSize}"
+                            FontAttributes="Bold"
+                            TextColor="Black"
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center" />
+                    </Grid>
+
                     <!--====================================================================================-->
                     <!--====================================================================================-->
                     <!--SECCION DE INFORMACION PERSONAL-->

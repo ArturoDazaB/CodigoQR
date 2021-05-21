@@ -50,7 +50,7 @@
                     </Grid.RowDefinitions>
 
                     <!--TITULO DE LA PAGINA-->
-                    <Label  Text="Pagina de Registro"
+                    <Label  Text="{Binding RegistroPH}"
                             FontSize="{Binding HeaderFontSize}"
                             FontAttributes="Bold"
                             TextColor="Black"
