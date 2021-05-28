@@ -199,11 +199,11 @@ namespace MttoApp.ViewModel
         //--------------------Texto (Header y PH - Place Holder) PaginaConsultaTablero----------------------
         public string TableroIDHeader { get { return "Tablero ID (codigo del tablero)"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL TABLERO ID (PaginaRegistroTablero y PaginaConsultaTablero)
-        public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
+        public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero (20 caracteres máx)"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO 
         public string SAPIDHeader { get { return "SAP ID - Codigo SAP"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL SAP ID (PaginaRegistroTablero y PaginaConsultaTablero)
-        public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
+        public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero (20 caracteres máx)"; } }
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID SAP ASIGNADA AL TABLERO
         public string FilialHeader { get { return "Filial"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA FILIAL (PaginaRegistroTablero y PaginaConsultaTablero)
@@ -446,7 +446,7 @@ namespace MttoApp.ViewModel
             if (string.IsNullOrEmpty(tableroID) &&
                 string.IsNullOrEmpty(filial) &&
                 string.IsNullOrEmpty(area))
-                respuesta = "No debe existir ningun espacio en blanco";
+                respuesta = "No debe existir ningun campo en blanco";
 
             //CASO TableroID
             if (string.IsNullOrEmpty(tableroID))

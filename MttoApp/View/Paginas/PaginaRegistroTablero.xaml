@@ -107,7 +107,8 @@
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="4"
                                     Unfocused="OnUnfocusedTableroID"
-                                    Keyboard="Text" />
+                                    Keyboard="Text"
+                                    MaxLength="20"/>
 
                             <!--TITULO: SAP ID-->
                             <Label  Text="{Binding SAPIDHeader}"
@@ -122,7 +123,8 @@
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="6"
                                     Unfocused="OnUnfocusedTableroID"
-                                    Keyboard="Numeric" />
+                                    Keyboard="Numeric"
+                                    MaxLength="20"/>
 
                             <!--TITULO: FILIAL-->
                             <Label  Text="{Binding FilialHeader}"
@@ -152,7 +154,7 @@
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="10"
                                     Unfocused="OnUnfocusedArea"
-                                    Keyboard="Text" />
+                                    Keyboard="Text"/>
                         </Grid>
                     </Frame>
 
