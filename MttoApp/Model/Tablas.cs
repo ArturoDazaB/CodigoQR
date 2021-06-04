@@ -24,7 +24,6 @@ namespace MttoApp.Model
         public double? Telefono { get; set; }
 
         public string Correo { get; set; }
-        public DateTime FechaNacimiento { get; set; }
         public DateTime FechaCreacion { get; set; }
 
         //======================================================================================================
@@ -54,13 +53,13 @@ namespace MttoApp.Model
                 NumeroFicha = persona.NumeroFicha,
                 Telefono = persona.Telefono,
                 Correo = persona.Correo,
-                FechaNacimiento = persona.FechaNacimiento,
+                //FechaNacimiento = persona.FechaNacimiento,
                 FechaCreacion = persona.FechaCreacion,
             };
         }
 
         public Personas NewPersona(DateTime fechacreacion, string nombres, string apellidos, string cedula, string numeroficha,
-            DateTime fechanacimiento, string telefono, string correo)
+                                    string telefono, string correo)
         {
             return new Personas()
             {
@@ -71,7 +70,7 @@ namespace MttoApp.Model
                 Telefono = Convert.ToDouble(telefono),
                 Correo = correo,
                 FechaCreacion = fechacreacion,
-                FechaNacimiento = fechanacimiento,
+                //FechaNacimiento = fechanacimiento,
             };
         }
 
@@ -89,50 +88,12 @@ namespace MttoApp.Model
                     Apellidos = "N/A",
                     Cedula = 0,                     //ID ADMINISTRATOR
                     NumeroFicha = 0,
-                    FechaNacimiento = default,
+                    //FechaNacimiento = default,
                     Telefono = 0,
                     Correo = "N/A",
                     FechaCreacion = default
                 },
 
-                //PERSONA CARLOS ARTURO DAZA
-                new Personas()
-                {
-                    Nombres = "Carlos Arturo",
-                    Apellidos = "Daza Bohorquez",
-                    Cedula = 24778839,
-                    NumeroFicha = 2929,
-                    FechaNacimiento = new DateTime(1996, 06, 03),
-                    Telefono = 4147391846,
-                    Correo = "carlos.arturo.dazab@gmail.com",
-                    FechaCreacion = default,
-                },
-
-                //PERSONA JOSE ESCALONA
-                new Personas()
-                {
-                    Nombres = "José Gregorio",
-                    Apellidos = "Escalona Torres",
-                    Cedula = 20943030,
-                    NumeroFicha = 2867,
-                    FechaNacimiento = new DateTime(1994, 02, 22),
-                    Telefono = 4143511786,
-                    Correo = "jose_escalona@corimon.com",
-                    FechaCreacion = default,
-                },
-
-                //PERSONA ALEJANDRO PADRA
-                new Personas()
-                {
-                    Nombres = "Alejandro Rafael",
-                    Apellidos = "Padra Salom",
-                    Cedula = 22515348,
-                    NumeroFicha = 2824,
-                    FechaNacimiento = new DateTime(1993, 12, 09),
-                    Telefono = 4142022189,
-                    Correo = "alejandro_padra@corimon.com",
-                    FechaCreacion = default,
-                },
             };
 
             return DefaultPersonas;
@@ -218,36 +179,6 @@ namespace MttoApp.Model
                     Password = "4dm1n1str4t0r",
                     FechaCreacion = default,
                     NivelUsuario = 10,
-                },
-
-                //USUARIO CARLOS ARTURO DAZA
-                new Usuarios
-                {
-                    Username = "ArturoDazaB",
-                    Cedula = 24778839,
-                    Password = "*960205*",
-                    FechaCreacion = default,
-                    NivelUsuario = 0,
-                },
-
-                //USUARIO JOSE ESCALONA
-                new Usuarios
-                {
-                    Username = "jescalona",
-                    Cedula = 20943030,
-                    Password = "MaJo.,01*",
-                    FechaCreacion = default,
-                    NivelUsuario = 5,
-                },
-
-                //USUARIO ALEJANDRO PADRA
-                new Usuarios
-                {
-                    Username = "apadra",
-                    Cedula = 22515348,
-                    Password = "arlettesofia",
-                    FechaCreacion = default,
-                    NivelUsuario = 5,
                 },
             };
 
@@ -359,8 +290,8 @@ namespace MttoApp.Model
                 Modificaciones.ModificacionNombres = true;
             if (Persona.Apellidos != PrevPersona.Apellidos)
                 Modificaciones.ModificacionApellidos = true;
-            if (Persona.FechaNacimiento != PrevPersona.FechaNacimiento)
-                Modificaciones.ModificacionFecha = true;
+            //if (Persona.FechaNacimiento != PrevPersona.FechaNacimiento)
+                //Modificaciones.ModificacionFecha = true;
             if (Persona.Telefono != PrevPersona.Telefono)
                 Modificaciones.ModificacionTelefono = true;
             if (Persona.Correo != PrevPersona.Correo)

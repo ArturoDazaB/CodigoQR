@@ -207,23 +207,6 @@ namespace MttoApp.View.Paginas
                 await DisplayAlert("Alerta", ConexionDatos.PasswordDoesNotMatch, ConexionDatos.OkText);
         }
 
-        //==================================================================================================================================
-        //==================================================================================================================================
-        //VERIFICACION FECHA DE NACIMIENTO: METODO ACTIVADO CUANDO SE SELECCIONA UNA FECHA DEL "fechaNacimientoPicker"
-        private void OnDateSelected(object sender, DateChangedEventArgs args)
-        {
-            //SE EVALUA SI LA FECHA DE NACIMIENTO SELECCIONADA ES IGUAL O MAYOR/SUPERIOR A LA FECHA ACTUAL 
-            if (ConexionDatos.FechaNacimiento >= DateTime.Today)
-            {
-                //SE CAMBIA EL COLOR DEL TEXTO DEL fechaNacimientoPicker A ROJO
-                fechaNacimientoPicker.TextColor = Color.Red;
-                //SE LE NOTIFICA AL USUARIO CUAL DE LAS DOS CONDICIONES MINIMAS NO SE HA CUMPLIDO.
-                ConexionDatos.MensajePantalla(ConexionDatos.OnDateSelectedMessage);
-            }
-            else
-                fechaNacimientoPicker.TextColor = Color.Black;
-        }
-
         //===============================================================================================================================
         //===============================================================================================================================
         //METODO DE REGISTRO: METODO LLAMADO CUANDO SE PRECIONA EL BOTON DE LA PAGINA DE REGISTRO

@@ -225,7 +225,7 @@ namespace MttoApp.ViewModel
 
                 if (flagLecturaEscritura) //=> flagLecturaEscritura = true => Pagina de Lectura y Escritura
                 {
-                    ConsoleWriteline("Numero de Ficha", Persona.NumeroFicha.ToString(), FechaNacimiento.ToString());
+                    ConsoleWriteline("Numero de Ficha", Persona.NumeroFicha.ToString(), NumeroFicha.ToString());
                 }
                 else //=> flagLecturaEscritura = false => Pagina DE Escritura
                 {
@@ -243,40 +243,7 @@ namespace MttoApp.ViewModel
                     flagNumeroFicha = false;
             }
         }
-        public DateTime FechaNacimiento
-        {
-            get { return fechanacimiento; }
-            set
-            {
-                //SE LE ASIGNA A LA VARIABLE "fechanacimiento" EL VALOR INGRESADO POR EL USUARIO
-                fechanacimiento = value;
-                OnPropertyChanged();
 
-                //=================================================================================================
-                //=================================================================================================
-                //EVENTOS QUE, DEPENDIENDO DESDE QUE PAGINA SE INVOCA A LA CLASE "ConfiguracionAdminViewModel.cs",
-                //MOSTRARA EL VALOR QUE SE ESTA INGREANDO (CASO PAGINA "PaginaRegistro.xaml.cs") O MOSTRANDO EL
-                //VALOR PREVIO Y EL VALOR MODIFICADO (CASO PAGINA "PaginaConfiguracion.xaml.cs")
-                if (flagLecturaEscritura)//=> flagLecturaEscritura = true => Pagina de Lectura y Escritura
-                {
-                    ConsoleWriteline("Fecha de Nacimiento", Persona.FechaNacimiento.ToString(), FechaNacimiento.ToString());
-                }
-                else  //=> flagLecturaEscritura = false => Pagina DE Escritura
-                {
-                    ConsoleWriteline("Fecha de Nacimiento", FechaNacimiento.ToString());
-                }
-
-                //=================================================================================================
-                //=================================================================================================
-                //PARA EL CASO DE LAS PÁGINAS DE LECTURA Y ESCRITURA CUANDO EL USUARIO INTERACTÚE CON ALGUNA
-                //DE LAS PROPIEDADES DE LA CLASE ESTAS EVALUARAN SI EL VALOR QUE POSEEN ES IGUAL AL VALOR QUE 
-                //YA SE ENCUENTRA REGISTRADO, DE SER CIERTO SE DISPARA UNA BANDERA
-                if (FechaNacimiento == Persona.FechaNacimiento)
-                    flagsameFecha = true;
-                else
-                    flagsameFecha = false;
-            }
-        }
         public string Telefono
         {
             get { return telefono; }
@@ -621,36 +588,6 @@ namespace MttoApp.ViewModel
         public string OnCompletePasswordMinimunLenght { get { return "La contraseña no puede tener menos de seis (6) caracteres."; } }
         //TEXTOS UTILIZADO EN LA FUNCION "OnDateSelected" => FUNCION ACTIVADA CUANDO SE TERMINA DE SELECCIONAR LA FECHA 
         //PROPIEDAD UTILIZADA EN LAS CLASES "PaginaRegistro", "PaginaConfiguracion" Y "PaginaConfiguracionAdmin"
-        public string OnDateSelectedMessage
-        {
-            //NOTA: PUESTO QUE LA FUNCION "OnDateSelected" (FUNCION DE LA CLASE
-            //"PaginaRegistro") SE EVALUAN LAS DOS CONDICIONES (NO SELECCIONAR
-            //LA FECHA ACTUAL Y NO SELECCIONAR UNA FECHA MAYOR) SE DECIDIO CREAR 
-            //UNA PROPIEDAD QUE RETORNARA EL MENSAJE PARA LAS DOS SITUACIONES.
-
-            get
-            {
-                //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA EL TEXTO A MOSTRAR
-                string text = string.Empty;
-
-                //SE EVALUA SI LA FECHA SELECCIONADA ES LA FECHA ACTUAL 
-                if (FechaNacimiento == DateTime.Today)  //=> true => Se selecciono la fecha actual 
-                    text = "No se permite seleccionar la fecha actual como fecha de nacimiento.";
-
-                //SE EVALUA SI LA FECHA SELECCIONADA ES MAYOR A LA FECHA ACTUAL
-                if (FechaNacimiento > DateTime.Today) //=> true => Se selecciono una fecha superior a la fecha actual
-                    text = "No se permite seleccionar una fecha que no ha existido todavía.";
-
-                if (flagsameFecha)
-                    text = "La fecha seleccionada es igual a la que se encuentra registrada actualmente.";
-
-                //SE RETORNA EL TEXTO SELECCIONADO
-                return text;
-
-            }
-        }
-        //TEXTO UTILIZADO EN LAS FUNCIONES "OnCompletedPassword2" y "CorreccionPassword2" => FUNCIONES ACTIVADAS CUANDO SE DEJA DE ENFOCAR EL
-        //ENTRY "passwordEntry2" Y CUANDO EL TEXTO DENTRO DEL ENTRY "passwordEntry2" CAMBIA (respectivamente), AMBAS FUNCIONES DE LA CLASE "PaginaRegistro"
         public string PasswordDoesNotMatch { get { return "Las contraseñas ingresadas no coinciden\n\nVerifique e intente nuevamente."; } }
         //TEXTO UTILIZADO PARA INFORMAR AL USUARIO DE LOS CARACTERES NO PERMITIDOS => PROPIEDAD USADA EN LAS FUNCIONES
         //PERTENECIENTE A LAS CLASE "PaginaRegistro" Y "PaginaConfiguracion".
@@ -791,7 +728,7 @@ namespace MttoApp.ViewModel
                 cedula = Persona.Cedula.ToString();
                 numeroficha = Persona.NumeroFicha.ToString();
                 fechacreacion = Persona.FechaCreacion;
-                fechanacimiento = Persona.FechaNacimiento;
+                //fechanacimiento = Persona.FechaNacimiento;
                 telefono = Persona.Telefono.ToString();
                 correo = Persona.Correo;
 
@@ -950,7 +887,7 @@ namespace MttoApp.ViewModel
                 //SE EVALUAN QUE TODOS LOS CAMPOS A MODIFICAR SEAN SIMILARES A LOS VALORES REGISTRADOS 
                 if (Persona.Nombres == Nombres &&                   //VERIFICA SI LOS NOMBRES SON IGUALES
                     Persona.Apellidos == Apellidos &&               //VERIFICA SI LOS APELLIDOS SON IGUALES
-                    Persona.FechaNacimiento == FechaNacimiento &&   //VERIFICA SI LAS FECHAS DE NACIMIENTO SON IGUALES
+                    //Persona.FechaNacimiento == FechaNacimiento &&   //VERIFICA SI LAS FECHAS DE NACIMIENTO SON IGUALES
                     Persona.Telefono.ToString() == Telefono &&      //VERIFICA SI LOS TELEFONOS SON IGUALES
                     Persona.Correo == Correo &&                     //VERIFICA SI LOS CORREOS SON IGUALES
                     Usuario.Username == Username &&                 //VERIFICA SI LOS NOMBRES DE USUARIOS SON IGUALES
@@ -982,8 +919,8 @@ namespace MttoApp.ViewModel
                 //SE EVALUAN QUE TODOS LOS CAMPOS DE "Información Personal" CUMPLAN CON LAS SIGUIENTES CONDICIONES
                 if (!string.IsNullOrEmpty(Nombres) &&   //EL NOMBRE NO PUEDE SER VACIO O NULO
                 !string.IsNullOrEmpty(Apellidos) &&     //EL APELLIDO NO PUEDE SER VACIO O NULO
-                FechaNacimiento != DateTime.Now &&      //NO SE PUEDE REGISTRAR LA FECHA ACTUAL
-                FechaNacimiento < DateTime.Now &&       //LA FECHA NO PUEDE SER MAYOR A LA FECHA ACTUAL
+                //FechaNacimiento != DateTime.Now &&      //NO SE PUEDE REGISTRAR LA FECHA ACTUAL
+                //FechaNacimiento < DateTime.Now &&       //LA FECHA NO PUEDE SER MAYOR A LA FECHA ACTUAL
                 !string.IsNullOrEmpty(Telefono) &&      //EL TELEFONO NO PUEDE SER VACIO O NULLO
                 !string.IsNullOrEmpty(Correo) &&        //EL CORREO NO PUEDE SER VACIO O NULLO
                 !Error)                                 //EL ATRIBUTO ERROR NO PUEDE SER VERDADERO
@@ -997,8 +934,8 @@ namespace MttoApp.ViewModel
                 //SE EVALUAN QUE TODOS LOS CAMPOS CUMPLAN CON LAS SIGUIENTES CONDICIONES
                 if (!string.IsNullOrEmpty(Nombres) &&  //EL NOMBRE NO PUEDE SER VACIO O NULO
                 !string.IsNullOrEmpty(Apellidos) &&  //EL APELLIDO NO PUEDE SER VACIO O NULO
-                FechaNacimiento != DateTime.Now &&  //NO SE PUEDE REGISTRAR LA FECHA ACTUAL
-                FechaNacimiento < DateTime.Now &&  //LA FECHA NO PUEDE SER MAYOR A LA FECHA ACTUAL
+                //FechaNacimiento != DateTime.Now &&  //NO SE PUEDE REGISTRAR LA FECHA ACTUAL
+                //FechaNacimiento < DateTime.Now &&  //LA FECHA NO PUEDE SER MAYOR A LA FECHA ACTUAL
                 !string.IsNullOrEmpty(Telefono) &&  //EL TELEFONO NO PUEDE SER VACIO O NULLO
                 !string.IsNullOrEmpty(Correo) &&  //EL CORREO NO PUEDE SER VACIO O NULLO
                 !string.IsNullOrEmpty(Username) &&  //EL USERNAME NO PUEDE SER VACIO O NULLO
@@ -1073,7 +1010,7 @@ namespace MttoApp.ViewModel
             Console.WriteLine("\nNombres: " + Nombres);
             Console.WriteLine("\nApellidos: " + Apellidos);
             Console.WriteLine("\nCedula: " + Cedula);
-            Console.WriteLine("\nFecha de Nacimiento: " + FechaNacimiento);
+            //Console.WriteLine("\nFecha de Nacimiento: " + FechaNacimiento);
             Console.WriteLine("\nTelefono: " + Telefono);
             Console.WriteLine("\nCorreo: " + Correo);
             Console.WriteLine("\n\nUsername: " + Username);
@@ -1138,7 +1075,7 @@ namespace MttoApp.ViewModel
                             NewUser = new InformacionGeneral()
                             {
                                 Persona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                                                                            Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo.ToLower()),
+                                                                            Cedula, NumeroFicha, Telefono, Correo.ToLower()),
                                 Usuario = new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario),
                             },
                             UserId = UserId,
@@ -1186,7 +1123,7 @@ namespace MttoApp.ViewModel
                     Cedula = Convert.ToDouble(Cedula),
                     Nombres = Nombres, 
                     Apellidos = Apellidos,
-                    FechaNacimiento = FechaNacimiento,
+                    //FechaNacimiento = FechaNacimiento,
                     Telefono = Convert.ToDouble(Telefono),
                     Correo = Correo,
                     Username = Username,

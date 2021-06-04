@@ -40,7 +40,7 @@ namespace MttoApp.Model
     {
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
-        public DateTime FechaNacimiento { get; set; }
+        //public DateTime FechaNacimiento { get; set; }
         public string Username { get; set; }
 
         public int NivelUsuario { get; set; }
@@ -52,7 +52,7 @@ namespace MttoApp.Model
                 Nombres = newinfo.Nombres,
                 Apellidos = newinfo.Apellidos,
                 Cedula = newinfo.Cedula,
-                FechaNacimiento = newinfo.FechaNacimiento,
+                //FechaNacimiento = newinfo.FechaNacimiento,
                 Telefono = newinfo.Telefono,
                 Correo = newinfo.Correo,
 
