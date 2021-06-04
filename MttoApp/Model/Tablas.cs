@@ -124,14 +124,14 @@ namespace MttoApp.Model
         public int NivelUsuario { get; set; }
 
         /*LOS NIVELES DE USUARIO VAN A SER JERARQUIZADOS EN UNA ESCALA DEL 0 - 10, DONDE:
-            -0  => Nivel Basico
+            -1  => Nivel Basico
                 * Consulta de Tableros.
                 * Modificacion de datos personales.
             -5  => Nivel Medio
                 * Consulta y escritura de tableros.
                 * Creacion de Usuarios (?).
                 * Creacion de Tableros (?).
-            -10 => Nivel Alto
+            -8 => Nivel Superior
                 * Consulta, escritura y Modificacion de Tableros.
                 * Creacion y Modificacion de Usuarios.
                 * Creacion de Tableros.*/
