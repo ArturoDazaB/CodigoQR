@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              mc:Ignorable="d"
              x:Class="MttoApp.View.Paginas.PaginaRegistroTablero"
              Title="{Binding TituloRegistro}"
@@ -108,7 +106,7 @@
                                     Grid.Row="4"
                                     Unfocused="OnUnfocusedTableroID"
                                     Keyboard="Text"
-                                    MaxLength="20"/>
+                                    MaxLength="20" />
 
                             <!--TITULO: SAP ID-->
                             <Label  Text="{Binding SAPIDHeader}"
@@ -124,7 +122,7 @@
                                     Grid.Row="6"
                                     Unfocused="OnUnfocusedTableroID"
                                     Keyboard="Numeric"
-                                    MaxLength="20"/>
+                                    MaxLength="20" />
 
                             <!--TITULO: FILIAL-->
                             <Label  Text="{Binding FilialHeader}"
@@ -132,14 +130,13 @@
                                     Grid.Row="7" />
 
                             <!--FILIAL-->
-                            <Entry  x:Name="entryFilial"
-                                    Text="{Binding Filial}"
-                                    Placeholder="{Binding FilialPH}"
-                                    TextColor="Black"
+                            <Picker x:Name="filialPicker"
+                                    Title="{Binding FilialPH}"
+                                    ItemsSource="{Binding FilialesList}"
                                     FontSize="{Binding EntryFontSize}"
+                                    TextColor="Black"
                                     Grid.Row="8"
-                                    Unfocused="OnUnfocusedFilial"
-                                    Keyboard="Text" />
+                                    SelectedIndexChanged="OnSelectedFilial" />
 
                             <!--TITULO: AREAFILIAL-->
                             <Label  Text="{Binding AreaHeader}"
@@ -154,7 +151,7 @@
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="10"
                                     Unfocused="OnUnfocusedArea"
-                                    Keyboard="Text"/>
+                                    Keyboard="Text" />
                         </Grid>
                     </Frame>
 

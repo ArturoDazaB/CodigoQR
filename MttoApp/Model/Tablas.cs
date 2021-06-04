@@ -256,7 +256,7 @@ namespace MttoApp.Model
 
         //======================================================================================================
         //======================================================================================================
-        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS
+        //METODO PARA RETORNAR LOS NIVELES DE USUARIOS
         public List<string> NivelUsuarioLista()
         {
             return new List<string>()
@@ -440,6 +440,20 @@ namespace MttoApp.Model
                 //------------------------------------------
                 //ID DEL USUARIO QUE ACABA DE CREAR EL TABLERO
                 IDCreador = id,
+            };
+        }
+
+        //======================================================================================================
+        //======================================================================================================
+        //METODO PARA RETORNAR LOS NIVELES DE USUARIOS
+        public List<string> FilialesLista()
+        {
+            return new List<string>()
+            {
+                "Corimon Pinturas",
+                "Montana Grafica",
+                "Resimon",
+                "Planta Cerdex"
             };
         }
     }

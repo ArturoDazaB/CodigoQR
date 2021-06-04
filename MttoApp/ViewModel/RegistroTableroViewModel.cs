@@ -28,7 +28,8 @@ namespace MttoApp.ViewModel
         //                                          CodigoQRData (Pagina de registro y consulta)
         //                                          CodigoQRFilename (Pagina de registro y consulta)
 
-        protected string sapid, tableroID, filial, area, descripcion, cantidad;
+        protected string sapid, tableroID, area, descripcion, cantidad;
+        public string filial;
         protected Personas Persona;
         protected Usuarios Usuario;
         protected string codigoqrdata;
@@ -305,6 +306,8 @@ namespace MttoApp.ViewModel
         public string ConsultaID { get { return "Debe ingresar el parámetro de consulta"; } }
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA INGRESADO EL ID EL TABLERO A CONSULTAR
+        public string PickerFilialTitulo { get { return "Filiales"; } }
+        //TEXTO USADO EN EL PICKER "filialPicker" DE LA PAGINA "PaginaRegistroTablero"
         public string PickerSelectedIndex { get { return "Debe seleccionar la opción de consulta"; } }
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA SELECCIONADO CUAL METODO DE CONSULTA (CONSULTA POR TABLERO ID
@@ -316,6 +319,16 @@ namespace MttoApp.ViewModel
         public string OkText { get { return App.OkText; } } //=>ENTENDIDO
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
 
+        //----------------------------------------------------------------------------------------------------------
+        //LISTA DE NIVELES DE USUARIO (USADO EN LA PAGINA "PaginaRegistro.xaml.cs")
+        public List<string> FilialesList
+        {
+            get
+            {
+                //LISTA DE NIVELES DE USUARIO
+                return new Tableros().FilialesLista();
+            }
+        }
         //-----------------------------------------COLORES--------------------------------------------------
         //COLOR DEL FONDO
         public string BackGroundColor { get { return App.BackGroundColor; } }
