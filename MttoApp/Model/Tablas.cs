@@ -163,14 +163,14 @@ namespace MttoApp.Model
         public int NivelUsuario { get; set; }
 
         /*LOS NIVELES DE USUARIO VAN A SER JERARQUIZADOS EN UNA ESCALA DEL 0 - 10, DONDE:
-            -0  => Nivel Basico
+            -1  => Nivel Basico
                 * Consulta de Tableros.
                 * Modificacion de datos personales.
             -5  => Nivel Medio
                 * Consulta y escritura de tableros.
                 * Creacion de Usuarios (?).
                 * Creacion de Tableros (?).
-            -10 => Nivel Alto
+            -8 => Nivel Superior
                 * Consulta, escritura y Modificacion de Tableros.
                 * Creacion y Modificacion de Usuarios.
                 * Creacion de Tableros.*/
@@ -218,36 +218,6 @@ namespace MttoApp.Model
                     Password = "4dm1n1str4t0r",
                     FechaCreacion = default,
                     NivelUsuario = 10,
-                },
-
-                //USUARIO CARLOS ARTURO DAZA
-                new Usuarios
-                {
-                    Username = "ArturoDazaB",
-                    Cedula = 24778839,
-                    Password = "*960205*",
-                    FechaCreacion = default,
-                    NivelUsuario = 0,
-                },
-
-                //USUARIO JOSE ESCALONA
-                new Usuarios
-                {
-                    Username = "jescalona",
-                    Cedula = 20943030,
-                    Password = "MaJo.,01*",
-                    FechaCreacion = default,
-                    NivelUsuario = 5,
-                },
-
-                //USUARIO ALEJANDRO PADRA
-                new Usuarios
-                {
-                    Username = "apadra",
-                    Cedula = 22515348,
-                    Password = "arlettesofia",
-                    FechaCreacion = default,
-                    NivelUsuario = 5,
                 },
             };
 
