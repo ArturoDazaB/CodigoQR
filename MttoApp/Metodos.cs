@@ -470,7 +470,7 @@ namespace MttoApp
         //===============================================================================
         //===============================================================================
 
-        public string EncryptString(string text2Encrypt)
+        public static string EncryptString(string text2Encrypt)
         {
             //SE CREAN E INICIALIZAN LAS VARIABLES LOCALES USADAS
             string ToReturn = string.Empty;
@@ -511,7 +511,7 @@ namespace MttoApp
             return ToReturn;
         }
 
-        public string DecryptString(string text2Decrypt)
+        public static string DecryptString(string text2Decrypt)
         {
             //SE CREAN E INICIALIZAN LAS VARIABLES LOCALES USADAS
             string ToReturn = string.Empty;
@@ -540,6 +540,7 @@ namespace MttoApp
                     cs.FlushFinalBlock();
                     Encoding encoding = Encoding.UTF8;
                     ToReturn = encoding.GetString(ms.ToArray());
+
                 }
             }
             //SI OCURRE ALGUNA EXCEPCION EN ALGUN PROCESO O LLAMADO DE PROCESO EN EL SEGMENTO

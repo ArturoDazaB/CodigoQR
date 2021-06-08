@@ -98,6 +98,14 @@ namespace MttoApp.Model
 
     //===================================================================================
     //===================================================================================
+    public class LogInRequest
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    //===================================================================================
+    //===================================================================================
     public class ResponseQueryAdmin
     {
         public static ResponseQueryAdmin NewQueryAdmin(Personas persona)

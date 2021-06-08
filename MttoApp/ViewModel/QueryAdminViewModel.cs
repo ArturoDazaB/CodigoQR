@@ -396,6 +396,19 @@ namespace MttoApp.ViewModel
                         {
                             //SE DESERIABLIZA EL OBJETO JSON CONTENIDO EN EL OBJETO "response" (<InformacionGeneral>)
                             informacion = JsonConvert.DeserializeObject<InformacionGeneral>(await response.Content.ReadAsStringAsync());
+
+                            //SE DESENCRIPTA LA CONTRASEÑA
+                            informacion.Usuario.Password = Metodos.DecryptString(informacion.Usuario.Password);
+
+                            //====================================================================================
+                            //====================================================================================
+                            Console.WriteLine("\n\n====================================");
+                            Console.WriteLine("====================================");
+                            Console.WriteLine("La contraseña desencriptada es: " + informacion.Usuario.Password);
+                            Console.WriteLine("====================================");
+                            Console.WriteLine("====================================\n\n");
+                            //====================================================================================
+                            //====================================================================================
                         }
                         else
                         {

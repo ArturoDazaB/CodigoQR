@@ -70,7 +70,6 @@ namespace MttoApp
         //SE DEFINEN LAS PROPIEDADES "SecretKey" y "PublicKey" PARA LAS FUNCIONES DE ECRIPTACION
         //Y DESENCRIPTACION (FUNCIONES ALBERGADAS EN EL ARCHIVO "Metodos").
         public static string SecretKey { get { return "12345678"; } }
-
         public static string PublicKey { get { return "98765432"; } }
 
         //===============================================================================================

@@ -1072,12 +1072,28 @@ namespace MttoApp.ViewModel
                         //SE CREA EL OBJETO MODELO DEL TIPO "RequestRegistroUsuario"
                         var model = new RequestRegistroUsuario()
                         {
+                            //SE CREA E INICIALIZA EL OBJETO INTERNO QUE CONTENDRA
+                            //LA INFORMACION PERSONAL Y DE USUARIO DEL NUEVO REGISTRO
                             NewUser = new InformacionGeneral()
                             {
-                                Persona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                                                                            Cedula, NumeroFicha, Telefono, Correo.ToLower()),
-                                Usuario = new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario),
+                                //INFORMACION PERSONAL
+                                Persona = new Personas().NewPersona(FechaCreacion, 
+                                                                    Metodos.Mayuscula(Nombres), 
+                                                                    Metodos.Mayuscula(Apellidos),
+                                                                    Cedula, 
+                                                                    NumeroFicha, 
+                                                                    Telefono, 
+                                                                    Correo.ToLower()),
+
+                                //INFORMACION DE USUARIO
+                                Usuario = new Usuarios().NewUsuario(Username.ToLower(), 
+                                                                    Metodos.EncryptString(Password),  //SE ENCRIPTA LA CONTRASEÑA EN EL OBJETO MODELO
+                                                                    Cedula,
+                                                                    FechaCreacion,
+                                                                    NivelUsuario),
                             },
+
+                            //ID DEL USUARIO QUE REALIZO EL REGISTRO 
                             UserId = UserId,
                         };
 
@@ -1123,11 +1139,10 @@ namespace MttoApp.ViewModel
                     Cedula = Convert.ToDouble(Cedula),
                     Nombres = Nombres, 
                     Apellidos = Apellidos,
-                    //FechaNacimiento = FechaNacimiento,
                     Telefono = Convert.ToDouble(Telefono),
                     Correo = Correo,
                     Username = Username,
-                    Userpassword = Password,
+                    Userpassword = Metodos.EncryptString(Password),
                     NivelUsuario = NivelUsuario,
                 };
 
@@ -1187,7 +1202,7 @@ namespace MttoApp.ViewModel
                     Cedula = Convert.ToDouble(Cedula),
                     Telefono = Convert.ToDouble(Telefono),
                     Correo = Correo,
-                    Userpassword = Password,
+                    Userpassword = Metodos.EncryptString(Password),
                 };
 
                 //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
