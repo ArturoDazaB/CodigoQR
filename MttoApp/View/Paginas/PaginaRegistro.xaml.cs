@@ -305,7 +305,7 @@ namespace MttoApp.View.Paginas
             {
                 //NIVEL BAJO (1)
                 case 0:
-                    ConexionDatos.nivelusuario = 0;
+                    ConexionDatos.nivelusuario = 1;
                     break;
                 //NIVEL MEDIO (5)
                 case 1:
