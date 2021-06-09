@@ -262,6 +262,7 @@ namespace MttoApp.View.Paginas
                         ConexionDatos.OnButtonPushMethodMessage, ConexionDatos.AffirmativeText, ConexionDatos.NegativeText))
                     {
                         //INICIAMOS EL ACTIVITY INDICATOR
+                        ActivityIndicatorA.IsVisible = true;
                         ActivityIndicatorA.IsRunning = true;
                         //INICIAMOS UNA SECCION DE CODIGO QUE SE EJECUTARA EN SEGUNDO PLANO UTILIZANDO LA FUNCION Run DE LA CLASE TasK
                         await Task.Run(async () =>
@@ -271,6 +272,8 @@ namespace MttoApp.View.Paginas
                             //DETENEMOS EL ACTIVITY INDICATOR
                             ActivityIndicatorA.IsRunning = false;
                         });
+
+                        ActivityIndicatorA.IsVisible = false;
 
                         //SE MUESTRA EL MENSAJE OBTENIDO
                         ConexionDatos.MensajePantalla(respuesta);

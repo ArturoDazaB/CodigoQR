@@ -1,13 +1,11 @@
-﻿using Android.Widget;
+﻿using MttoApp.Model;
+using MttoApp.View.Paginas.PaginasInformacion;
 using MttoApp.ViewModel;
-using MttoApp.Model;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
-using MttoApp.View.Paginas.PaginasInformacion;
 
 namespace MttoApp.View.Paginas
 {
@@ -19,6 +17,7 @@ namespace MttoApp.View.Paginas
         //OBJETOS
         //SE CREAN LAS VARIABLES Y OBJETOS GLOBALES DE LA CLASE
         private Personas Persona;
+
         private Usuarios Usuario;
         private ConfiguracionAdminViewModel ConexionDatos;
 
@@ -36,7 +35,7 @@ namespace MttoApp.View.Paginas
 
             //SE EVALUA SI OCURRIO UN ERROR AL MOMENTO DE APERTURAR LA PAGINA
             //NOTA: PUESTO QUE ESTA PAGINA ESTA DEDICADA A LA MODIFICACION DE LOS DATOS PERSONALES
-            //(EL MISMO USUARIO MODIFICARA SU INFORMACION) SE EVALUA QUE LAS CEDULAS (ID) DE LOS 
+            //(EL MISMO USUARIO MODIFICARA SU INFORMACION) SE EVALUA QUE LAS CEDULAS (ID) DE LOS
             //OBJETOS Persona Y Usuario SON IGUALES
 
             if (ConexionDatos.Error)
@@ -45,7 +44,6 @@ namespace MttoApp.View.Paginas
                 //         FALSE: LAS CEDULAS (ID) DE LOS OBJETOS Persona Y Usuario SON IGUALES
                 Navigation.PopAsync();
             }
-            
 
             //INDICAMOS AL "nivelusuarioPicker" QUE NIVEL DE USUARIO POSEE EL USUARIO A MODIFICAR
             switch (ConexionDatos.NivelUsuario)
@@ -81,7 +79,7 @@ namespace MttoApp.View.Paginas
 
         //===================================================================================================================================================
         //===================================================================================================================================================
-        //METODO PARA LA VERIFICACION DEL NOMBRE(S) CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL 
+        //METODO PARA LA VERIFICACION DEL NOMBRE(S) CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL
         private void OnUnfocusedNombres(object sender, EventArgs e)
         {
             //SE VERIFICA SI EL NOMBRE PROPORCIONADO ESTA REGISTRADO
@@ -111,7 +109,7 @@ namespace MttoApp.View.Paginas
 
         //===================================================================================================================================================
         //===================================================================================================================================================
-        //METODO PARA LA VERIFICACION DEL APELLIDO(S) CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL 
+        //METODO PARA LA VERIFICACION DEL APELLIDO(S) CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL
         private void OnUnfocusedApellidos(object sender, EventArgs e)
         {
             //SE VERIFICA SI EL NOMBRE PROPORCIONADO ESTA REGISTRADO
@@ -132,7 +130,7 @@ namespace MttoApp.View.Paginas
                     //SE LE NOTIFICA AL USUARIO DE LA EXISTENCIA DE CARACTERES PROHIBIDOS EN EL TEXTO QUE ACABA DE INGRESAR
                     ConexionDatos.MensajePantalla(ConexionDatos.ForbiddenCharacters);
                 }
-                else //=> false => No existen caracteres prohibidos 
+                else //=> false => No existen caracteres prohibidos
                     entryApellidos.TextColor = Color.Black;
             }
         }
@@ -159,7 +157,7 @@ namespace MttoApp.View.Paginas
             //SE VERIFICA SI LA DIRECCION DE CORREO ES LA MISMA QUE EXISTE ACTUALMENTE
             if (ConexionDatos.flagsameCorreo) //=> true => EL CORREO INGRESADO ES IGUAL AL QUE SE ENCUENTRA REGISTRADO
             {
-                //DE SER LA MISMA SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE QUE NO SE HA REALIZADO 
+                //DE SER LA MISMA SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE QUE NO SE HA REALIZADO
                 //NINGUN CAMBIO EN ESTE CAMPO A PESAR DE HABER SIDO INSPECCIONADO
                 ConexionDatos.MensajePantalla(ConexionDatos.OnCompletedCorreoSameCorreo);
             }
@@ -167,7 +165,7 @@ namespace MttoApp.View.Paginas
 
         //===================================================================================================================================================
         //===================================================================================================================================================
-        //METODO PARA LA VERIFICACION DEL NOMBRE DE USUARIO CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL 
+        //METODO PARA LA VERIFICACION DEL NOMBRE DE USUARIO CUANDO EL USUARIO DEJE DE INTERACTUAR CON EL
         private void OnUnfocusedUsername(object sender, EventArgs e)
         {
             //SE DA SET AL COLOR DE TEXTO
@@ -191,7 +189,7 @@ namespace MttoApp.View.Paginas
                     ConexionDatos.MensajePantalla(ConexionDatos.ForbiddenCharacters);
                 }
 
-                //VERIFICACION DE ESPACIOS EN BLANCO 
+                //VERIFICACION DE ESPACIOS EN BLANCO
                 if (Metodos.EspacioBlanco(ConexionDatos.Username))  //=> TRUE => EXISTEN ESPACIOS EN BLANCO EN EL TEXTO
                 {
                     //SE CAMBIA EL COLOR DEL TEXTO A ROJO
@@ -288,12 +286,12 @@ namespace MttoApp.View.Paginas
                 //SE MUESTRA EL MENSAJE OBTENIDO
                 ConexionDatos.MensajePantalla(respuesta);
 
-                //SE VERIFICA EL TEXTO CONTENIDO DENTRO DE LA RESPUESTA DE LA APLICACION 
+                //SE VERIFICA EL TEXTO CONTENIDO DENTRO DE LA RESPUESTA DE LA APLICACION
                 if (respuesta.ToLower() == "datos actualizados")
                 {
-                    //SE REALIZA UNA PAUSA DE 2 SEGUNDOS
+                    //SE REALIZA UNA PAUSA DE 1 SEGUNDO
                     await Task.Delay(1000);
-                    //SI LA RESPUESTA ES POSITIVA SE PROCEDE A CERRAR LA PAGINA 
+                    //SI LA RESPUESTA ES POSITIVA SE PROCEDE A CERRAR LA PAGINA
                     await Navigation.PopAsync();
                 }
             }

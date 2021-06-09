@@ -1106,7 +1106,8 @@ namespace MttoApp.ViewModel
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
                         //SE RETORNA EL MENSAJE OBTENIDO POR 
-                        return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        var text = await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        return text;
                     }
                 }
                 //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
