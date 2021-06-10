@@ -159,17 +159,11 @@
 
                     <!--====================================================================================================>
                     <=====================================================================================================-->
-                    <!--ACTIVITY INDICATOR-->
-                    <ActivityIndicator  x:Name="ActivityIndicator"
-                                        HeightRequest="30" />
-
-                    <!--====================================================================================================>
-                    <=====================================================================================================-->
                     <!--INFORMACION DEL CODIGO QR-->
                     <Frame  BackgroundColor="{Binding BackGroundColor}"
                             BorderColor="Black"
                             CornerRadius="10"
-                            x:Name="FrameResultado">
+                            x:Name="FrameInformacionBasica">
 
                         <StackLayout>
 
@@ -182,6 +176,7 @@
 
                                     HorizontalTextAlignment="Center" />
 
+                            <!---SECCION INFORMACION BASICA DEL TABLERO-->
                             <Grid>
 
                                 <Grid.RowDefinitions>
@@ -206,8 +201,6 @@
                                     <!--8) LABEL: ULTIMA FECHA DE CONSULTA-->
                                     <RowDefinition Height="auto" />
                                     <!--9) ULTIMA FECHA DE CONSULTA-->
-                                    <RowDefinition Height="auto" />
-                                    <!--10) LABEL: CODIGO QR (IMAGEN)-->
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
@@ -327,106 +320,130 @@
 
                                         Grid.Row="9"
                                         Grid.Column="1" />
-
-                                <!--=============================================================-->
-                                <!--10) TITULO: Items del Tablero-->
-                                <Label  FontSize="{Binding LabelFontSize}"
-                                        FontAttributes="Bold"
-                                        TextColor="Black"
-
-                                        Text="{Binding ItemsTableroHeader}"
-
-                                        Grid.Row="10"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2" />
                             </Grid>
 
-                            <Frame BorderColor="Black"
-                                   Margin="0,5,0,0">
+                        </StackLayout>
+                    </Frame>
 
-                                <StackLayout>
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--INFORMACION DEL CODIGO QR-->
+                    <Frame  BackgroundColor="{Binding BackGroundColor}"
+                            BorderColor="Black"
+                            CornerRadius="10"
+                            x:Name="FrameItemsTablero">
 
-                                    <Grid ColumnSpacing="10"
+                        <StackLayout>
+
+                            <!--TITULO: ITEMS DEL TABLERO-->
+                            <Label  FontSize="{Binding HeaderFontSize}"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+
+                                    Text="{Binding ItemsTableroHeader}"
+
+                                    HorizontalTextAlignment="Center" />
+
+                            <!--TITULOS COLUMNAS ITEMS DEL TABLERO-->
+                            <Grid ColumnSpacing="10"
                                           HorizontalOptions="StartAndExpand">
 
-                                        <Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
 
-                                            <ColumnDefinition Width="100" />
-                                            <!--0) COLUMNA CANTIDAD-->
-                                            <ColumnDefinition Width="auto" />
-                                            <!--1) COLUMNA DESCRIPCION-->
-                                        </Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <!--0) COLUMNA CANTIDAD-->
+                                    <ColumnDefinition Width="auto" />
+                                    <!--1) COLUMNA DESCRIPCION-->
+                                </Grid.ColumnDefinitions>
 
-                                        <!--===========================================================================================-->
-                                        <!--0) COLUMNA CEDULA-->
-                                        <Label  Text="{Binding ColumnaCant}"
+                                <!--===========================================================================================-->
+                                <!--0) COLUMNA CEDULA-->
+                                <Label  Text="{Binding ColumnaCant}"
                                                 FontSize="15"
                                                 FontAttributes="Bold"
                                                 HorizontalOptions="Start"
                                                 TextColor="Black"
                                                 Grid.Column="0" />
 
-                                        <!--===========================================================================================-->
-                                        <!--0) COLUMNA NOMBRES-->
-                                        <Label  Text="{Binding ColumnaDescripcion}"
+                                <!--===========================================================================================-->
+                                <!--0) COLUMNA NOMBRES-->
+                                <Label  Text="{Binding ColumnaDescripcion}"
                                                 FontSize="15"
                                                 FontAttributes="Bold"
                                                 HorizontalOptions="Start"
                                                 TextColor="Black"
                                                 Grid.Column="1" />
-                                    </Grid>
+                            </Grid>
 
-                                    <ListView x:Name="listViewItems"
-                                          SeparatorColor="Black"
-                                          SelectionMode="None">
+                            <!--SECCION ITEMS DEL TABLEO-->
+                            <ListView x:Name="listViewItems"
+                                      SeparatorColor="Black"
+                                      ItemTapped="OnItemSelected">
 
-                                        <ListView.ItemTemplate>
+                                <ListView.ItemTemplate>
 
-                                            <DataTemplate>
+                                    <DataTemplate>
 
-                                                <ViewCell>
+                                        <ViewCell>
 
-                                                    <Grid   ColumnSpacing="10"
+                                            <Grid   ColumnSpacing="10"
                                                         HorizontalOptions="StartAndExpand">
 
-                                                        <Grid.ColumnDefinitions>
+                                                <Grid.ColumnDefinitions>
 
-                                                            <ColumnDefinition Width="100" />
-                                                            <!--0) CANTIDAD-->
-                                                            <ColumnDefinition Width="auto" />
-                                                            <!--1) DESCRIPCION-->
-                                                        </Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <!--0) CANTIDAD-->
+                                                    <ColumnDefinition Width="auto" />
+                                                    <!--1) DESCRIPCION-->
+                                                </Grid.ColumnDefinitions>
 
-                                                        <!--=======================================================-->
-                                                        <!--1) DESCRIPCION-->
-                                                        <Label  Text="{Binding Descripcion}"
+                                                <!--=======================================================-->
+                                                <!--1) DESCRIPCION-->
+                                                <Label  Text="{Binding Descripcion}"
                                                             FontSize="15"
                                                             HorizontalOptions="Start"
                                                             TextColor="Black"
                                                             Grid.Column="1" />
 
-                                                        <!--=======================================================-->
-                                                        <!--0) CANTIDAD-->
-                                                        <Label  Text="{Binding Cantidad}"
+                                                <!--=======================================================-->
+                                                <!--0) CANTIDAD-->
+                                                <Label  Text="{Binding Cantidad}"
                                                             FontSize="15"
                                                             HorizontalOptions="Start"
                                                             TextColor="Black"
                                                             Grid.Column="0" />
-                                                    </Grid>
-                                                </ViewCell>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    
-                                </StackLayout>
-                            </Frame>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                            <Label FontSize="{Binding LabelFontSize}"
+                        </StackLayout>
+
+                    </Frame>
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--INFORMACION DEL CODIGO QR-->
+                    <Frame  BackgroundColor="{Binding BackGroundColor}"
+                            BorderColor="Black"
+                            CornerRadius="10"
+                            x:Name="FrameCodigoQR">
+
+                        <StackLayout>
+
+                            <!--TITULO: CODIGO QR-->
+                            <Label FontSize="{Binding HeaderFontSize}"
                                    FontAttributes="Bold"
                                    TextColor="Black"
 
-                                   Text="{Binding ImagenCodigoQRHeader}" />
+                                   Text="{Binding ImagenCodigoQRHeader}"
+                                   
+                                   HorizontalTextAlignment="Center"/>
 
+                            
+
+                            <!--SECCION CODIGO QR-->
                             <Frame BorderColor="Black"
                                    Margin="0,5,0,0">
 
@@ -435,6 +452,7 @@
 
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
+
                             </Frame>
 
                             <!--BOTON PARA GUARDADO DE LA IMAGEN EN LA GALERIA DEL TELEFONO-->
@@ -452,8 +470,37 @@
 
                                     x:Name="BotonGuardar"
                                     Clicked="GuardarCodigoQR" />
+
                         </StackLayout>
+                        
                     </Frame>
+
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--BOTON PARA GUARDADO DE LA IMAGEN EN LA GALERIA DEL TELEFONO-->
+                    <Button VerticalOptions="Center"
+                                    Text="{Binding EliminarTableroPH}"
+                                    Margin="2,2,2,4"
+
+                                    BorderColor="Black"
+                                    BorderWidth="1"
+                                    BackgroundColor="{Binding ButtonColor}"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    HeightRequest="35"
+                                    CornerRadius="10"
+
+                                    x:Name="BotonEliminar"
+                                    Clicked="EliminarTablero" />
+
+                    <!--"
+                                    -->
+                    
+                    <!--====================================================================================================>
+                    <=====================================================================================================-->
+                    <!--ACTIVITY INDICATOR-->
+                    <ActivityIndicator  x:Name="ActivityIndicator"
+                                        HeightRequest="30" />
                 </StackLayout>
 
                 <!--====================================================================================================>

@@ -99,17 +99,13 @@
                                 <RowDefinition Height="auto" />
                                 <!--7) NUMERO FICHA-->
                                 <RowDefinition Height="auto" />
-                                <!--8) TITULO FECHA DE NACIMIENTO-->
+                                <!--8) TITULO: TELEFONO-->
                                 <RowDefinition Height="auto" />
-                                <!--9) FECHA DE NACIMIENTO-->
+                                <!--9) TELEFONO-->
                                 <RowDefinition Height="auto" />
-                                <!--10) TITULO: TELEFONO-->
+                                <!--10) TITULO: CORREO-->
                                 <RowDefinition Height="auto" />
-                                <!--11) TELEFONO-->
-                                <RowDefinition Height="auto" />
-                                <!--12) TITULO: CORREO-->
-                                <RowDefinition Height="auto" />
-                                <!--13) CORREO-->
+                                <!--11) CORREO-->
                             </Grid.RowDefinitions>
 
                             <!--TITULO: NOMBRE(s)-->
@@ -161,26 +157,14 @@
                                     x:Name="numerofichaEntry"
                                     Text="{Binding NumeroFicha}"
                                     FontSize="{Binding EntryFontSize}" />
-
-                            <!--TITULO: FECHA DE NACIMIENTO-->
-                            <Label  Text="{Binding FechaNacimientoPH}"
-                                    FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="8" />
-
-                            <!--4) FECHA DE NACIMIENTO-->
-                            <DatePicker Grid.Row="9"
-                                        x:Name="fechaNacimientoPicker"
-                                        Date="{Binding FechaNacimiento}"
-                                        Unfocused="OnDateSelected"
-                                        FontSize="{Binding EntryFontSize}" />
-
+                            
                             <!--TITULO: TELEFONO-->
                             <Label  Text="{Binding TelefonoPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="10" />
+                                    Grid.Row="8" />
 
                             <!--5) TELEFONO-->
-                            <Entry  Grid.Row="11"
+                            <Entry  Grid.Row="9"
                                     Placeholder="Numero de telefono"
                                     Keyboard="Numeric"
                                     MaxLength="{Binding TelefonoMaxLegnt}"
@@ -191,10 +175,10 @@
                             <!--TITULO: CORREO-->
                             <Label  Text="{Binding CorreoPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="12" />
+                                    Grid.Row="10" />
 
                             <!--6) CORREO-->
-                            <Entry  Grid.Row="13"
+                            <Entry  Grid.Row="11"
                                     Placeholder="Correo electronico, Email"
                                     x:Name="correoEntry"
                                     Unfocused="OnCompletedCorreo"

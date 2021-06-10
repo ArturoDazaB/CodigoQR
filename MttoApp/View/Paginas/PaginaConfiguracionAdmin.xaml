@@ -103,17 +103,13 @@
                                     <RowDefinition Height="auto" />
                                     <!--9) NUMERO DE FICHA-->
                                     <RowDefinition Height="auto" />
-                                    <!--10) TITULO: FECHA DE NACIMIENTO-->
+                                    <!--10) TITULO: TELEFONO CELULAR-->
                                     <RowDefinition Height="auto" />
-                                    <!--11) FECHA DE NACIMIENTO-->
+                                    <!--11) TELEFONO CELULAR-->
                                     <RowDefinition Height="auto" />
-                                    <!--12) TITULO: TELEFONO CELULAR-->
+                                    <!--12) TITULO: CORREO -->
                                     <RowDefinition Height="auto" />
-                                    <!--13) TELEFONO CELULAR-->
-                                    <RowDefinition Height="auto" />
-                                    <!--14) TITULO: CORREO -->
-                                    <RowDefinition Height="auto" />
-                                    <!--15) CORREO-->
+                                    <!--13) CORREO-->
                                 </Grid.RowDefinitions>
 
                                 <!--0) TITULO FECHA DE REGISTRO-->
@@ -200,34 +196,9 @@
                                    FontSize="{Binding EntryFontSize}"
                                    Grid.Row="9" />
 
-                                <!--10) TITULO FECHA DE NACIMIENTO-->
-                                <Label  FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="10">
-
-                                    <Label.FormattedText>
-
-                                        <FormattedString>
-
-                                            <Span   Text="{Binding FechaNacimientoPH}" />
-                                            <Span   Text="*"
-                                                FontSize="{Binding LabelFontSize}"
-                                                FontAttributes="Bold"
-                                                TextColor="Red" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-
-                                <!--11) FECHA DE NACIMIENTO-->
-                                <DatePicker Date="{Binding FechaNacimiento}"
-                                        x:Name="pickerFecha"
-                                        TextColor="Black"
-                                        FontSize="{Binding EntryFontSize}"
-                                        Grid.Row="11"
-                                        Unfocused="OnUnfocusedDate" />
-
                                 <!--12) TITULO TELEFONO-->
                                 <Label  FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="12">
+                                    Grid.Row="10">
 
                                     <Label.FormattedText>
 
@@ -248,12 +219,12 @@
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
                                     MaxLength="{Binding TelefonoMaxLegnt}"
-                                    Grid.Row="13"
+                                    Grid.Row="11"
                                     Unfocused="OnUnfocusedTelefono" />
 
                                 <!--14) TITULO CORREO/EMAIL-->
                                 <Label  FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="14">
+                                    Grid.Row="12">
 
                                     <Label.FormattedText>
 
@@ -273,7 +244,7 @@
                                     x:Name="entryCorreo"
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
-                                    Grid.Row="15"
+                                    Grid.Row="13"
                                     Unfocused="OnUnfocusedCorreo" />
                             </Grid>
 

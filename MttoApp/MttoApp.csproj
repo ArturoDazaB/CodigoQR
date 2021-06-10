@@ -28,6 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\Paginas\PaginaModificacionItems.xaml.cs">
+      <DependentUpon>PaginaModificacionItems.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="View\Paginas\MasterDetail\DetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -46,7 +52,7 @@
     <EmbeddedResource Update="View\Paginas\PaginaConsultaTablero.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\Paginas\PaginaDePrueba.xaml">
+    <EmbeddedResource Update="View\Paginas\PaginaModificacionItems.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\Paginas\PaginaPrincipal.xaml">

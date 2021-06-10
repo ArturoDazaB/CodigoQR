@@ -10,6 +10,7 @@ using System.Net.Http;
 using Xamarin.Essentials;
 using System.Net.Http.Headers;
 using Android.Widget;
+using System.Text;
 
 namespace MttoApp.ViewModel
 {
@@ -162,9 +163,31 @@ namespace MttoApp.ViewModel
         //METODO PARA VALIDAR EL INGRESO DE UN USUARIO POR MEDIO DE CONSUMO DE SERVICIOS WEB
         public async Task<LogInResponse> LogInRequest()
         {
-            
+            //SE CREA E INICIALIZA LA VARIABLE URL
+            string url = string.Empty;
+
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = App.BaseUrl + $"/login?username={Username}&password={Password}";
+            url = App.BaseUrl + $"/login";
+
+            LogInRequest model = null;
+
+            //SE EVALUA SI EL USUARIO QUE INTENTA ACCEDER A LA PLATAFORMA ES EL USUARIO ADMINISTRATOR
+            if (username.ToLower() == "administrator")
+            {
+                model = new LogInRequest()
+                {
+                    Username = username,
+                    Password = password,
+                };
+            }
+            else
+            {
+                model = new LogInRequest()
+                {
+                    Username = username,
+                    Password = Metodos.EncryptString(password),
+                };
+            }
 
             //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
             var current = Connectivity.NetworkAccess;
@@ -188,19 +211,15 @@ namespace MttoApp.ViewModel
                     {
                         //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
                         client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
-
-                        //SE CONFIGURAN LOS HEADERS DE LA SOLICITUD HTTP (HTTP REQUEST)
+                        //SE REALIZA LA CONVERSION A OBJETO JSON
+                        var json = JsonConvert.SerializeObject(model);
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                        //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                         //SE REALIZA EL LLAMADO Y SE RECIBE UNA RESPUESTA
-                        HttpResponseMessage response = await client.GetAsync(url);
-
-                        /*if(response.StatusCode != System.Net.HttpStatusCode.OK)
-                        {
-                            url = App.BaseUrl2 + $"/login?username={Username}&password={Password}";
-
-                            response = await client.GetAsync(url);
-                        }*/
+                        HttpResponseMessage response = await client.PostAsync(url, httpContent);
 
                         //SE EVALUA SI EL CODIGO DE ESTATUS RETORNADO ES EL CODIGO 200 OK
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -209,7 +228,11 @@ namespace MttoApp.ViewModel
                             //SE RECIBE LA RESPUESTA COMPLETA OBTENIDA POR EL SERVIDOR (STRING) 
                             result = await response.Content.ReadAsStringAsync();
                             //SE REALIZA LA EL MAPEO DE UN OBJETO JSON A UN OBJETO "LogInResponse"
-                            return await Task.FromResult(JsonConvert.DeserializeObject<LogInResponse>(result));
+                            LogInResponse loginresponse = await Task.FromResult(JsonConvert.DeserializeObject<LogInResponse>(result));
+                            //SE DESENCRIPTA LA CONTRASEÑA
+                            loginresponse.UserInfo.Usuario.Password = Metodos.DecryptString(loginresponse.UserInfo.Usuario.Password);
+                            //SE RETORNA EL OBJETO 
+                            return loginresponse;
                         }
                         else
                         {

@@ -90,22 +90,6 @@ namespace MttoApp.View.Paginas
 
         //=========================================================================================================================================================
         //=========================================================================================================================================================
-        //FUNCION ACTIVADA LUEGO DE QUE SE DEJE DE ENFOCAR EL ENTRY DEL pickerFechaNacimiento
-        protected void OnUnfocusedDate(object sender, EventArgs e)
-        {
-            //SE VERIFICA QUE LA FECHA DE NACIMIENTO SELECCIONADA NO SEA NI LA QUE YA SE ENCUENTRE REGISTRADA
-            //NI UNA FECHA SUPERIOR A LA ACTUAL
-            if (ConexionDatos.flagsameFecha ||                      //=> true => LA FECHA SELECCIONADA ES IGUAL A LA REGISTRADA
-                ConexionDatos.FechaNacimiento > DateTime.Today)     //=> true => LA FECHA SELECCIONADA ES SUPERIOR A LA ACTUAL
-            {
-                //DE SER LA MISMA O SUPERIOR SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE QUE NO SE HA REALIZADO
-                //NINGUN CAMBIO EN ESTE CAMPO A PESAR DE HABER SIDO INSPECCIONADO
-                ConexionDatos.MensajePantalla(ConexionDatos.OnDateSelectedMessage);
-            }
-        }
-
-        //=========================================================================================================================================================
-        //=========================================================================================================================================================
         //FUNCION ACTIVADA LUEGO DE QUE SE DEJE DE ENFOCAR EL ENTRY DEL entryTelefono
         protected void OnUnfocusedTelefono(object sender, EventArgs e)
         {

@@ -207,23 +207,6 @@ namespace MttoApp.View.Paginas
                 await DisplayAlert("Alerta", ConexionDatos.PasswordDoesNotMatch, ConexionDatos.OkText);
         }
 
-        //==================================================================================================================================
-        //==================================================================================================================================
-        //VERIFICACION FECHA DE NACIMIENTO: METODO ACTIVADO CUANDO SE SELECCIONA UNA FECHA DEL "fechaNacimientoPicker"
-        private void OnDateSelected(object sender, DateChangedEventArgs args)
-        {
-            //SE EVALUA SI LA FECHA DE NACIMIENTO SELECCIONADA ES IGUAL O MAYOR/SUPERIOR A LA FECHA ACTUAL 
-            if (ConexionDatos.FechaNacimiento >= DateTime.Today)
-            {
-                //SE CAMBIA EL COLOR DEL TEXTO DEL fechaNacimientoPicker A ROJO
-                fechaNacimientoPicker.TextColor = Color.Red;
-                //SE LE NOTIFICA AL USUARIO CUAL DE LAS DOS CONDICIONES MINIMAS NO SE HA CUMPLIDO.
-                ConexionDatos.MensajePantalla(ConexionDatos.OnDateSelectedMessage);
-            }
-            else
-                fechaNacimientoPicker.TextColor = Color.Black;
-        }
-
         //===============================================================================================================================
         //===============================================================================================================================
         //METODO DE REGISTRO: METODO LLAMADO CUANDO SE PRECIONA EL BOTON DE LA PAGINA DE REGISTRO
@@ -279,6 +262,7 @@ namespace MttoApp.View.Paginas
                         ConexionDatos.OnButtonPushMethodMessage, ConexionDatos.AffirmativeText, ConexionDatos.NegativeText))
                     {
                         //INICIAMOS EL ACTIVITY INDICATOR
+                        ActivityIndicatorA.IsVisible = true;
                         ActivityIndicatorA.IsRunning = true;
                         //INICIAMOS UNA SECCION DE CODIGO QUE SE EJECUTARA EN SEGUNDO PLANO UTILIZANDO LA FUNCION Run DE LA CLASE TasK
                         await Task.Run(async () =>
@@ -288,6 +272,8 @@ namespace MttoApp.View.Paginas
                             //DETENEMOS EL ACTIVITY INDICATOR
                             ActivityIndicatorA.IsRunning = false;
                         });
+
+                        ActivityIndicatorA.IsVisible = false;
 
                         //SE MUESTRA EL MENSAJE OBTENIDO
                         ConexionDatos.MensajePantalla(respuesta);
@@ -322,7 +308,7 @@ namespace MttoApp.View.Paginas
             {
                 //NIVEL BAJO (1)
                 case 0:
-                    ConexionDatos.nivelusuario = 0;
+                    ConexionDatos.nivelusuario = 1;
                     break;
                 //NIVEL MEDIO (5)
                 case 1:

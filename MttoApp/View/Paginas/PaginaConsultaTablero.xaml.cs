@@ -1,6 +1,7 @@
 ﻿using MttoApp.Model;
 using MttoApp.View.Paginas.PaginasInformacion;
 using MttoApp.ViewModel;
+using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.IO;
@@ -40,8 +41,10 @@ namespace MttoApp.View.Paginas
             //SE GENERA LA CONEXION CON LA CLASE VIEWMODEL
             BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, false);
 
-            //SE DA SET (FALSE) AL FRAME QUE CONTENDRA LA INFORMACION DEL CODIGO QR
-            FrameResultado.IsVisible = false;
+            //SE DA SET (FALSE) A LOS FRAMES QUE CONTENDRAN LA INFORMACION DEL TABLERO, LOS ITEMS
+            //EL CODIGO QR Y EL BOTON DE ELIMINACION DE TABLERO.
+            FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = false;
+            BotonEliminar.IsVisible = false;
 
             //SE DA SET (FALSE) AL ActivityIndicator QUE INDICARA AL USUARIO CUANDO SE ESTA CUMPLIENDO ALGUN PROCESO
             ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
@@ -98,7 +101,8 @@ namespace MttoApp.View.Paginas
                     await App.MasterDetail.Navigation.PopModalAsync();
 
                     //SE OCULTA EL FRAME QUE CONTENDRAN LOS RESULTADOS DE BUSQUEDA
-                    FrameResultado.IsVisible = false;
+                    FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible 
+                        = FrameCodigoQR.IsVisible = BotonEliminar.IsVisible = false;
 
                     //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
                     ActivityIndicator.IsVisible = true;
@@ -117,7 +121,10 @@ namespace MttoApp.View.Paginas
                     if (SearchStatus)
                     {
                         //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
-                        FrameResultado.IsVisible = SearchStatus;
+                        FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
+                        //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
+                        if (Usuario.NivelUsuario >= 5)
+                            BotonEliminar.IsVisible = SearchStatus;
                         //------------------------------------------------------------------------------------------------
                         //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
                         idtablero.Text = DatosPagina.TableroID;
@@ -132,8 +139,11 @@ namespace MttoApp.View.Paginas
                     }
                     else
                     {
-                        //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
-                        FrameResultado.IsVisible = SearchStatus;
+                        //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
+                        FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
+                        //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
+                        if (Usuario.NivelUsuario >= 5)
+                            BotonEliminar.IsVisible = SearchStatus;
                         //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS
                         listViewItems.HeightRequest = 0;
                         //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
@@ -169,7 +179,7 @@ namespace MttoApp.View.Paginas
                 PickerOpciones.SelectedIndex > -1)
             {
                 //SE OCULTA EL FRAME QUE CONTENDRAN LOS RESULTADOS DE BUSQUEDA
-                FrameResultado.IsVisible = false;
+                FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = BotonEliminar.IsVisible = false;
 
                 //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
                 ActivityIndicator.IsVisible = true;
@@ -191,7 +201,10 @@ namespace MttoApp.View.Paginas
                 if (SearchStatus)
                 {
                     //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
-                    FrameResultado.IsVisible = SearchStatus;
+                    FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
+                    //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
+                    if (Usuario.NivelUsuario >= 5)
+                        BotonEliminar.IsVisible = SearchStatus;
                     //------------------------------------------------------------------------------------------------
                     //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
                     idtablero.Text = DatosPagina.TableroID;
@@ -206,9 +219,11 @@ namespace MttoApp.View.Paginas
                 }
                 else
                 {
-                    //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
-                    //FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
-                    FrameResultado.IsVisible = SearchStatus;
+                    //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
+                    FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
+                    //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
+                    if (Usuario.NivelUsuario >= 5)
+                        BotonEliminar.IsVisible = SearchStatus;
                     //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS
                     listViewItems.HeightRequest = 0;
                     //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
@@ -240,14 +255,56 @@ namespace MttoApp.View.Paginas
             DatosPagina.SaveImage();
         }
 
+        //========================================================================================================
+        //========================================================================================================
+        //METODO ACTIVADO AL SELECCIONAR UN ITEM DE LA LISTA DE ITEMS
+        async private void OnItemSelected(object sender, ItemTappedEventArgs e)
+        {
+            //SI SE SELECCIONA UN ITEM DENTRO DE LA LISTA DE ITEMS SE PROCEDE A DESPLEGAR LAS OPCIONES EXISTENTES
+            //PARA ESE REGISTRO DE ITEM EN ESPECIFICO
+            var actionSheet = await DisplayActionSheet("Opciones", "Cancelar", null, "Modificar", "Eliminar");
+
+            //TOMAMOS LA OPCION RETORNADA Y LA EVALUAREMOS CON UN SWITCH
+            switch (actionSheet)
+            {
+                //OPCION MODIFICAR (UPDATE)
+                case "Modificar":
+                    //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
+                    await Navigation.PushPopupAsync(new PaginaModificacionItems());
+                    break;
+                
+                //OPCION ELIMINAR (DELETE)
+                case "Eliminar":
+                    //REALIZAMOS UNA PREGUNTA DE CONFIRMACION AL USUARIO PARA ELIMINAR DICHO ELEMENTO
+                    var response = await DisplayAlert("Alerta", "¿Está seguro que desea eliminar el/los ítem(s) del tablero?", "Si", "No, regresar");
+
+                    //EVALUAMOS LA RESPUESTA OBTENIDA
+                    if(response)
+                    {
+                        // INTERTE CODIGO DE LLAMADO A LA FUNCION ELIMINAR ITEM EN EL RESPECTIVO VIEWMODEL
+                    }
+
+                    break;
+            }
+
+            //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
+            ((ListView)sender).SelectedItem = null;
+        }
+
+        //========================================================================================================
+        //========================================================================================================
+        //METODO ACTIVADO AL PRESIONAR EL BOTON ELIMINAR
+        async private void EliminarTablero(object sender, EventArgs e)
+        {
+            var result = await DisplayAlert("Alerta", "¿Esta seguro que desea eliminar el tablero junto con toda su informacion?", "Si", "No, regresar");
+        }
+
         //==========================================================================
         //==========================================================================
         //FUNCION PARA LLAMAR A LA PAGINA DE INFORMACION
-
-        [Obsolete]
         private async void OnInfoClicked(object sender, EventArgs e)
         {
-            await PopupNavigation.PushAsync(new PaginaInformacionConsultaTablero());
+            await Navigation.PushPopupAsync(new PaginaInformacionConsultaTablero());
         }
     }
 }

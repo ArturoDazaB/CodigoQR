@@ -271,6 +271,24 @@ namespace MttoApp.View.Paginas
             }
         }
 
+        //===========================================================================
+        //===========================================================================
+        //METODO QUE RETORNA A LA CLASE "ConfiguracionAdminViewModel.cs" EL NUMERO
+        //DEL ITEM SELECCIONADO EN EL PICKER "nivelusuarioPicker"
+        private void OnSelectedFilial(object sender, EventArgs e)
+        {
+            //---------------------------------------NOTA---------------------------------------
+            /*PARA CONSULTAR O MODIFICAR LOS NIVELES DE USUARIOS DIRIJASE A LA SUB CLASE "Usuarios"
+             DENTRO DE LA CLASE "Tablas.cs". En ella se encontrara con una funcion llamada
+             "NivelUsuarioLista" la cual retornara un lista del tipo string*/
+            //----------------------------------------------------------------------------------
+            //CREAMOS UN OBJETO DEL TIPO "Picker" Y LO ENLAZAMOS "nivelusuarioPicker" (ubicado
+            //EN "PaginaRegistro.xaml")
+            Picker picker = sender as Picker;
+            //EVALUAMOS EL VALOR DE LA POSICION DE LA OPCION SELECCIONADA
+            DatosPagina.filial = new Tableros().FilialesLista()[picker.SelectedIndex];
+        }
+
         //==========================================================================
         //==========================================================================
         //FUNCION PARA LLAMAR A LA PAGINA DE INFORMACION

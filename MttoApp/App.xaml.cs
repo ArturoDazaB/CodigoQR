@@ -43,7 +43,7 @@ namespace MttoApp
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        public const string BaseUrl = "https://10.10.0.83:5001/mttoapp";
+        public const string BaseUrl = "https://10.10.0.83:5002/mttoapp";
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
         public const int TimeInSeconds = 5;
@@ -66,6 +66,11 @@ namespace MttoApp
         //===============================================================================================
         //PROPIEDADES DE LA APLICACION
         public static MasterDetailPage MasterDetail { get; set; }
+
+        //SE DEFINEN LAS PROPIEDADES "SecretKey" y "PublicKey" PARA LAS FUNCIONES DE ECRIPTACION
+        //Y DESENCRIPTACION (FUNCIONES ALBERGADAS EN EL ARCHIVO "Metodos").
+        public static string SecretKey { get { return "12345678"; } }
+        public static string PublicKey { get { return "98765432"; } }
 
         //===============================================================================================
         //===============================================================================================
