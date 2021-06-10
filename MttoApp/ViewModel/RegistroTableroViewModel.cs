@@ -222,7 +222,7 @@ namespace MttoApp.ViewModel
         //=> TEXTO DE LA COLUMNA "Cantidad" DE LA LISTA DE ITEMS DEL TABLERO
         public string ColumnaDescripcion { get { return "Descripcion"; } }
         //=> TEXTO DE LA COLUMNA "Descripcion" DE LA LISTA DE ITEMS DEL TABLERO
-        public string ItemsTableroHeader { get { return "Items/Elementos del Tablero: "; } }
+        public string ItemsTableroHeader { get { return "Items/Elementos del Tablero"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LOS ITEMS DEL TABLERO (PaginaRegistroTablero y PaginaConsultaTablero)
         public string DescripcionItemHeader { get { return "Descripcion del Item"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA DESCRIPCION DEL ITEM  (PaginaRegistroTablero)
@@ -235,8 +235,27 @@ namespace MttoApp.ViewModel
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA INFORMACION GENERAL DEL TABLERO
         public string UltimaConsultaHeader { get { return "Ultima consulta del tablero: "; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA ULTIMA FECHA DE CONSULTA
-        public string ImagenCodigoQRHeader { get { return "Codigo QR del tablero: "; } }
+        public string ImagenCodigoQRHeader { get { return "Codigo QR del tablero"; } }
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA IMAGEN DEL CODIGO QR
+        //-------------------------------Texto (Header) PaginaModificacionItems-----------------------------
+        public string TituloModItem { get { return "Modificacion de Item"; } }
+        //=> TEXTO PRESENTADO COMO TITULO DE LA PAGINA "PaginaModificacionItems"
+        public string BotonText { get { return "Modificar"; } }
+        //=> TEXTO PARA EL BOTON QUE ACTIVARA LA FUNCION DE ACTUALIZAR EL ITEM ASIGNADO AL TABLERO CONSULTADO
+        //-----------------------------------------------IMAGENES-------------------------------------------
+        public string CloseButton //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
+                                  //   DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
+        {
+            //https://iconos8.es/icons/set/close-window"
+            //Cerrar ventana icon by a target="_blank"
+            //href "https://iconos8.es"*/
+
+            get { return "Cerrar24px2.png"; }
+        }
+        //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
+        public string BackGroundColor { get { return App.BackGroundColorPopUp; } } //=> COLOR DE FONDO PAGINAS INFORMACION (POP-UP)
+        public string FrameColor { get { return App.FrameColorPopUp; } } //=> COLOR PARA EL MARCO DE LAS PAGINAS INFORMACION (POP-UP)
+        public string ButtonColor { get { return App.ButtonColor; } } //=> COLOR PARA EL FONDO DE LOS BOTONES
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
         //TEXTO DEL BOTON GENERAR CODIGO QR DE LA PAGINA "PaginaRegistroTablero"
@@ -246,6 +265,7 @@ namespace MttoApp.ViewModel
         //TEXTO DEL BOTON GUARDAR IMAGEN DE LA PAGINA "PaginaRegistroTablero" y "PaginaConsultaTablero"
         public string RegistrarTableroPH { get { return "Registrar"; } }
         //TEXTO DEL BOTON REGISTRAR TABLERO DE LA PAGINA "PaginaRegistroTablero"
+        public string EliminarTableroPH { get { return  "Eliminar Tablero"; } }
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
         public string BotonScanPH { get { return "Escanear Código"; } }
         //TEXTO DEL BOTON ESCANEAR DE LA PAGINA "PaginaConsutaTablero"
@@ -329,11 +349,6 @@ namespace MttoApp.ViewModel
                 return new Tableros().FilialesLista();
             }
         }
-        //-----------------------------------------COLORES--------------------------------------------------
-        //COLOR DEL FONDO
-        public string BackGroundColor { get { return App.BackGroundColor; } }
-        //COLOR DE LOS BOTONES
-        public string ButtonColor { get { return App.ButtonColor; } }
         //-------------------------------------------NOTA---------------------------------------------------
         //EN ESTA SECCION ASIGNAREMOS EL TAMAÑO DE LA FUENTE PARA LAS ETIQUETAS, TITULOS, ENTRYS, ETC.
         public int LabelFontSize { get { return App.LabelFontSize; } }
@@ -349,7 +364,6 @@ namespace MttoApp.ViewModel
         //==================================================================================================
         //==================================================================================================
         //--------------------------------------------METODOS-----------------------------------------------
-
         //==================================================================================================
         //==================================================================================================
         //CONSTRUCTOR DE LA CLASE
@@ -373,6 +387,14 @@ namespace MttoApp.ViewModel
             //showresultadoscan = false;
             SourceOfCalling = sourceofcalling;
         }
+
+        //==================================================================================================
+        //==================================================================================================
+        //CONSTRUCTOR DE LA CLASE
+        //NOTA: SE SOBRE ESCRIBE EL CONSTRUCTOR DE LA CLASE PARA PODER PERMITIR EL ACCESO A LA CLASE
+        //"PaginaModificacionItems" (ESTO DEBIDO A QUE DICHA CLASE MANEJA EL MISMO MODELO DE ITEMS USADO
+        //EN LAS PAGINAS "PaginaConsultaTableros" Y "PaginaRegistroTableros".
+        public RegistroTableroViewModel() { }
 
         //==================================================================================================
         //==================================================================================================

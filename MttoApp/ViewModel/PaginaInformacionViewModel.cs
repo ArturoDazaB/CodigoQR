@@ -177,7 +177,6 @@
 
         //PROPIEDAD QUE RETORNA EL TEXTO QUE FUNCIONARA DE TITULO A LA PAGINA POP UP EMERGENTE
         public string TituloPH { get { return "INFORMACIÓN"; } }
-
         //============================================================================================================
         //============================================================================================================
         //CONSTRUCTOR DE LA CLASE

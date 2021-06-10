@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="MttoApp.View.Paginas.PaginaModificacionItems">
+    
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation  PositionIn="Center"
+                                    PositionOut="Center"
+                                    ScaleIn="1.4"
+                                    ScaleOut="1.0"
+                                    DurationIn="500"
+                                    DurationOut="500"
+                                    EasingIn="SinOut"
+                                    EasingOut="SinIn"
+                                    HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+    <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
+
+    <Frame BorderColor="{Binding FrameColor}"
+           BackgroundColor="{Binding BackGroundColor}"
+           CornerRadius="10"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           WidthRequest="300">
+
+        <StackLayout Orientation="Vertical"
+                         BackgroundColor="{Binding BackGroundColor}">
+
+            <!--===========================================================================================-->
+            <!--===========================================================================================-->
+            <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
+
+            <ImageButton    Source="{Binding CloseButton}"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            Clicked="OnClose"
+                            Aspect="AspectFit" />
+
+            <!--https://iconos8.es/icons/set/close-window"
+                    Cerrar ventana  icon by a target="_blank"
+                    href "https://iconos8.es"-->
+
+            <!--===========================================================================================-->
+            <!--===========================================================================================-->
+            <!--SECCION DE MODIFICACION DE CAMPOS DEL ITEM DEL TABLERO-->
+            <Grid>
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="auto" />
+                    <!--0) TITULO: Modificacion de Item-->
+                    <RowDefinition Height="5" />
+                    <!--1) ESPACIO-->
+                    <RowDefinition Height="auto" />
+                    <!--2) Titulo: Descripcion-->
+                    <RowDefinition Height="auto" />
+                    <!--3) Entry: Descripcion del item-->
+                    <RowDefinition Height="auto" />
+                    <!--4) Titulo: Cantidad-->
+                    <RowDefinition Height="auto" />
+                    <!--5) Entry: Cantidad del item-->
+                    <RowDefinition Height="auto"/>
+                    <!--6) BOTON PARA ACTUALIZAR-->
+                </Grid.RowDefinitions>
+
+                <!--=======================================================-->
+                <!--0) TITULO: Modificacion de Item-->
+                <Label  Text="{Binding TituloModItem}"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="{Binding HeaderFontSize}"
+                        HorizontalOptions="Center"
+                        Grid.Row="0" />
+
+                <!--=======================================================-->
+                <!--2) Titulo: Descripcion-->
+                <Label  Text="Descripción del ítem"
+                        FontSize="{Binding LabelFontSize}"
+                        Grid.Row="2" />
+
+                <!--=======================================================-->
+                <!--3) Entry: Descripcion del componente-->
+                <Entry  x:Name="entryDescripcion"
+                        TextColor="Black"
+                        FontSize="{Binding EntryFontSize}"
+                        Grid.Row="3"
+                        Keyboard="Text" />
+
+                <!--=======================================================-->
+                <!--4) Titulo: Cantidad-->
+                <Label  Text="Cantidad de unidades"
+                        FontSize="{Binding LabelFontSize}"
+                        Grid.Row="4" />
+
+                <!--=======================================================-->
+                <!--5) Entry: Presentacion del producto-->
+                <Entry  x:Name="entryCantidad"
+                        TextColor="Black"
+                        FontSize="{Binding EntryFontSize}"
+                        Grid.Row="5"
+
+                        Keyboard="Numeric" />
+
+                <!--=======================================================-->
+                <!--6) Entry: Boton para actualizar-->
+                <Button VerticalOptions="Center"
+                        Text="{Binding BotonText}"
+                        Margin="2,2,2,4"
+                        
+                        Grid.Row="6"
+                        BorderColor="Black"
+                        BorderWidth="1"
+                        BackgroundColor="{Binding ButtonColor}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        HeightRequest="35"
+                        CornerRadius="10"
+                        x:Name="BotonAddItem" />
+
+            </Grid>
+
+        </StackLayout>
+
+    </Frame>
+</pages:PopupPage>
