@@ -1,6 +1,6 @@
 ﻿using MttoApp.ViewModel;
+using MttoApp.Model;
 using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Services;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
@@ -10,15 +10,19 @@ namespace MttoApp.View.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaModificacionItems : Rg.Plugins.Popup.Pages.PopupPage
     {
+        //DECLARACION DE VARIABLES GLOBALES DE LA CLASE
+        private RegistroTableroViewModel DatosPagina;
+
         //===========================================================================================================================================
         //===========================================================================================================================================
-        public PaginaModificacionItems()
+        public PaginaModificacionItems(Personas persona, Usuarios usuario, ItemTablero item)
         {
             InitializeComponent();
             //SE ENLAZA CON LA CLASE "PaginaInformacionViewModel"
-            //NOTA: SE UTILIZA ESTE VIEWMODEL DEBIDO A QUE LA NATURALEZA DE ESTA 
+            //NOTA: SE UTILIZA ESTE VIEWMODEL DEBIDO A QUE LA NATURALEZA DE ESTA
             //PAGINA ES DE TIPO POPUP.
-            BindingContext = new RegistroTableroViewModel();
+            DatosPagina = (RegistroTableroViewModel)(BindingContext = new RegistroTableroViewModel(persona, usuario, item));
+            ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
         }
 
         //===========================================================================================================================================
@@ -92,6 +96,39 @@ namespace MttoApp.View.Paginas
         private async void OnClose(object sender, EventArgs e)
         {
             await Navigation.PopAllPopupAsync();
+        }
+
+        private async void OnModifyItem(object sender, EventArgs e)
+        {
+
+            if (await DisplayAlert("Alerta",
+                "Esta apunto de modificar la informacion de registro del item seleccionado.\n\n¿Desea Continuar?",
+                "Si",
+                "No, retornar"))
+            {
+                //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE
+                //ENCUENTREN VACIOS
+                if (!string.IsNullOrEmpty(entryDescripcion.Text) &&
+                    !string.IsNullOrEmpty(entryCantidad.Text))
+                {
+                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
+
+                    await Task.Delay(1500);
+
+                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+
+                    DatosPagina.MensajePantalla("Opcion actualmente no habilitada.");
+                }
+                //UNO DE LOS DOS CAMPOS (O LOS DOS) SE ENCUENTRA NULO O VACIO
+                else
+                {
+
+                    //SE NOTIFICA POR PANTALLA AL USUARIO CUAL DE LAS DOS PROPIEDADES SE ENCUENTRA VACIA
+                    DatosPagina.MensajePantalla(DatosPagina.AddItemMessage);
+                }
+            }
+
+            
         }
 
     }
