@@ -40,6 +40,7 @@ namespace MttoApp.ViewModel
         protected string codigoqrfilename;
         protected DateTime ultimafechaconsulta;
         protected List<ItemTablero> items;
+        protected ItemTablero item;
         protected string tipodeconsulta;    //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected int opcionconsultaid;     //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string httperrorresponse;
@@ -243,15 +244,15 @@ namespace MttoApp.ViewModel
         public string BotonText { get { return "Modificar"; } }
         //=> TEXTO PARA EL BOTON QUE ACTIVARA LA FUNCION DE ACTUALIZAR EL ITEM ASIGNADO AL TABLERO CONSULTADO
         //-----------------------------------------------IMAGENES-------------------------------------------
-        public string CloseButton //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
-                                  //   DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
+        public string CloseButton 
         {
             //https://iconos8.es/icons/set/close-window"
             //Cerrar ventana icon by a target="_blank"
             //href "https://iconos8.es"*/
 
             get { return "Cerrar24px2.png"; }
-        }
+        } //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
+                                      //DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
         //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
         public string BackGroundColor { get { return App.BackGroundColorPopUp; } } //=> COLOR DE FONDO PAGINAS INFORMACION (POP-UP)
         public string FrameColor { get { return App.FrameColorPopUp; } } //=> COLOR PARA EL MARCO DE LAS PAGINAS INFORMACION (POP-UP)
@@ -294,6 +295,10 @@ namespace MttoApp.ViewModel
                 //SE EVALUA SI LA PROPIEDAD "Cantidad" SE ENCUENTRA VACIA
                 if (string.IsNullOrEmpty(Cantidad))
                     mensaje = "El campo 'Cantidad' no puede estar vacío";
+
+                if (string.IsNullOrEmpty(Descripcion) &&
+                   string.IsNullOrEmpty(Cantidad))
+                    mensaje = "Ninguno de los dos campos puede estar vacío";
 
                 return mensaje;
             }
@@ -384,7 +389,6 @@ namespace MttoApp.ViewModel
 
             //==========================================================================================
             //SE INICIALIZAN LAS VARIABLES ASIGNADAS A LAS PROPIEDADES DE LA CLASE VIEWMODEL
-            //showresultadoscan = false;
             SourceOfCalling = sourceofcalling;
         }
 
@@ -394,7 +398,26 @@ namespace MttoApp.ViewModel
         //NOTA: SE SOBRE ESCRIBE EL CONSTRUCTOR DE LA CLASE PARA PODER PERMITIR EL ACCESO A LA CLASE
         //"PaginaModificacionItems" (ESTO DEBIDO A QUE DICHA CLASE MANEJA EL MISMO MODELO DE ITEMS USADO
         //EN LAS PAGINAS "PaginaConsultaTableros" Y "PaginaRegistroTableros".
-        public RegistroTableroViewModel() { }
+        public RegistroTableroViewModel(Personas persona, Usuarios usuario, ItemTablero item_2_modify)
+        {
+            //==========================================================================================
+            //SE INICIALIZAN LAS VARIABLES LOCALES (Tablero e HistorialTablero)
+            tableroID = filial = area = codigoqrdata = codigoqrfilename = tipodeconsulta = string.Empty;
+            codigoqr = null;
+            codigoqrbyte = null;
+            ultimafechaconsulta = DateTime.Now;
+
+            //==========================================================================================
+            //SE INICIALIZAN LAS VARIABLES LOCALES (PaginaModificacionItems)
+            item = item_2_modify;
+            descripcion = item.Descripcion;
+            cantidad = Convert.ToString(item.Cantidad);
+
+            //==========================================================================================
+            //SE LLENAN LOS OBJETOS Persona e Usuario
+            Persona = new Personas().NewPersona(persona);
+            Usuario = new Usuarios().NewUsuario(usuario);
+        }
 
         //==================================================================================================
         //==================================================================================================
@@ -406,7 +429,7 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION QUE ADICIONA ITEMS A LA LISTA DE ITEMS
+        //FUNCION QUE ADICIONA ITEMS A LA LISTA DE ITEMS (PaginaRegistroTablero)
         public List<ItemTablero> AddItem(string tableroID, string descripcion,
             int cantidad, List<ItemTablero> lista)
         {
@@ -420,134 +443,7 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION QUE EVALUA QUE NINGUNO DE LOS CAMPOS DEL TABLERO SE ENCUENTRE VACIO
-        private bool Evaluacion1()
-        {
-            //SE EVALUA QUE NINGUNO DE LOS CAMPOS SE ENCUENTRE VACIO
-            if (!string.IsNullOrEmpty(tableroID) && //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
-                !string.IsNullOrEmpty(sapid) &&     //EL ID DE SAP DEL TABLERO NO PUEDE SER VACIO
-                !string.IsNullOrEmpty(filial) &&  //LA FILIAL NO SE PUEDE ENCONTRAR VACIA
-                !string.IsNullOrEmpty(area))            //EL AREA NO SE PUEDE ENCONTRAR VACIA
-                return true;
-            else
-                return false;
-        }
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION QUE EVALUA QUE TODOS LOS CAMPOS CUMLAN CON LAS CONDICIONES MINIMAS DE FORMATO
-        private bool Evaluacion2()
-        {
-            //SE EVALUA QUE TODOS LOS CAMPOS CUMPLAN CON LAS CONDICIONES MINIMAS
-            if (!Metodos.EspacioBlanco(tableroID) &&    //EL ID DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
-                !Metodos.Caracteres(tableroID) &&       //EL ID DEL TABLERO NO PUEDE CONTENER CARACTERES ESPECIFICOS
-                !Metodos.EspacioBlanco(sapid) &&        //EL ID DE SAP DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
-                !Metodos.Caracteres(sapid) &&           //EL ID DE SAP DEL TABLERO NO PUEE CONTENER CARACTERES ESPECIFICOS
-                !Metodos.Caracteres(filial) &&          //LA FILIAL NO PUEDE CONTENER CARACTERES ESPECIFICOS
-                !Metodos.Caracteres(area))              //EL AREA NO PUEDE CONTENER CARACTERES ESPECIFICOS
-                return true;
-            else
-                return false;
-        }
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION QUE EVALUA SI LA INFORMACION DEL TABLERO A REGISTRAR NO SE ENCUENTRA YA PREVIAMENTE
-        //REGISTRADA EN LA BASE DE DATOS.
-        //NOTA: ESTA FUNCION SOLO ES EJECUTADA CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE
-        private bool Evaluacion3(List<Tableros> registros)
-        {
-            if (!Metodos.MatchTableroID(registros, TableroID) &&      //SE EVALUA SI EL TableroID YA SE ENCONTRABA REGISTRADO PREVIAMENTE
-               (!Metodos.MatchCodigoQRData(registros, CodigoQRData))) //SE EVALUA SI EL CODIGOQRDATA YA SE ENCONTRABA REGISTRADO PREVIAMENTE
-                //SI NO EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE PROCEDE CON EL REGISTRO (TRUE)
-                return true;
-            else
-                //SI EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE DETIENE EL REGISTRO (FALSE)
-                return false;
-        } 
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION QUE EVALUA CUAL DE LOS CAMPOS EVALUADOS SE ENCUENTRA VACIO Y RETORNA UNA RESPUESTA PARA 
-        //INFORMAR AL USAURIO
-        private string RespuestaEvaluacion1()
-        {
-            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA UN MENSAJE DE NOTIFICACION 
-            //AL USUARIO CUALES SON LOS ELEMENTOS QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
-            //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA LA RESPUESTA
-            string respuesta = string.Empty;
-
-            //CASO DE NO TENER NINGUN VALOR INGRESADO
-            if (string.IsNullOrEmpty(tableroID) &&
-                string.IsNullOrEmpty(filial) &&
-                string.IsNullOrEmpty(area))
-                respuesta = "No debe existir ningun campo en blanco";
-
-            //CASO TableroID
-            if (string.IsNullOrEmpty(tableroID))
-                respuesta = "Para generar un codigo QR debe ingresar el ID del tablero a registrar";
-
-            //CASO Filial
-            if (string.IsNullOrEmpty(filial))
-                respuesta = "Para generar un codigo QR debe ingresar a que filial pertenece el tablero";
-
-            //CASO Area
-            if (string.IsNullOrEmpty(area))
-                respuesta = "Para generar un codigo QR debe ingresar a que area pertenece el tablero";
-
-            return respuesta;
-        }
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION QUE RETORNA UNA RESPUESTA DESPUES DE EVALUAR CUAL DE LOS CAMPOS NO CUMPLE CON LAS 
-        //CONDICIONES MINIMAS DE FORMATO
-        private string RespuestaEvaluacion2()
-        {
-            string respuesta = string.Empty;
-
-            if (Metodos.EspacioBlanco(tableroID))
-                respuesta = "El ID del tablero no puede contener espacios en blanco";
-
-            if (Metodos.Caracteres(tableroID))
-                respuesta = "El ID del tablero no puede contener los siguientes caracteres:\n " +
-                        PaginaInformacionViewModel.CaracteresNoPermitidos();
-
-            if (Metodos.Caracteres(filial))
-                respuesta = "La filial a la cual pertenece el tablero no puede contener los siguientes caracteres:\n " +
-                        PaginaInformacionViewModel.CaracteresNoPermitidos();
-
-            if (Metodos.Caracteres(area))
-                respuesta = "El area a la cual pertenece el tablero no puede contener los siguientes caracteres:\n " +
-                        PaginaInformacionViewModel.CaracteresNoPermitidos();
-
-            return respuesta;
-        }
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION QUE RETORNA UNA RESPUESTA SI EL ID DEL TABLERO YA SE ENCUENTA REGISTRADO O SI EL CODIGO QR 
-        //CREADO YA SE ENCUENTRA 
-        //NOTA: ESTA FUNCION SOLO ES EJECUTADA CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE
-        private string RespuestaEvaluacion3(List<Tableros> registros)
-        {
-            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA
-            string respuesta = string.Empty;
-
-            //SE EVALUA SI YA EXISTE UN TABLERO QUE CONTENGA EL ID DEL TABLERO QUE SE INTENTA REGISTRAR
-            if (Metodos.MatchTableroID(registros, TableroID))
-                respuesta = "El ID del tablero ya se encuentra registrado.\nIntente con un ID distinto";
-
-            //SE EVALUA SI YA EXISTE UN TABLERO QUE CONTENGA EL CODIGOQRDATA DEL TABLERO QUE SE INTENTA REGISTRAR
-            if (Metodos.MatchCodigoQRData(registros, CodigoQRData))
-                respuesta = "El codigo QR del tablero ya se encuentra registrado.\nIntente realizar el registro nuevamente";
-
-            //SE RETORNA EL VALOR DE LA VARIABLE RESPUESTA
-            return respuesta;
-        } 
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCION PARA LA CREACION DE CODIGOS QR (QRCoder)
+        //FUNCION PARA LA CREACION DE CODIGOS QR (QRCoder) (PaginaRegistroTablero)
         private PngByteQRCode GenerarCodigoQR(string codevalue)
         {
             //------------------------------NOTA-------------------------------
@@ -570,7 +466,8 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION QUE GENERA EL CODIGO QR Y RETORNA UN MENSAJE CON LA RESPUESTA DE LA OPERACION
+        //FUNCION QUE GENERA EL CODIGO QR Y RETORNA UN MENSAJE CON LA RESPUESTA DE LA OPERACION 
+        //(PaginaRegistroTablero)
         public string GenerarCodigo()
         {
             //VARIABLE QUE RECIBE LA RESPUESTA DEL PROCESO SOLICITADO
@@ -608,7 +505,7 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION PARA ALMACENAR IMAGENES (CodigoQR) EN LA GALERIA DEL TELEFONO
+        //FUNCION PARA ALMACENAR IMAGENES (CodigoQR) EN LA GALERIA DEL TELEFONO ()
         public void SaveImage()
         {
             //SE LLAMA LA FUNCION SavePicture
@@ -678,463 +575,6 @@ namespace MttoApp.ViewModel
             //TRUE => SE CONSIGUIO UN TABLERO CON EL ID ENVIADO COMO PARAMETRO
             //FALSE => NO SE CONSIGUIO NINGUN TABLERO CON EL ID ENVIADO COMO PARAMETRO
             return await Task.FromResult(flag);
-        }
-
-        //==================================================================================================
-        //==================================================================================================
-        //FUNCIONES UTILIZADAS PARA REGISTRAR Y CONSULTAR TABLEROS CUANDO LA APLICACION SE ENCUENTRE
-        //TRABAJANDO STAND ALONE
-        private async Task<bool> BuscarTableroStandAlone(string id)
-        {
-            //SE CREA E INICIALIZA LA VARIABLE DE TIPO BOOL "flag", LA CUAL FUNCIONARA COMO VARIABLE DE RETORNO
-            bool flag = false;
-
-            using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(App.FileName))
-            {
-                //EVALUAMOS QUE TIPO DE CONSULTA ES:
-                if (tipodeconsulta == "CONSULTA_ESCANER")
-                {
-                    //SE CREA LAS TABLAS "Tableros", "ItemTablero", "HistorialTableros"(SI YA EXISTE NO SE CREA)
-                    connection.CreateTable<Tableros>();
-                    connection.CreateTable<ItemTablero>();
-                    connection.CreateTable<HistorialTableros>();
-
-                    //SE EVALUA SI EXISTE ALGUN REGISTRO
-                    if (connection.Table<Tableros>().Any())
-                    {
-                        //SE REALIZA UNA CONSULTA DE CADA UNO DE LOS TABLEROS REGISTRADOS
-                        foreach (Tableros tablero in connection.Table<Tableros>().ToList())
-                        {
-                            //SE COMPARA SI EL PAYLOAD OBTENIDO DEL ESCANEO
-                            //ES IGUAL AL ID DEL TABLERO (tablero)
-                            if (tablero.TableroID.ToLower() == id.ToLower())
-                            {
-                                //SE ACTIVA LA BANDERA
-                                flag = true;
-
-                                //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
-                                await Task.Run(() =>
-                                {
-                                    tableroID = tablero.TableroID;
-                                    sapid = tablero.SapID;
-                                    filial = tablero.Filial;
-                                    area = tablero.AreaFilial;
-                                    //-------------------------------------------------------------------------------
-                                    //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                    //CONVERSION DE STRING A BITMAP
-                                    codigoqrdata = tablero.CodigoQRData;
-                                    codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                    codigoqrfilename = tablero.CodigoQRFilename;
-                                    //-------------------------------------------------------------------------------
-                                });
-
-                                //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
-                                foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
-                                {
-                                    if (tableroID.ToLower() == x.TableroId.ToLower())
-                                    {
-                                        items.Add(x);
-                                    }
-                                }
-
-                                //SE EVALUA SI EXISTE AL MENOS UN REGISTRO EN LA TABLA "HistorialTableros"
-                                if (connection.Table<HistorialTableros>().Any())
-                                {
-                                    //SE CREA UN OBJETO DEL TIPO "HistorialTableros"
-                                    var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                    //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                    connection.Insert(Historial);
-
-                                    //CREAMOS UNA LISTA AUXILIAR
-                                    List<HistorialTableros> HistorialTableroAux = new List<HistorialTableros>();
-
-                                    //SE BUSCA EL ULTIMO REGISTRO EN LA TABLA "HistorialTableros"
-                                    foreach (HistorialTableros registro in connection.Table<HistorialTableros>().ToList())
-                                    {
-                                        //SE COMPARA SI EL REGISTRO QUE SE ESTA EVALUANDO
-                                        //EN EL MOMENTO POSEE EL ID DEL TABLERO QUE ACABA DE SER ESCANEADO
-                                        if (registro.TableroID == TableroID)
-                                        {
-                                            //SE AÑADE ESTE TABLERO A LA LISTA "HistorialTableroAux"
-                                            HistorialTableroAux.Add(registro);
-                                        }
-                                    }
-
-                                    //SE CREA UNA VARIABLE CONTADOR
-                                    int cont = 0;
-
-                                    //SE VUELVE A RECORRER LA LISTA AUXILIAR
-                                    foreach (HistorialTableros registro in HistorialTableroAux)
-                                    {
-                                        if (cont == (HistorialTableroAux.Count - 2))
-                                        {
-                                            //SE LE ASIGNA A LA VARIABLE "ultimafechaconsulta" LA FECHA DEL PENULTILMO REGISTRO DE LA LISTA AUXILIAR
-                                            ultimafechaconsulta = registro.FechaDeConsulta;
-                                            //SE CIERRA EL CICLO DE LECTURA
-                                            break;
-                                        }
-
-                                        //SE PASA A LA SIGUIENTE POSICION
-                                        cont++;
-                                    }
-
-                                    //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                    connection.Close();
-
-                                    //SE DETIENE LA COMPARACION DE TABLEROS
-                                    break;
-                                }
-                                //DE NO EXISTIR NINGUN REGISTRO DE TABLEROS SE REALIZA EL PRIMER REGISTRO E IMPRESION DE LA ULTIMA FECHA DE CONSULTA
-                                else
-                                {
-                                    //DE NO EXISTIR NINGUN REGISTRO SE PROCEDE A CREAR EL PRIMERO
-                                    var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                    //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                    connection.Insert(Historial);
-
-                                    //SE COLOCA AUTOMATICAMENTE ESA FECHA COMO LA ULTIMA FECHA DE CONSULTA
-                                    ultimafechaconsulta = Historial.FechaDeConsulta;
-
-                                    //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                    connection.Close();
-
-                                    //SE DETIENE LA COMPARACION DE TABLEROS
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //SI NO EXISTE NINGUN REGISTRO SE RETORNA FALSE
-                        flag = false;
-                    }
-                }
-
-                if (tipodeconsulta == "CONSULTA_POR_ID")
-                {
-                    switch (opcionconsultaid)
-                    {
-                        //CONSULTA POR TABLERO ID
-                        case 0:
-                            //----------------------------------------------------------------------------------------------
-                            //SE CREA LAS TABLAS "Tableros", "ItemTablero", "HistorialTableros"(SI YA EXISTE NO SE CREA)
-                            connection.CreateTable<Tableros>();
-                            connection.CreateTable<ItemTablero>();
-                            connection.CreateTable<HistorialTableros>();
-
-                            //SE EVALUA SI EXISTE ALGUN REGISTRO
-                            if (connection.Table<Tableros>().Any())
-                            {
-                                //SE REALIZA UNA CONSULTA DE CADA UNO DE LOS TABLEROS REGISTRADOS
-                                foreach (Tableros tablero in connection.Table<Tableros>().ToList())
-                                {
-                                    //SE COMPARA SI EL TEXTO ENVIADO (TABLERO ID)
-                                    //ES IGUAL AL ID DEL TABLERO (tablero)
-                                    if (tablero.TableroID.ToLower() == id.ToLower())
-                                    {
-                                        //SE ACTIVA LA BANDERA
-                                        flag = true;
-
-                                        //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
-                                        await Task.Run(() =>
-                                        {
-                                            //SE LLENAN LAS VARIABLES LOCALES
-                                            tableroID = tablero.TableroID;
-                                            sapid = tablero.SapID;
-                                            filial = tablero.Filial;
-                                            area = tablero.AreaFilial;
-                                            //-------------------------------------------------------------------------------
-                                            //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                            //CONVERSION DE STRING A BITMAP
-                                            codigoqrdata = tablero.CodigoQRData;
-                                            codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                            codigoqrfilename = tablero.CodigoQRFilename;
-                                            //-------------------------------------------------------------------------------
-                                        });
-
-                                        //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
-                                        foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
-                                        {
-                                            if (tableroID.ToLower() == x.TableroId.ToLower())
-                                            {
-                                                items.Add(x);
-                                            }
-                                        }
-
-                                        //SE EVALUA SI EXISTE AL MENOS UN REGISTRO EN LA TABLA "HistorialTableros"
-                                        if (connection.Table<HistorialTableros>().Any())
-                                        {
-                                            //SE CREA UN OBJETO DEL TIPO "HistorialTableros"
-                                            var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                            //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                            connection.Insert(Historial);
-
-                                            //CREAMOS UNA LISTA AUXILIAR
-                                            List<HistorialTableros> HistorialTableroAux = new List<HistorialTableros>();
-
-                                            //SE BUSCA EL ULTIMO REGISTRO EN LA TABLA "HistorialTableros"
-                                            foreach (HistorialTableros registro in connection.Table<HistorialTableros>().ToList())
-                                            {
-                                                //SE COMPARA SI EL REGISTRO QUE SE ESTA EVALUANDO
-                                                //EN EL MOMENTO POSEE EL ID DEL TABLERO QUE ACABA DE SER ESCANEADO
-                                                if (registro.TableroID == TableroID)
-                                                {
-                                                    //SE AÑADE ESTE TABLERO A LA LISTA "HistorialTableroAux"
-                                                    HistorialTableroAux.Add(registro);
-                                                }
-                                            }
-
-                                            //SE CREA UNA VARIABLE CONTADOR
-                                            int cont = 0;
-
-                                            //SE VUELVE A RECORRER LA LISTA AUXILIAR
-                                            foreach (HistorialTableros registro2 in HistorialTableroAux)
-                                            {
-                                                if (cont == (HistorialTableroAux.Count - 2))
-                                                {
-                                                    //SE LE ASIGNA A LA VARIABLE "ultimafechaconsulta" LA FECHA DEL PENULTILMO REGISTRO DE LA LISTA AUXILIAR
-                                                    ultimafechaconsulta = registro2.FechaDeConsulta;
-                                                    //SE CIERRA EL CICLO DE LECTURA
-                                                    break;
-                                                }
-
-                                                //SE PASA A LA SIGUIENTE POSICION
-                                                cont++;
-                                            }
-
-                                            //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                            connection.Close();
-
-                                            //SE DETIENE LA COMPARACION DE TABLEROS
-                                            break;
-                                        }
-                                        //DE NO EXISTIR NINGUN REGISTRO DE TABLEROS SE REALIZA EL PRIMER REGISTRO E IMPRESION DE LA ULTIMA FECHA DE CONSULTA
-                                        else
-                                        {
-                                            //DE NO EXISTIR NINGUN REGISTRO SE PROCEDE A CREAR EL PRIMERO
-                                            var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                            //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                            connection.Insert(Historial);
-
-                                            //SE COLOCA AUTOMATICAMENTE ESA FECHA COMO LA ULTIMA FECHA DE CONSULTA
-                                            ultimafechaconsulta = Historial.FechaDeConsulta;
-
-                                            //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                            connection.Close();
-
-                                            //SE DETIENE LA COMPARACION DE TABLEROS
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //SI NO EXISTE NINGUN REGISTRO SE RETORNA FALSE
-                                flag = false;
-                            }
-
-                            break;
-                        //----------------------------------------------------------------------------------------------
-                        //CONSULTA POR SAP ID
-                        case 1:
-                            //----------------------------------------------------------------------------------------------
-                            //SE CREA LA TABLA "Tableros" (SI YA EXISTE NO SE CREA)
-                            connection.CreateTable<Tableros>();
-                            connection.CreateTable<ItemTablero>();
-                            connection.CreateTable<HistorialTableros>();
-
-                            //SE EVALUA SI EXISTE ALGUN REGISTRO
-                            if (connection.Table<Tableros>().Any())
-                            {
-                                //SE REALIZA UNA CONSULTA DE CADA UNO DE LOS TABLEROS REGISTRADOS
-                                foreach (Tableros tablero in connection.Table<Tableros>().ToList())
-                                {
-                                    //SE COMPARA SI EL TEXTO ENVIADO (SAP ID)
-                                    //ES IGUAL AL ID DEL TABLERO (tablero)
-                                    if (tablero.SapID.ToLower() == id.ToLower())
-                                    {
-                                        //SE ACTIVA LA BANDERA
-                                        flag = true;
-
-                                        //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
-                                        await Task.Run(() =>
-                                        {
-                                            //SE LLENAN LAS VARIABLES LOCALES
-                                            tableroID = tablero.TableroID;
-                                            sapid = tablero.SapID;
-                                            filial = tablero.Filial;
-                                            area = tablero.AreaFilial;
-                                            //-------------------------------------------------------------------------------
-                                            //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                            //CONVERSION DE STRING A BITMAP
-                                            codigoqrdata = tablero.CodigoQRData;
-                                            codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                            codigoqrfilename = tablero.CodigoQRFilename;
-                                            //-------------------------------------------------------------------------------
-                                        });
-
-                                        //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
-                                        foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
-                                        {
-                                            if (tableroID.ToLower() == x.TableroId.ToLower())
-                                            {
-                                                items.Add(x);
-                                            }
-                                        }
-
-                                        //SE EVALUA SI EXISTE AL MENOS UN REGISTRO EN LA TABLA "HistorialTableros"
-                                        if (connection.Table<HistorialTableros>().Any())
-                                        {
-                                            //SE CREA UN OBJETO DEL TIPO "HistorialTableros"
-                                            var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                            //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                            connection.Insert(Historial);
-
-                                            //CREAMOS UNA LISTA AUXILIAR
-                                            List<HistorialTableros> HistorialTableroAux = new List<HistorialTableros>();
-
-                                            //SE BUSCA EL ULTIMO REGISTRO EN LA TABLA "HistorialTableros"
-                                            foreach (HistorialTableros registro in connection.Table<HistorialTableros>().ToList())
-                                            {
-                                                //SE COMPARA SI EL REGISTRO QUE SE ESTA EVALUANDO
-                                                //EN EL MOMENTO POSEE EL ID DEL TABLERO QUE ACABA DE SER ESCANEADO
-                                                if (registro.TableroID == TableroID)
-                                                {
-                                                    //SE AÑADE ESTE TABLERO A LA LISTA "HistorialTableroAux"
-                                                    HistorialTableroAux.Add(registro);
-
-                                                    //SE CREA UNA VARIABLE CONTADOR
-                                                    int cont = 0;
-
-                                                    //SE VUELVE A RECORRER LA LISTA AUXILIAR
-                                                    foreach (HistorialTableros registro2 in HistorialTableroAux)
-                                                    {
-                                                        if (cont == (HistorialTableroAux.Count - 2))
-                                                        {
-                                                            //SE LE ASIGNA A LA VARIABLE "ultimafechaconsulta" LA FECHA DEL PENULTILMO REGISTRO DE LA LISTA AUXILIAR
-                                                            ultimafechaconsulta = registro2.FechaDeConsulta;
-                                                            //SE CIERRA EL CICLO DE LECTURA
-                                                            break;
-                                                        }
-
-                                                        //SE PASA A LA SIGUIENTE POSICION
-                                                        cont++;
-                                                    }
-
-                                                    //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                                    connection.Close();
-
-                                                    //SE DETIENE LA COMPARACION DE TABLEROS
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //DE NO EXISTIR NINGUN REGISTRO SE PROCEDE A CREAR EL PRIMERO
-                                            var Historial = new HistorialTableros().NewRegistroHistorial(TableroID, Usuario.Cedula, DateTime.Now, TipoDeConsulta);
-
-                                            //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
-                                            connection.Insert(Historial);
-
-                                            //SE COLOCA AUTOMATICAMENTE ESA FECHA COMO LA ULTIMA FECHA DE CONSULTA
-                                            ultimafechaconsulta = Historial.FechaDeConsulta;
-
-                                            //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                            connection.Close();
-
-                                            //SE DETIENE LA COMPARACION DE TABLEROS
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //SI NO EXISTE NINGUN REGISTRO SE RETORNA FALSE
-                                flag = false;
-                            }
-                            break;
-                            //----------------------------------------------------------------------------------------------
-                    }
-                }
-            }
-
-            return await Task.FromResult(flag);
-        }
-        private async Task<string> RegistroTableroStandAlone(List<ItemTablero> items)
-        {
-            //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA LA FUNCION
-            string respuesta = string.Empty;
-
-            //SE GENERA LA APERTURA CON LA BASE DE DATOS
-            using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(App.FileName))
-            {
-                //SE CREA LA TABLA TABLEROS (DE EXISTIR YA NO SE CREA)
-                connection.CreateTable<Tableros>();
-                connection.CreateTable<ItemTablero>();
-
-                //SE VERIFICA SI EXISTE AL MENOS ALGUN REGISTRO DENTRO DE LA TABLA
-                if (connection.Table<Tableros>().Any())
-                {
-                    //SE VERIFICA QUE NO EXISTA UN REGISTRO PREVIO DE DICHO TABLERO
-                    if (Evaluacion3(connection.Table<Tableros>().ToList()))
-                    {
-                        //SE INSERTA EL NUEVO REGISTRO
-                        connection.Insert(Tableros.NuevoTablero(TableroID, SapID, Filial, Area, FechaRegistro,
-                            CodigoQRData, CodigoQRFileName, Usuario.Cedula));
-
-                        //SE RECORREN TODOS LOS ELEMENTOS DE LA LISTA "items"
-                        foreach (ItemTablero x in items)
-                        {
-                            //SE INSERTAN TODOS LOS ELEMENTOS DENTRO DE LA TABLA
-                            connection.Insert(x);
-                        }
-
-                        //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                        connection.Close();
-
-                        //SE GENERA UN MENSAJE INFORMATIVO
-                        Toast.MakeText(Android.App.Application.Context, "Tablero registrado satisfactoriamente", ToastLength.Long).Show();
-                    }
-                    else
-                    {
-                        //SE DA RETORNO AL MENSAJE QUE INDICARA AL USUARIO QUE NO SE LOGRO REGISTRAR EL NUEVO TABLERO
-                        respuesta = RespuestaEvaluacion3(connection.Table<Tableros>().ToList());
-                    }
-                }
-                //SI NO EXISTE NINGUN REGISTRO PROCEDEMOS A CREAR EL PRIMERO (ESTE CODIGO SOLO SE EJECUTARA UNA VEZ)
-                else
-                {
-                    //SE INSERTA LA INFORMACION DEL TABLERO DENTRO DE LA TABLA "Tableros"
-                    connection.Insert(Tableros.NuevoTablero(TableroID, SapID, Filial, Area, FechaRegistro,
-                        CodigoQRData, CodigoQRFileName, Usuario.Cedula));
-
-                    //SE RECORREN TODOS LOS ELEMENTOS DE LA LISTA "items"
-                    foreach (ItemTablero x in items)
-                    {
-                        //SE INSERTAN TODOS LOS ELEMENTOS DENTRO DE LA TABLA
-                        connection.Insert(x);
-                    }
-
-                    int cont = connection.Table<ItemTablero>().Count();
-
-                    //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                    connection.Close();
-
-                    //SE GENERA UN MENSAJE INFORMATIVO
-                    Toast.MakeText(Android.App.Application.Context, "Tablero registrado satisfactoriamente", ToastLength.Long).Show();
-                }
-            }
-
-            return await Task.FromResult(respuesta);
         }
 
         //==================================================================================================
@@ -1365,6 +805,12 @@ namespace MttoApp.ViewModel
 
                 return await Task.FromResult(flag);
         }
+        private async Task<bool> ModificarRegistroItem()
+        {
+            // REGISTR SU CODIGO AQUI.
+
+            return await Task.FromResult(false);
+        }
 
         //==================================================================================================
         //==================================================================================================
@@ -1388,8 +834,6 @@ namespace MttoApp.ViewModel
             Console.WriteLine("=============================================\n\n");
         }
 
-        //==================================================================================================
-        //==================================================================================================
         //METODO DE IMPRESION POR CONSOLA
         protected void Mensaje(string mensaje)
         {
@@ -1404,14 +848,98 @@ namespace MttoApp.ViewModel
             Console.WriteLine("=============================================\n\n\n");
         }
 
-        //==================================================================================================
-        //==================================================================================================
         //METODO DE IMPRESION POR CONSOLA
         public void MensajePantalla(string mensaje)
         {
             Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Long).Show();
 
             Mensaje(mensaje);
+        }
+
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE EVALUA QUE NINGUNO DE LOS CAMPOS DEL TABLERO SE ENCUENTRE VACIO
+        private bool Evaluacion1()
+        {
+            //SE EVALUA QUE NINGUNO DE LOS CAMPOS SE ENCUENTRE VACIO
+            if (!string.IsNullOrEmpty(tableroID) && //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
+                !string.IsNullOrEmpty(sapid) &&     //EL ID DE SAP DEL TABLERO NO PUEDE SER VACIO
+                !string.IsNullOrEmpty(filial) &&  //LA FILIAL NO SE PUEDE ENCONTRAR VACIA
+                !string.IsNullOrEmpty(area))            //EL AREA NO SE PUEDE ENCONTRAR VACIA
+                return true;
+            else
+                return false;
+        }
+
+        //FUNCION QUE EVALUA QUE TODOS LOS CAMPOS CUMLAN CON LAS CONDICIONES MINIMAS DE FORMATO
+        private bool Evaluacion2()
+        {
+            //SE EVALUA QUE TODOS LOS CAMPOS CUMPLAN CON LAS CONDICIONES MINIMAS
+            if (!Metodos.EspacioBlanco(tableroID) &&    //EL ID DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
+                !Metodos.Caracteres(tableroID) &&       //EL ID DEL TABLERO NO PUEDE CONTENER CARACTERES ESPECIFICOS
+                !Metodos.EspacioBlanco(sapid) &&        //EL ID DE SAP DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
+                !Metodos.Caracteres(sapid) &&           //EL ID DE SAP DEL TABLERO NO PUEE CONTENER CARACTERES ESPECIFICOS
+                !Metodos.Caracteres(filial) &&          //LA FILIAL NO PUEDE CONTENER CARACTERES ESPECIFICOS
+                !Metodos.Caracteres(area))              //EL AREA NO PUEDE CONTENER CARACTERES ESPECIFICOS
+                return true;
+            else
+                return false;
+        }
+
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE EVALUA CUAL DE LOS CAMPOS EVALUADOS SE ENCUENTRA VACIO Y RETORNA UNA RESPUESTA PARA 
+        //INFORMAR AL USAURIO
+        private string RespuestaEvaluacion1()
+        {
+            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA UN MENSAJE DE NOTIFICACION 
+            //AL USUARIO CUALES SON LOS ELEMENTOS QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA LA RESPUESTA
+            string respuesta = string.Empty;
+
+            //CASO DE NO TENER NINGUN VALOR INGRESADO
+            if (string.IsNullOrEmpty(tableroID) &&
+                string.IsNullOrEmpty(filial) &&
+                string.IsNullOrEmpty(area))
+                respuesta = "No debe existir ningun campo en blanco";
+
+            //CASO TableroID
+            if (string.IsNullOrEmpty(tableroID))
+                respuesta = "Para generar un codigo QR debe ingresar el ID del tablero a registrar";
+
+            //CASO Filial
+            if (string.IsNullOrEmpty(filial))
+                respuesta = "Para generar un codigo QR debe ingresar a que filial pertenece el tablero";
+
+            //CASO Area
+            if (string.IsNullOrEmpty(area))
+                respuesta = "Para generar un codigo QR debe ingresar a que area pertenece el tablero";
+
+            return respuesta;
+        }
+
+        //FUNCION QUE RETORNA UNA RESPUESTA DESPUES DE EVALUAR CUAL DE LOS CAMPOS NO CUMPLE CON LAS 
+        //CONDICIONES MINIMAS DE FORMATO
+        private string RespuestaEvaluacion2()
+        {
+            string respuesta = string.Empty;
+
+            if (Metodos.EspacioBlanco(tableroID))
+                respuesta = "El ID del tablero no puede contener espacios en blanco";
+
+            if (Metodos.Caracteres(tableroID))
+                respuesta = "El ID del tablero no puede contener los siguientes caracteres:\n " +
+                        PaginaInformacionViewModel.CaracteresNoPermitidos();
+
+            if (Metodos.Caracteres(filial))
+                respuesta = "La filial a la cual pertenece el tablero no puede contener los siguientes caracteres:\n " +
+                        PaginaInformacionViewModel.CaracteresNoPermitidos();
+
+            if (Metodos.Caracteres(area))
+                respuesta = "El area a la cual pertenece el tablero no puede contener los siguientes caracteres:\n " +
+                        PaginaInformacionViewModel.CaracteresNoPermitidos();
+
+            return respuesta;
         }
     }
 }

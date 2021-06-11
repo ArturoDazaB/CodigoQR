@@ -97,6 +97,7 @@
                 <!--=======================================================-->
                 <!--3) Entry: Descripcion del componente-->
                 <Entry  x:Name="entryDescripcion"
+                        Text="{Binding Descripcion}"
                         TextColor="Black"
                         FontSize="{Binding EntryFontSize}"
                         Grid.Row="3"
@@ -111,6 +112,7 @@
                 <!--=======================================================-->
                 <!--5) Entry: Presentacion del producto-->
                 <Entry  x:Name="entryCantidad"
+                        Text="{Binding Cantidad}"
                         TextColor="Black"
                         FontSize="{Binding EntryFontSize}"
                         Grid.Row="5"
@@ -122,7 +124,7 @@
                 <Button VerticalOptions="Center"
                         Text="{Binding BotonText}"
                         Margin="2,2,2,4"
-                        
+                        Clicked="OnModifyItem"
                         Grid.Row="6"
                         BorderColor="Black"
                         BorderWidth="1"
@@ -134,6 +136,15 @@
                         x:Name="BotonAddItem" />
 
             </Grid>
+
+            <!--==================================================================================>
+            <===================================================================================-->
+
+            <ActivityIndicator  x:Name="ActivityIndicator"
+                                HeightRequest="30" />
+
+            <!--====================================================================================-->
+            <!--====================================================================================-->
 
         </StackLayout>
 

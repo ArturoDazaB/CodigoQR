@@ -260,6 +260,9 @@ namespace MttoApp.View.Paginas
         //METODO ACTIVADO AL SELECCIONAR UN ITEM DE LA LISTA DE ITEMS
         async private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
+            //IDETIFICAMOS EL OBJETO SELECCIONADO COMO UN OBJETO DE TIPO "ItemTablero"
+            var item_2_modify = e.Item as ItemTablero;
+
             //SI SE SELECCIONA UN ITEM DENTRO DE LA LISTA DE ITEMS SE PROCEDE A DESPLEGAR LAS OPCIONES EXISTENTES
             //PARA ESE REGISTRO DE ITEM EN ESPECIFICO
             var actionSheet = await DisplayActionSheet("Opciones", "Cancelar", null, "Modificar", "Eliminar");
@@ -270,7 +273,7 @@ namespace MttoApp.View.Paginas
                 //OPCION MODIFICAR (UPDATE)
                 case "Modificar":
                     //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
-                    await Navigation.PushPopupAsync(new PaginaModificacionItems());
+                    await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_2_modify));
                     break;
                 
                 //OPCION ELIMINAR (DELETE)
