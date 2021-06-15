@@ -261,7 +261,7 @@ namespace MttoApp.View.Paginas
         async private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
             //IDETIFICAMOS EL OBJETO SELECCIONADO COMO UN OBJETO DE TIPO "ItemTablero"
-            var item_2_modify = e.Item as ItemTablero;
+            var item_selected = e.Item as ItemTablero;
 
             //SI SE SELECCIONA UN ITEM DENTRO DE LA LISTA DE ITEMS SE PROCEDE A DESPLEGAR LAS OPCIONES EXISTENTES
             //PARA ESE REGISTRO DE ITEM EN ESPECIFICO
@@ -275,18 +275,31 @@ namespace MttoApp.View.Paginas
                     await Task.Run(async () =>
                     {
                         //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
-                        await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_2_modify));
+                        await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_selected));
                     });
                     break;
                 //OPCION ELIMINAR (DELETE)
                 case "Eliminar":
                     //REALIZAMOS UNA PREGUNTA DE CONFIRMACION AL USUARIO PARA ELIMINAR DICHO ELEMENTO
-                    var response = await DisplayAlert("Alerta", "¿Está seguro que desea eliminar el/los ítem(s) del tablero?", "Si", "No, regresar");
+                    var response = await DisplayAlert("Alerta", 
+                                        $"¿Está seguro que desea eliminar el ítem seleccionado del tablero '{DatosPagina.TableroID}'?", "Si", "No, regresar");
 
                     //EVALUAMOS LA RESPUESTA OBTENIDA
                     if (response)
                     {
-                        // INTERTE CODIGO DE LLAMADO A LA FUNCION ELIMINAR ITEM EN EL RESPECTIVO VIEWMODEL
+                        await Task.Run(async () =>
+                        {
+                            await DatosPagina.EliminarRegistroItem(item_selected);
+                        });
+
+                        DatosPagina.MensajePantalla(DatosPagina.EliminarItemText);
+                        //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                        listViewItems.ItemsSource = null;
+                        //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                        listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                        //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                        //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                        listViewItems.ItemsSource = DatosPagina.Items;
                     }
 
                     break;
@@ -295,10 +308,12 @@ namespace MttoApp.View.Paginas
             //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
             ((ListView)sender).SelectedItem = null;
 
-            //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
-            MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
-            (this, App.ItemUpdate, (p, items) =>
+            if (actionSheet == "Modificar")
             {
+                //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
+                MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
+                (this, App.ItemUpdate, (p, items) =>
+                {
                 //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
                 listViewItems.ItemsSource = null;
                 //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
@@ -306,7 +321,8 @@ namespace MttoApp.View.Paginas
                 //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
                 //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
                 listViewItems.ItemsSource = items;
-            });
+                });
+            }
         }
 
         //========================================================================================================

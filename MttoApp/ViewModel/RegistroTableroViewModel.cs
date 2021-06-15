@@ -45,6 +45,7 @@ namespace MttoApp.ViewModel
         protected string tipodeconsulta;    //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected int opcionconsultaid;     //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string httperrorresponse;
+        protected string eliminaritemtext;
         //---------------------------------------------NOTA-------------------------------------------------
         //Puesto que este proyecto es una aplicacion movil (es decir utiliza la version PCL de la libreria 
         //QRCoder) los objteos del tipo PngByteQRCode y BitMapByteQRCode son los unicos renders dispoibles
@@ -344,7 +345,8 @@ namespace MttoApp.ViewModel
         //TEXTO UTILIZADO PARA REPRESENTAR LA NEGACION ANTE UN MENSAJE DE CONSULTA
         public string OkText { get { return App.OkText; } } //=>ENTENDIDO
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
-
+        public string EliminarItemText { get { return eliminaritemtext; } }
+        //TEXTO UTILIZADO PARA MOSTRA UN MENSAJE NOTIFICANDO EL ESTATUS DE LA OPERAICION DE ELIMINACION DE UN ITEM SELECCIONADO
         //----------------------------------------------------------------------------------------------------------
         //LISTA DE NIVELES DE USUARIO (USADO EN LA PAGINA "PaginaRegistro.xaml.cs")
         public List<string> FilialesList
@@ -884,6 +886,76 @@ namespace MttoApp.ViewModel
             //TRUE => SE MODIFICO SATISFACTORIAMENTE EL REGISTRO DE ITEM
             //FALSE => NO SE MODIFICO SATISFACTORIAMENTE EL REGISTRO DEL ITEM
             return await Task.FromResult(flag);
+        }
+
+        public async Task EliminarRegistroItem(ItemTablero item2delete)
+        {
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+            string url = App.BaseUrl + "/registrotableros/deleteitem";
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
+            bool flag = false;
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA LA RESPUESTA DE LA SOLICITUD HTTP
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+            var current = Xamarin.Essentials.Connectivity.NetworkAccess;
+
+            //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+            if (current == Xamarin.Essentials.NetworkAccess.Internet)
+            {
+                //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                //SE INICIA EL CICLO TRY...CATCH
+                try
+                {
+                    //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //----------------------------------------------------------------------------------------------
+                    //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
+                    //TIPO HttpClientHandler => 
+                    //----------------------------------------------------------------------------------------------
+                    using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                    {
+                        //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                        client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                        //SE REALIZA LA CONVERSION A OBJETO JSON
+                        var json = JsonConvert.SerializeObject(item2delete);
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                        //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE REALIZA LA SOLICITUD HTTP
+                        response = await client.PostAsync(url, httpContent);
+
+                        //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
+                        if (response.IsSuccessStatusCode)
+                        {
+                            //SE ACTIVA LA BANDERA QUE INDICA UNA ACTIALIZACION EXITOSA
+                            flag = true;
+                            //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
+                            items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
+                        }
+
+                        //SE EVALUA EL ESTADO DE LA BANDERA
+                        if (flag)
+                            //TRUE => SE ELIMINO SATISFACTORIAMENTE EL ITEM SELECCIONADO
+                            eliminaritemtext = "Se eliminó el ítem satisfactoriamente";
+                        else
+                            //FALSE => NO SE ELIMINO SATISFACTORIAMENTE
+                            eliminaritemtext = "Ocurrió un error al intentar eliminar el ítem seleccionado";
+                    }
+                }
+                catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
+                {
+                    eliminaritemtext = "Error de conexion, intente nuevamente";
+                }
+            }
         }
 
         //==================================================================================================
