@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MttoApp.Model
 {
@@ -40,6 +39,7 @@ namespace MttoApp.Model
     {
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+
         //public DateTime FechaNacimiento { get; set; }
         public string Username { get; set; }
 
@@ -75,6 +75,7 @@ namespace MttoApp.Model
                 Usuario = usuario,
             };
         }
+
         public Personas Persona { get; set; }
         public Usuarios Usuario { get; set; }
     }
@@ -172,9 +173,20 @@ namespace MttoApp.Model
         public double UserIdSelected { get; set; }
         public double UserIdRequested { get; set; }
 
-        /* CLASE OBJETO FORMADA POR DOS PARAMETROS/PROPIEDADES, 
+        /* CLASE OBJETO FORMADA POR DOS PARAMETROS/PROPIEDADES,
          * UserIdSelected => Id del usuario a retornar
          * UserIdRequested => Id del usuario que realiza al solicitud
          */
+    }
+
+    //===================================================================================
+    //===================================================================================
+    public partial class ModificacionTableroResponse
+    {
+        public List<ItemTablero> ItemsTablerosMod {get; set;}
+        /*CLASE OBJETO FORMADA POR UN UNICO PAAMETRO
+         ItemsTableroMod => Lista de items del tablero consultado luego de 
+                            modificar uno o mas items dento del grupo de 
+                            items del tablero consultado.*/
     }
 }
