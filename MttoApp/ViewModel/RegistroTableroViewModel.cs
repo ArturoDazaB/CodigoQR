@@ -1,13 +1,11 @@
 ﻿using Android.Widget;
 using MttoApp.Model;
-using MttoApp.View.Paginas;
 using MttoApp.Servicios;
 using Newtonsoft.Json;
 using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
@@ -34,11 +32,14 @@ namespace MttoApp.ViewModel
         protected Personas Persona;
         protected Usuarios Usuario;
         protected string codigoqrdata;
+
         //--------------------------------------------------NOTA--------------------------------------------
         //ESTA VARIABLE ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA QRCoder EN FORMATO DE byte[]
         protected byte[] codigoqrbyte;
+
         //--------------------------------------------------------------------------------------------------
         protected string codigoqrfilename;
+
         protected DateTime ultimafechaconsulta;
         protected List<ItemTablero> items;
         protected ItemTablero item;
@@ -46,10 +47,12 @@ namespace MttoApp.ViewModel
         protected int opcionconsultaid;     //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string httperrorresponse;
         protected string eliminaritemtext;
+
         //---------------------------------------------NOTA-------------------------------------------------
-        //Puesto que este proyecto es una aplicacion movil (es decir utiliza la version PCL de la libreria 
+        //Puesto que este proyecto es una aplicacion movil (es decir utiliza la version PCL de la libreria
         //QRCoder) los objteos del tipo PngByteQRCode y BitMapByteQRCode son los unicos renders dispoibles
         protected PngByteQRCode codigoqr;
+
         //--------------------------------------------------------------------------------------------------
         //BANDERAS
         //SourceOfInvoke => TRUE  => Se llama a la clase desde "PaginaRegistroTablero.xaml.cs"
@@ -70,6 +73,7 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("SapID", SapID);
             }
         }
+
         public string TableroID
         {
             get { return tableroID; }
@@ -81,6 +85,7 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("TableroID", TableroID);
             }
         }
+
         public string Filial
         {
             get { return filial; }
@@ -91,6 +96,7 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("Filial", Filial);
             }
         }
+
         public string Area
         {
             get { return area; }
@@ -101,16 +107,19 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("Area", Area);
             }
         }
+
         public DateTime FechaRegistro { get { return DateTime.Now; } }
+
         public byte[] CodigoQRbyte
         {
             //-------------------------------------------------NOTA---------------------------------------------
-            //PROPIEDAD QUE CONTENDRAN LOS CODIGO QR IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN 
-            //EL TELEFONO. SE UTILIZA EL RENDER DEL TIPO "PngByteQRCode", EL CUAL RETORNA UN ARRELO DE BYTES 
+            //PROPIEDAD QUE CONTENDRAN LOS CODIGO QR IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN
+            //EL TELEFONO. SE UTILIZA EL RENDER DEL TIPO "PngByteQRCode", EL CUAL RETORNA UN ARRELO DE BYTES
             //(byte[]) QUE CONTENDRA LA INFORMACION DE UNA IMAGEN DEL TIPO PNG.
 
             get { return codigoqrbyte; }
         }
+
         public string CodigoQRData
         {
             get
@@ -122,6 +131,7 @@ namespace MttoApp.ViewModel
                 return codigoqrdata;
             }
         }
+
         public string CodigoQRFileName
         {
             get
@@ -147,10 +157,16 @@ namespace MttoApp.ViewModel
                 }
             }
         }
+        //--------------------------------------------------------------------------------------------------
+        //PROPIEDADES USADAS PARA REPRESENTAR LA INFORMACION DEL USUARIO QUE SE ENCUENTRA EN LA PAGINA
+        public Personas Personas { get { return Persona; } }
+        public Usuarios Usuarios { get { return Usuario; } }
+        public int NivelUsuario { get { return Usuario.NivelUsuario; } }
 
         //--------------------------------------------------------------------------------------------------
         //PROPIEDADES USADAS PARA REPRESENTAR LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
         public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
+
         public string Descripcion
         {
             get { return descripcion; }
@@ -162,6 +178,7 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("Descripcion", Descripcion);
             }
         }
+
         public string Cantidad
         {
             get { return cantidad; }
@@ -173,6 +190,7 @@ namespace MttoApp.ViewModel
                 NotificacionCambio("Cantidad", Cantidad);
             }
         }
+
         public List<ItemTablero> Items { get { return items; } }
 
         //--------------------------------------------------------------------------------------------------
@@ -199,51 +217,72 @@ namespace MttoApp.ViewModel
         //===============================PROPIEDADES INTERNAS DE LA PAGINA==================================
         //--------------------Texto (Header y PH - Place Holder) PaginaConsultaTablero----------------------
         public string TableroIDHeader { get { return "Tablero ID (codigo del tablero)"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL TABLERO ID (PaginaRegistroTablero y PaginaConsultaTablero)
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero (20 caracteres máx)"; } }
-        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO 
+
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
         public string SAPIDHeader { get { return "SAP ID - Codigo SAP"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DEL SAP ID (PaginaRegistroTablero y PaginaConsultaTablero)
         public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero (20 caracteres máx)"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID SAP ASIGNADA AL TABLERO
         public string FilialHeader { get { return "Filial"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA FILIAL (PaginaRegistroTablero y PaginaConsultaTablero)
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
         public string AreaHeader { get { return "Area (Filial)"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA AREA (PaginaRegistroTablero y PaginaConsultaTablero)
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL AREA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
         public string DescripcionPH { get { return "Descripcion corta del item"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA DESCRIPCION DEL ITEM
         public string CantidadPH { get { return "Cantidad de items (unidades)"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA CANTIDAD DE UN ITEM EN ESPECIFICO
         public string ColumnaCant { get { return "Cantidad"; } }
+
         //=> TEXTO DE LA COLUMNA "Cantidad" DE LA LISTA DE ITEMS DEL TABLERO
         public string ColumnaDescripcion { get { return "Descripcion"; } }
+
         //=> TEXTO DE LA COLUMNA "Descripcion" DE LA LISTA DE ITEMS DEL TABLERO
         public string ItemsTableroHeader { get { return "Items/Elementos del Tablero"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LOS ITEMS DEL TABLERO (PaginaRegistroTablero y PaginaConsultaTablero)
         public string DescripcionItemHeader { get { return "Descripcion del Item"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA DESCRIPCION DEL ITEM  (PaginaRegistroTablero)
         public string CantidadItemHeader { get { return "Cantidad (unidades)"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA CANTIDAD DE ITEMS (PaginaRegistroTablero)
         //-------------------------------Texto (Header) PaginaConsultaTablero-------------------------------
         public string ConsultaTableroIDPH { get { return "Ingresa el ID a consultar (Tablero ID o SapID)"; } }
+
         //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
         public string InformacionGeneralHeader { get { return "Informacion General"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA INFORMACION GENERAL DEL TABLERO
         public string UltimaConsultaHeader { get { return "Ultima consulta del tablero: "; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA ULTIMA FECHA DE CONSULTA
         public string ImagenCodigoQRHeader { get { return "Codigo QR del tablero"; } }
+
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA IMAGEN DEL CODIGO QR
         //-------------------------------Texto (Header) PaginaModificacionItems-----------------------------
         public string TituloModItem { get { return "Modificacion de Item"; } }
+
         //=> TEXTO PRESENTADO COMO TITULO DE LA PAGINA "PaginaModificacionItems"
         public string BotonText { get { return "Modificar"; } }
+
         //=> TEXTO PARA EL BOTON QUE ACTIVARA LA FUNCION DE ACTUALIZAR EL ITEM ASIGNADO AL TABLERO CONSULTADO
         //-----------------------------------------------IMAGENES-------------------------------------------
-        public string CloseButton 
+        public string CloseButton
         {
             //https://iconos8.es/icons/set/close-window"
             //Cerrar ventana icon by a target="_blank"
@@ -251,36 +290,50 @@ namespace MttoApp.ViewModel
 
             get { return "Cerrar24px2.png"; }
         } //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
-                                      //DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
-        //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
+
+          //DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
+          //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
         public string BackGroundColor { get { return App.BackGroundColorPopUp; } } //=> COLOR DE FONDO PAGINAS INFORMACION (POP-UP)
+
         public string FrameColor { get { return App.FrameColorPopUp; } } //=> COLOR PARA EL MARCO DE LAS PAGINAS INFORMACION (POP-UP)
         public string ButtonColor { get { return App.ButtonColor; } } //=> COLOR PARA EL FONDO DE LOS BOTONES
+
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
+
         //TEXTO DEL BOTON GENERAR CODIGO QR DE LA PAGINA "PaginaRegistroTablero"
         public string AddItemPHP { get { return "Añadir Ítem"; } }
+
         //TEXTO DEL BOTON AÑADIR ITEM DE LA PAGINA "PaginaRegistroTablero"
         public string GuardarTableroPH { get { return "Guardar Imagen"; } }
+
         //TEXTO DEL BOTON GUARDAR IMAGEN DE LA PAGINA "PaginaRegistroTablero" y "PaginaConsultaTablero"
         public string RegistrarTableroPH { get { return "Registrar"; } }
+
         //TEXTO DEL BOTON REGISTRAR TABLERO DE LA PAGINA "PaginaRegistroTablero"
-        public string EliminarTableroPH { get { return  "Eliminar Tablero"; } }
+        public string EliminarTableroPH { get { return "Eliminar Tablero"; } }
+
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
         public string BotonScanPH { get { return "Escanear Código"; } }
+
         //TEXTO DEL BOTON ESCANEAR DE LA PAGINA "PaginaConsutaTablero"
         public string BotonConsultaIDPH { get { return "Búsqueda por ID"; } }
+
         //TEXTO DEL BOTON CONSULTA POR ID DE LA PAGINA "PaginaConsultaTablero"
         //----------------------------------PH Titulo de las Paginas----------------------------------------
         public string TituloRegistro { get { return "Registro de Tableros"; } }
+
         //TEXTO DEL TITULO DE LA PAGINA "PaginaRegistroTablero"
         public string TituloConsulta { get { return "Consulta de Tableros"; } }
+
         //TEXTO DEL TITULO DE LA PAGINA "PaginaConsultaTablero"
         //-----------------------------------TEXTOS MENSAJES POP-UP-----------------------------------------
         public string RegistrarTableroMethodMessage { get { return "Está a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
+
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "RegistroTablero" DONDE SE LE CONSULTA AL USUARIO
         //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO
         public string ModificacionItemsMethodMessage { get { return "Esta apunto de modificar la informacion de registro del item seleccionado.\n\n¿Desea Continuar?"; } }
+
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "PaginaModificacionTablero" DONDE SE LE CONSULTA
         //AL USUARIO SI DESEA CONTINUAR CON LA MODIFICACION DEL ITEM
         public string AddItemMessage
@@ -305,6 +358,7 @@ namespace MttoApp.ViewModel
                 return mensaje;
             }
         }
+
         //TEXTO USADO EN LA FUNCION "AddItem" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string OnUnfocusedTableroID
         {
@@ -314,7 +368,7 @@ namespace MttoApp.ViewModel
                 string mensaje = string.Empty;
 
                 //SE EVALUA SI LA PROPIEDAD "TableroID" TIENE ESPACIOS EN BLANCO
-                if(Metodos.EspacioBlanco(TableroID))
+                if (Metodos.EspacioBlanco(TableroID))
                     mensaje = "El ID del tablero no puede contener espacios en blanco";
 
                 //SE EVALUA SI LA PROPIEDAD "TableroID" TIENE CARACTERES ESPECIFICOS PROHIBIDOS
@@ -325,27 +379,37 @@ namespace MttoApp.ViewModel
                 return mensaje;
             }
         }
+
         //TEXTO USADO EN LA FUNCION "OnUnfocusedTableroID" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
-        public string OnUnfocusedFilial { get { return "El nombre de la filial no puede contener los siguientes caracteres:\n "+App.ForbiddenCharacters; } }
+        public string OnUnfocusedFilial { get { return "El nombre de la filial no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
+
         //TEXTO USADO EN LA FUNCION "OnUnfocuseFilial" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string OnUnfocusedArea { get { return "El nombre del área no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
+
         //TEXTO USADO EN LA FUNCION "OnUnfocusedArea" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string ConsultaID { get { return "Debe ingresar el parámetro de consulta"; } }
+
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA INGRESADO EL ID EL TABLERO A CONSULTAR
         public string PickerFilialTitulo { get { return "Filiales"; } }
+
         //TEXTO USADO EN EL PICKER "filialPicker" DE LA PAGINA "PaginaRegistroTablero"
         public string PickerSelectedIndex { get { return "Debe seleccionar la opción de consulta"; } }
+
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA SELECCIONADO CUAL METODO DE CONSULTA (CONSULTA POR TABLERO ID
         //O CONSULTAPOR SAP ID) DE TABLEROS
         public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
+
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE DE CONSULTA
         public string NegativeText { get { return App.NegativeText; } } //=> NO
+
         //TEXTO UTILIZADO PARA REPRESENTAR LA NEGACION ANTE UN MENSAJE DE CONSULTA
         public string OkText { get { return App.OkText; } } //=>ENTENDIDO
+
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
         public string EliminarItemText { get { return eliminaritemtext; } }
+
         //TEXTO UTILIZADO PARA MOSTRA UN MENSAJE NOTIFICANDO EL ESTATUS DE LA OPERAICION DE ELIMINACION DE UN ITEM SELECCIONADO
         //----------------------------------------------------------------------------------------------------------
         //LISTA DE NIVELES DE USUARIO (USADO EN LA PAGINA "PaginaRegistro.xaml.cs")
@@ -357,9 +421,11 @@ namespace MttoApp.ViewModel
                 return new Tableros().FilialesLista();
             }
         }
+
         //-------------------------------------------NOTA---------------------------------------------------
         //EN ESTA SECCION ASIGNAREMOS EL TAMAÑO DE LA FUENTE PARA LAS ETIQUETAS, TITULOS, ENTRYS, ETC.
         public int LabelFontSize { get { return App.LabelFontSize; } }
+
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
 
@@ -472,7 +538,7 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION QUE GENERA EL CODIGO QR Y RETORNA UN MENSAJE CON LA RESPUESTA DE LA OPERACION 
+        //FUNCION QUE GENERA EL CODIGO QR Y RETORNA UN MENSAJE CON LA RESPUESTA DE LA OPERACION
         //(PaginaRegistroTablero)
         public string GenerarCodigo()
         {
@@ -585,7 +651,7 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCIONES UTILIZADAS PARA REGISTRAR Y CONSULTAR TABLEROS CUANDO LA APLICACION SE ENCUENTRE 
+        //FUNCIONES UTILIZADAS PARA REGISTRAR Y CONSULTAR TABLEROS CUANDO LA APLICACION SE ENCUENTRE
         //CONSUMIENTO SERVICIOS WEB
         private async Task<string> RegistroTableroHttpClient(List<ItemTablero> items)
         {
@@ -598,7 +664,7 @@ namespace MttoApp.ViewModel
             //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO MODELO PARA EL OBJETO JSON ENVIADO
             var model = new RegistroTablero()
             {
-                //INFORMACION DEL TABLERO 
+                //INFORMACION DEL TABLERO
                 tableroInfo = new Tableros()
                 {
                     TableroID = TableroID,
@@ -625,12 +691,12 @@ namespace MttoApp.ViewModel
                 try
                 {
                     //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
-                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
-                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
                     //----------------------------------------------------------------------------------------------
                     //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
-                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
-                    //TIPO HttpClientHandler => 
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
@@ -644,7 +710,7 @@ namespace MttoApp.ViewModel
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-                        //SE RETORNA EL MENSAJE OBTENIDO POR 
+                        //SE RETORNA EL MENSAJE OBTENIDO POR
                         respuesta = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
                     }
                 }
@@ -667,6 +733,7 @@ namespace MttoApp.ViewModel
 
             return await Task.FromResult(respuesta);
         }
+
         private async Task<bool> BusquedaTableroHttpClient(string id)
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE SERA RETORNADA POR LA FUNCION
@@ -693,12 +760,11 @@ namespace MttoApp.ViewModel
                 };
 
                 //SE TERMINA DE ESCRIBIR LA DIRECCION A LA CUAL SE REALIZARA LA SOLICITUD HTTP
-                url = url + "/tableroid"; 
+                url = url + "/tableroid";
             }
 
             if (tipodeconsulta == "CONSULTA_POR_ID")
             {
-
                 switch (opcionconsultaid)
                 {
                     //CONSUTA POR ID => PARAMETRO ENVIADO -> TableroId
@@ -726,7 +792,6 @@ namespace MttoApp.ViewModel
                         url = url + "/sapid";
                         break;
                 }
-
             }
 
             //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
@@ -739,12 +804,12 @@ namespace MttoApp.ViewModel
                 try
                 {
                     //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
-                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
-                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
                     //----------------------------------------------------------------------------------------------
                     //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
-                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
-                    //TIPO HttpClientHandler => 
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
@@ -796,8 +861,6 @@ namespace MttoApp.ViewModel
                         {
                             httperrorresponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
                         }
-
-
                     }
                 }
                 catch (Exception ex) when (ex is HttpRequestException ||
@@ -809,8 +872,9 @@ namespace MttoApp.ViewModel
                 }
             }
 
-                return await Task.FromResult(flag);
+            return await Task.FromResult(flag);
         }
+
         public async Task<bool> ModificarRegistroItem()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
@@ -842,12 +906,12 @@ namespace MttoApp.ViewModel
                 try
                 {
                     //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
-                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
-                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
                     //----------------------------------------------------------------------------------------------
                     //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
-                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
-                    //TIPO HttpClientHandler => 
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
@@ -871,7 +935,6 @@ namespace MttoApp.ViewModel
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
                         }
                     }
-
                 }
                 catch (Exception ex) when (ex is HttpRequestException ||
                                            ex is Javax.Net.Ssl.SSLException ||
@@ -882,7 +945,7 @@ namespace MttoApp.ViewModel
                 }
             }
 
-            //RETORNAMOS EL VALOR DE LA BANDERA 
+            //RETORNAMOS EL VALOR DE LA BANDERA
             //TRUE => SE MODIFICO SATISFACTORIAMENTE EL REGISTRO DE ITEM
             //FALSE => NO SE MODIFICO SATISFACTORIAMENTE EL REGISTRO DEL ITEM
             return await Task.FromResult(flag);
@@ -910,12 +973,12 @@ namespace MttoApp.ViewModel
                 try
                 {
                     //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
-                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
-                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
                     //----------------------------------------------------------------------------------------------
                     //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
-                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
-                    //TIPO HttpClientHandler => 
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
@@ -1034,11 +1097,11 @@ namespace MttoApp.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCION QUE EVALUA CUAL DE LOS CAMPOS EVALUADOS SE ENCUENTRA VACIO Y RETORNA UNA RESPUESTA PARA 
+        //FUNCION QUE EVALUA CUAL DE LOS CAMPOS EVALUADOS SE ENCUENTRA VACIO Y RETORNA UNA RESPUESTA PARA
         //INFORMAR AL USAURIO
         private string RespuestaEvaluacion1()
         {
-            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA UN MENSAJE DE NOTIFICACION 
+            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA UN MENSAJE DE NOTIFICACION
             //AL USUARIO CUALES SON LOS ELEMENTOS QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
             //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA LA RESPUESTA
             string respuesta = string.Empty;
@@ -1064,7 +1127,7 @@ namespace MttoApp.ViewModel
             return respuesta;
         }
 
-        //FUNCION QUE RETORNA UNA RESPUESTA DESPUES DE EVALUAR CUAL DE LOS CAMPOS NO CUMPLE CON LAS 
+        //FUNCION QUE RETORNA UNA RESPUESTA DESPUES DE EVALUAR CUAL DE LOS CAMPOS NO CUMPLE CON LAS
         //CONDICIONES MINIMAS DE FORMATO
         private string RespuestaEvaluacion2()
         {

@@ -21,8 +21,8 @@ namespace MttoApp.View.Paginas
         //SE DECLARACION DE OBJETOS
         private RegistroTableroViewModel DatosPagina;
 
-        private Personas Persona;
-        private Usuarios Usuario;
+        //private Personas Persona;
+        //private Usuarios Usuario;
 
         //SE DECLARAN LAS CONSTANTES
         private const int HeightRow = 45;
@@ -35,11 +35,11 @@ namespace MttoApp.View.Paginas
             InitializeComponent();
 
             //SE INSTANCIAN LOS OBJETOS CON LA INFORMACION DEL USUARIO QUE SE ENCUENTRA LOGGEADO
-            Persona = new Personas().NewPersona(persona);
-            Usuario = new Usuarios().NewUsuario(usuario);
+            //Persona = new Personas().NewPersona(persona);
+            //Usuario = new Usuarios().NewUsuario(usuario);
 
             //SE GENERA LA CONEXION CON LA CLASE VIEWMODEL
-            BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, false);
+            BindingContext = DatosPagina = new RegistroTableroViewModel(persona, usuario, false);
 
             //SE DA SET (FALSE) A LOS FRAMES QUE CONTENDRAN LA INFORMACION DEL TABLERO, LOS ITEMS
             //EL CODIGO QR Y EL BOTON DE ELIMINACION DE TABLERO.
@@ -123,7 +123,7 @@ namespace MttoApp.View.Paginas
                         //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
                         FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
                         //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
-                        if (Usuario.NivelUsuario >= 5)
+                        if (DatosPagina.NivelUsuario >= 5)
                             BotonEliminar.IsVisible = SearchStatus;
                         //------------------------------------------------------------------------------------------------
                         //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
@@ -142,7 +142,7 @@ namespace MttoApp.View.Paginas
                         //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
                         FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
                         //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
-                        if (Usuario.NivelUsuario >= 5)
+                        if (DatosPagina.NivelUsuario >= 5)
                             BotonEliminar.IsVisible = SearchStatus;
                         //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS
                         listViewItems.HeightRequest = 0;
@@ -203,7 +203,7 @@ namespace MttoApp.View.Paginas
                     //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
                     FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
                     //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
-                    if (Usuario.NivelUsuario >= 5)
+                    if (DatosPagina.NivelUsuario >= 5)
                         BotonEliminar.IsVisible = SearchStatus;
                     //------------------------------------------------------------------------------------------------
                     //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
@@ -222,7 +222,7 @@ namespace MttoApp.View.Paginas
                     //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
                     FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = SearchStatus;
                     //SI EL USUARIO TIENE UN NIVEL SUPERIOR O IGUAL A 5 SE HABILITA EL BOTON DE ELIMINAR
-                    if (Usuario.NivelUsuario >= 5)
+                    if (DatosPagina.NivelUsuario >= 5)
                         BotonEliminar.IsVisible = SearchStatus;
                     //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS
                     listViewItems.HeightRequest = 0;
@@ -260,68 +260,79 @@ namespace MttoApp.View.Paginas
         //METODO ACTIVADO AL SELECCIONAR UN ITEM DE LA LISTA DE ITEMS
         async private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
-            //IDETIFICAMOS EL OBJETO SELECCIONADO COMO UN OBJETO DE TIPO "ItemTablero"
-            var item_selected = e.Item as ItemTablero;
-
-            //SI SE SELECCIONA UN ITEM DENTRO DE LA LISTA DE ITEMS SE PROCEDE A DESPLEGAR LAS OPCIONES EXISTENTES
-            //PARA ESE REGISTRO DE ITEM EN ESPECIFICO
-            var actionSheet = await DisplayActionSheet("Opciones", "Cancelar", null, "Modificar", "Eliminar");
-
-            //TOMAMOS LA OPCION RETORNADA Y LA EVALUAREMOS CON UN SWITCH
-            switch (actionSheet)
+            if (DatosPagina.NivelUsuario >= 5)
             {
-                //OPCION MODIFICAR (UPDATE)
-                case "Modificar":
-                    await Task.Run(async () =>
-                    {
-                        //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
-                        await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_selected));
-                    });
-                    break;
-                //OPCION ELIMINAR (DELETE)
-                case "Eliminar":
-                    //REALIZAMOS UNA PREGUNTA DE CONFIRMACION AL USUARIO PARA ELIMINAR DICHO ELEMENTO
-                    var response = await DisplayAlert("Alerta", 
-                                        $"¿Está seguro que desea eliminar el ítem seleccionado del tablero '{DatosPagina.TableroID}'?", "Si", "No, regresar");
+                //IDETIFICAMOS EL OBJETO SELECCIONADO COMO UN OBJETO DE TIPO "ItemTablero"
+                var item_selected = e.Item as ItemTablero;
 
-                    //EVALUAMOS LA RESPUESTA OBTENIDA
-                    if (response)
-                    {
+                //SI SE SELECCIONA UN ITEM DENTRO DE LA LISTA DE ITEMS SE PROCEDE A DESPLEGAR LAS OPCIONES EXISTENTES
+                //PARA ESE REGISTRO DE ITEM EN ESPECIFICO
+                var actionSheet = await DisplayActionSheet("Opciones", "Cancelar", null, "Modificar", "Eliminar");
+
+                //TOMAMOS LA OPCION RETORNADA Y LA EVALUAREMOS CON UN SWITCH
+                switch (actionSheet)
+                {
+                    //OPCION MODIFICAR (UPDATE)
+                    case "Modificar":
                         await Task.Run(async () =>
                         {
-                            await DatosPagina.EliminarRegistroItem(item_selected);
+                            //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
+                            await Navigation.PushPopupAsync(new PaginaModificacionItems(DatosPagina.Personas, DatosPagina.Usuarios, item_selected));
                         });
+                        break;
+                    //OPCION ELIMINAR (DELETE)
+                    case "Eliminar":
+                        //REALIZAMOS UNA PREGUNTA DE CONFIRMACION AL USUARIO PARA ELIMINAR DICHO ELEMENTO
+                        var response = await DisplayAlert("Alerta",
+                                            $"¿Está seguro que desea eliminar el ítem seleccionado del tablero '{DatosPagina.TableroID}'?", "Si", "No, regresar");
 
-                        DatosPagina.MensajePantalla(DatosPagina.EliminarItemText);
-                        //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
-                        listViewItems.ItemsSource = null;
-                        //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
-                        listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
-                        //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
-                        //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
-                        listViewItems.ItemsSource = DatosPagina.Items;
-                    }
+                        //EVALUAMOS LA RESPUESTA OBTENIDA
+                        if (response)
+                        {
+                            await Task.Run(async () =>
+                            {
+                                await DatosPagina.EliminarRegistroItem(item_selected);
+                            });
 
-                    break;
-            }
+                            DatosPagina.MensajePantalla(DatosPagina.EliminarItemText);
+                            //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                            listViewItems.ItemsSource = null;
+                            //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                            listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                            //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                            //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                            listViewItems.ItemsSource = DatosPagina.Items;
+                        }
 
-            //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
-            ((ListView)sender).SelectedItem = null;
+                        break;
+                }
 
-            if (actionSheet == "Modificar")
-            {
-                //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
-                MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
-                (this, App.ItemUpdate, (p, items) =>
+                //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
+                ((ListView)sender).SelectedItem = null;
+
+                if (actionSheet == "Modificar")
                 {
-                //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
-                listViewItems.ItemsSource = null;
-                //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
-                listViewItems.HeightRequest = (items.Count * HeightRow);
-                //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
-                //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
-                listViewItems.ItemsSource = items;
-                });
+                    //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
+                    MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
+                    (this, App.ItemUpdate, (p, items) =>
+                    {
+                    //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                    listViewItems.ItemsSource = null;
+                    //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                    listViewItems.HeightRequest = (items.Count * HeightRow);
+                    //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                    //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                    listViewItems.ItemsSource = items;
+                    });
+                }
+            }
+            else
+            {
+                //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
+                ((ListView)sender).SelectedItem = null;
+
+                //SE LE NOTIFICA AL USUAIO A TRAVES DE UN MENSAJE QUE NO PUEDE SER PROCESADA SU SOLICITUD
+                DatosPagina.MensajePantalla("Opcion no disponible para usuarios cuyo nivel sea menor a 5");
             }
         }
 
