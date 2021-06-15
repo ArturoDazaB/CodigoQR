@@ -1,8 +1,10 @@
-﻿using MttoApp.ViewModel;
-using MttoApp.Model;
+﻿using MttoApp.Model;
+using MttoApp.ViewModel;
 using Rg.Plugins.Popup.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MttoApp.View.Paginas
@@ -100,36 +102,57 @@ namespace MttoApp.View.Paginas
 
         private async void OnModifyItem(object sender, EventArgs e)
         {
+            //VARIABLE QUE RECIBIRA LA RESPUESTA AL METODO DE GUARDADO
+            bool response = false;
 
             if (await DisplayAlert("Alerta",
-                "Esta apunto de modificar la informacion de registro del item seleccionado.\n\n¿Desea Continuar?",
-                "Si",
-                "No, retornar"))
+                DatosPagina.ModificacionItemsMethodMessage,
+                DatosPagina.AffirmativeText,
+                DatosPagina.NegativeText))
             {
                 //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE
                 //ENCUENTREN VACIOS
                 if (!string.IsNullOrEmpty(entryDescripcion.Text) &&
                     !string.IsNullOrEmpty(entryCantidad.Text))
                 {
-                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
+                    //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
+                    ActivityIndicator.IsVisible = true;
+                    ActivityIndicator.IsRunning = true;
+                    //SE INICIA EL LLAMADO ASINCRONO DE LA FUNCION "ModificacionRegistroItems"
+                    await Task.Run(async () =>
+                    {
+                        //RECIBIMOS LA LISTA RETORNADA EN EL LLAMADO DE LA FUNCION "ModificacionRegistroItems"
+                        response = await DatosPagina.ModificarRegistroItem();
+                        //DETENEMOS EL ACTIVITY INDICATO
+                        ActivityIndicator.IsRunning = false;
+                    });
 
-                    await Task.Delay(1500);
+                    //VOLVEMOS INVISIBLE EL ACTIVITY INDICATOR
+                    ActivityIndicator.IsVisible = false;
 
-                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-
-                    DatosPagina.MensajePantalla("Opcion actualmente no habilitada.");
+                    //EVALUAMOS EL RESULTADO OBTENIDO EN EL LLAMADO A LA FUNCION "ModificacioNRegistroItems"
+                    if (response) //TRUE => SE MODIFICO EL ITEM SELECCIONADO
+                    {
+                        //INICIALIZACION DEL PATRON "Publisher - Subscriber" (SEND en este caso) DONDE
+                        //ENVIAREMOS LA LISTA DE ITEMS DEL TABLERO AL QUE PERTENECE EL ITEM QUE CABAMOS 
+                        //DE MODIFICAR
+                        MessagingCenter.Send<PaginaModificacionItems, List<ItemTablero>>(this, App.ItemUpdate, DatosPagina.Items);
+                        //CERRAMOS LA PAGINA POP-UP "PaginaModificacionItems"
+                        await Navigation.PopAllPopupAsync();
+                    }
+                    else //FALSE => NO SE MODIFICO EL ITEM SELECCIONADO
+                    {
+                        //SE NOTIFICA POR PANTALLA AL USUARIO UN MENSAJE INDICANDO EL ERROR DE LA MODIFICACION.
+                        DatosPagina.MensajePantalla(DatosPagina.HttpErrorResponse);
+                    }
                 }
                 //UNO DE LOS DOS CAMPOS (O LOS DOS) SE ENCUENTRA NULO O VACIO
                 else
                 {
-
                     //SE NOTIFICA POR PANTALLA AL USUARIO CUAL DE LAS DOS PROPIEDADES SE ENCUENTRA VACIA
                     DatosPagina.MensajePantalla(DatosPagina.AddItemMessage);
                 }
             }
-
-            
         }
-
     }
 }

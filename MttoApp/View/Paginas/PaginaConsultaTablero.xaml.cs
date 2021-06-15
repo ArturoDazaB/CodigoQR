@@ -2,8 +2,8 @@
 using MttoApp.View.Paginas.PaginasInformacion;
 using MttoApp.ViewModel;
 using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Services;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -101,7 +101,7 @@ namespace MttoApp.View.Paginas
                     await App.MasterDetail.Navigation.PopModalAsync();
 
                     //SE OCULTA EL FRAME QUE CONTENDRAN LOS RESULTADOS DE BUSQUEDA
-                    FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible 
+                    FrameInformacionBasica.IsVisible = FrameItemsTablero.IsVisible
                         = FrameCodigoQR.IsVisible = BotonEliminar.IsVisible = false;
 
                     //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
@@ -272,17 +272,19 @@ namespace MttoApp.View.Paginas
             {
                 //OPCION MODIFICAR (UPDATE)
                 case "Modificar":
-                    //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
-                    await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_2_modify));
+                    await Task.Run(async () =>
+                    {
+                        //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
+                        await Navigation.PushPopupAsync(new PaginaModificacionItems(Persona, Usuario, item_2_modify));
+                    });
                     break;
-                
                 //OPCION ELIMINAR (DELETE)
                 case "Eliminar":
                     //REALIZAMOS UNA PREGUNTA DE CONFIRMACION AL USUARIO PARA ELIMINAR DICHO ELEMENTO
                     var response = await DisplayAlert("Alerta", "¿Está seguro que desea eliminar el/los ítem(s) del tablero?", "Si", "No, regresar");
 
                     //EVALUAMOS LA RESPUESTA OBTENIDA
-                    if(response)
+                    if (response)
                     {
                         // INTERTE CODIGO DE LLAMADO A LA FUNCION ELIMINAR ITEM EN EL RESPECTIVO VIEWMODEL
                     }
@@ -292,6 +294,19 @@ namespace MttoApp.View.Paginas
 
             //SE DESELECCIONA LA OPCION SELECCIONADA POR EL USUARIO
             ((ListView)sender).SelectedItem = null;
+
+            //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
+            MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
+            (this, App.ItemUpdate, (p, items) =>
+            {
+                //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                listViewItems.ItemsSource = null;
+                //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                listViewItems.HeightRequest = (items.Count * HeightRow);
+                //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                listViewItems.ItemsSource = items;
+            });
         }
 
         //========================================================================================================

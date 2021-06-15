@@ -61,6 +61,9 @@ namespace MttoApp
         public const string OkText = "Entendido";
         //TEXTO USADO PARA INDICAR CUALES SON LOS CARACTERES PROHIBIDOS
         public const string ForbiddenCharacters = "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'";
+        //TEXTO USADO PARA INDICAR EL "KEY" / "LLAVE" USADA EN LOS METODOS
+        //SUBSCRIBE Y SEND DE LA CLASE "MessageCenter" 
+        public const string ItemUpdate = "ItemUpdate";
 
         //===============================================================================================
         //===============================================================================================
