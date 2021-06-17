@@ -10,20 +10,20 @@ using Xamarin.Forms.Xaml;
 namespace MttoApp.View.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaModificacionItems : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class PaginaCrearItems : Rg.Plugins.Popup.Pages.PopupPage
     {
         //DECLARACION DE VARIABLES GLOBALES DE LA CLASE
         private RegistroTableroViewModel DatosPagina;
 
         //===========================================================================================================================================
         //===========================================================================================================================================
-        public PaginaModificacionItems(Personas persona, Usuarios usuario, ItemTablero item)
+        public PaginaCrearItems(Personas persona, Usuarios usuario, string TableroId)
         {
             InitializeComponent();
             //SE ENLAZA CON LA CLASE "PaginaInformacionViewModel"
             //NOTA: SE UTILIZA ESTE VIEWMODEL DEBIDO A QUE LA NATURALEZA DE ESTA
             //PAGINA ES DE TIPO POPUP.
-            DatosPagina = (RegistroTableroViewModel)(BindingContext = new RegistroTableroViewModel(persona, usuario, item));
+            DatosPagina = (RegistroTableroViewModel)(BindingContext = new RegistroTableroViewModel(persona, usuario, TableroId));
             ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
         }
 
@@ -100,13 +100,13 @@ namespace MttoApp.View.Paginas
             await Navigation.PopAllPopupAsync();
         }
 
-        private async void OnModifyItem(object sender, EventArgs e)
+        private async void OnAddItem(object sender, EventArgs e)
         {
             //VARIABLE QUE RECIBIRA LA RESPUESTA AL METODO DE GUARDADO
             bool response = false;
 
             if (await DisplayAlert("Alerta",
-                DatosPagina.ModificacionItemsMethodMessage,
+                DatosPagina.CreacionItemsMethodMessage,
                 DatosPagina.AffirmativeText,
                 DatosPagina.NegativeText))
             {
@@ -125,7 +125,7 @@ namespace MttoApp.View.Paginas
                         await Task.Run(async () =>
                         {
                             //RECIBIMOS LA LISTA RETORNADA EN EL LLAMADO DE LA FUNCION "ModificacionRegistroItems"
-                            response = await DatosPagina.ModificarRegistroItem();
+                            response = await DatosPagina.CrearRegistroItem();
                             //DETENEMOS EL ACTIVITY INDICATO
                             ActivityIndicator.IsRunning = false;
                         });
@@ -137,9 +137,8 @@ namespace MttoApp.View.Paginas
                         if (response) //TRUE => SE MODIFICO EL ITEM SELECCIONADO
                         {
                             //INICIALIZACION DEL PATRON "Publisher - Subscriber" (SEND en este caso) DONDE
-                            //ENVIAREMOS LA LISTA DE ITEMS DEL TABLERO AL QUE PERTENECE EL ITEM QUE CABAMOS 
-                            //DE MODIFICAR
-                            MessagingCenter.Send<PaginaModificacionItems, List<ItemTablero>>(this, App.ItemUpdate, DatosPagina.Items);
+                            //ENVIAREMOS LA LISTA DE ITEMS DEL TABLERO AL QUE PERTENECE EL ITEM QUE ACABAMOS DE MODIFICAR
+                            MessagingCenter.Send<PaginaCrearItems, List<ItemTablero>>(this, App.ItemAdd, DatosPagina.Items);
                             //CERRAMOS LA PAGINA POP-UP "PaginaModificacionItems"
                             await Navigation.PopAllPopupAsync();
                         }
@@ -149,7 +148,7 @@ namespace MttoApp.View.Paginas
                             DatosPagina.MensajePantalla(DatosPagina.HttpErrorResponse);
                         }
                     }
-                    else
+                    else 
                     {
                         //SE LE NOTIFICA AL USUARIO QUE EL CAMPO "Descripcion" NO PUEDE CONTENER CARACTERES PROHIBIDOS
                         await DisplayAlert("Alerta", DatosPagina.ItemDescriptionText, DatosPagina.OkText);

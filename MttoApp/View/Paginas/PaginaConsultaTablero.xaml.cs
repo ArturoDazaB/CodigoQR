@@ -132,8 +132,23 @@ namespace MttoApp.View.Paginas
                         filialtablero.Text = DatosPagina.Filial;
                         areatablero.Text = DatosPagina.Area;
                         ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
-                        listViewItems.ItemsSource = DatosPagina.Items;
-                        listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                        //EVALUAMOS CUANTOS ITEMS SE ENCUENTRAN ASIGNADOS AL TABLERO
+                        if (DatosPagina.Items.Count > 0) //=> MAS DE CERO (AL MENOS UNO)
+                        {
+                            //SE VUELVEN VISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                            gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = true;
+                            NoItemsLabel.IsVisible = false;
+                            //LLENAMOS LA LISTVIER "litviewItems" CON LA LISTA DE ITEMS
+                            listViewItems.ItemsSource = DatosPagina.Items;
+                            //DIMENSIONAMOS LA ALTURA DE ACUERDO A LA CANTIDAD DE ITEMS DE LA VIDA
+                            listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                        }
+                        else //=> MENOS DE CERO 
+                        {
+                            //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                            gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = false;
+                            NoItemsLabel.IsVisible = true;
+                        }
                         codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
                         //------------------------------------------------------------------------------------------------
                     }
@@ -212,8 +227,23 @@ namespace MttoApp.View.Paginas
                     filialtablero.Text = DatosPagina.Filial;
                     areatablero.Text = DatosPagina.Area;
                     ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
-                    listViewItems.ItemsSource = DatosPagina.Items;
-                    listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                    //EVALUAMOS CUANTOS ITEMS SE ENCUENTRAN ASIGNADOS AL TABLERO
+                    if (DatosPagina.Items.Count > 0) //=> MAS DE CERO (AL MENOS UNO)
+                    {
+                        //SE VUELVEN VISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                        gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = true;
+                        NoItemsLabel.IsVisible = false;
+                        //LLENAMOS LA LISTVIER "litviewItems" CON LA LISTA DE ITEMS
+                        listViewItems.ItemsSource = DatosPagina.Items;
+                        //DIMENSIONAMOS LA ALTURA DE ACUERDO A LA CANTIDAD DE ITEMS DE LA VIDA
+                        listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                    }
+                    else //=> MENOS DE CERO 
+                    {
+                        //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                        gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = false;
+                        NoItemsLabel.IsVisible = true;
+                    }
                     codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
                     //------------------------------------------------------------------------------------------------
                 }
@@ -295,13 +325,29 @@ namespace MttoApp.View.Paginas
                             });
 
                             DatosPagina.MensajePantalla(DatosPagina.EliminarItemText);
-                            //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
-                            listViewItems.ItemsSource = null;
-                            //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
-                            listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
-                            //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
-                            //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
-                            listViewItems.ItemsSource = DatosPagina.Items;
+
+                            //EVALUAMOS LA CANTIDAD DE ITEMS ASIGNADOS AL TABLERO
+                            if (DatosPagina.Items.Count > 0) //TODAVIA QUEDAN REGISTROS DE ITEMS RELACIONADOS CON EL TABLERO
+                            {
+                                //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                                listViewItems.ItemsSource = null;
+                                //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                                listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
+                                //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                                //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                                listViewItems.ItemsSource = DatosPagina.Items;
+                                //SE VUELVEN VISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                                gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = true;
+                                NoItemsLabel.IsVisible = false;
+                            }
+                            else //NO QUEDA NINGUN REGISTRO DE ITEMS RELACIONADOS CON EL TABLERO
+                            {
+                                //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                                gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = false;
+                                NoItemsLabel.IsVisible = true;
+                                //SE REMUEVEN LOS ITEMS RESTANTES EXISTENE EN LA LISTA
+                                listViewItems.ItemsSource = null;
+                            }
                         }
 
                         break;
@@ -316,13 +362,13 @@ namespace MttoApp.View.Paginas
                     MessagingCenter.Subscribe<PaginaModificacionItems, List<ItemTablero>>
                     (this, App.ItemUpdate, (p, items) =>
                     {
-                    //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
-                    listViewItems.ItemsSource = null;
-                    //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
-                    listViewItems.HeightRequest = (items.Count * HeightRow);
-                    //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
-                    //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
-                    listViewItems.ItemsSource = items;
+                        //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                        listViewItems.ItemsSource = null;
+                        //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                        listViewItems.HeightRequest = (items.Count * HeightRow);
+                        //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                        //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                        listViewItems.ItemsSource = items;
                     });
                 }
             }
@@ -342,6 +388,46 @@ namespace MttoApp.View.Paginas
         async private void EliminarTablero(object sender, EventArgs e)
         {
             var result = await DisplayAlert("Alerta", "¿Esta seguro que desea eliminar el tablero junto con toda su informacion?", "Si", "No, regresar");
+        }
+
+        //========================================================================================================
+        //========================================================================================================
+        //METODO ACTIVADO AL PRESIONAR EL ICONO PLUS
+        async private void AddItem(object sender, EventArgs e)
+        {
+            await Task.Run(async () =>
+            {
+                //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
+                await Navigation.PushPopupAsync(new PaginaCrearItems(DatosPagina.Personas, DatosPagina.Usuarios, DatosPagina.TableroID));
+            });
+
+            //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
+            MessagingCenter.Subscribe<PaginaCrearItems, List<ItemTablero>>
+            (this, App.ItemAdd, (p, items) =>
+            {
+                if (items.Count > 0)
+                {
+                    //SE VUELVEN VISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                    gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = true;
+                    NoItemsLabel.IsVisible = false;
+                    //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
+                    listViewItems.ItemsSource = null;
+                    //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
+                    listViewItems.HeightRequest = (items.Count * HeightRow);
+                    //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
+                    //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
+                    listViewItems.ItemsSource = items;
+                }
+                else 
+                {
+                    //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                    gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = false;
+                    NoItemsLabel.IsVisible = true;
+                }
+
+                
+            });
+
         }
 
         //==========================================================================

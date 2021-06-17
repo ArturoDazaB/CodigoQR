@@ -275,10 +275,17 @@ namespace MttoApp.ViewModel
 
         //=> TEXTO PRESENTADO COMO HEADER PARA EL TITULO DE LA IMAGEN DEL CODIGO QR
         //-------------------------------Texto (Header) PaginaModificacionItems-----------------------------
-        public string TituloModItem { get { return "Modificacion de Item"; } }
+        public string TituloModItem { get { return "Modificación de Ítem"; } }
 
         //=> TEXTO PRESENTADO COMO TITULO DE LA PAGINA "PaginaModificacionItems"
-        public string BotonText { get { return "Modificar"; } }
+        public string BotonModText { get { return "Modificar"; } }
+
+        //=> TEXTO PARA EL BOTON QUE ACTIVARA LA FUNCION DE ACTUALIZAR EL ITEM ASIGNADO AL TABLERO CONSULTADO
+        //-------------------------------Texto (Header) PaginaModificacionItems-----------------------------
+        public string TituloAddItem { get { return "Creación de Ítem"; } }
+
+        //=> TEXTO PRESENTADO COMO TITULO DE LA PAGINA "PaginaModificacionItems"
+        public string BotonAddText { get { return "Añadir"; } }
 
         //=> TEXTO PARA EL BOTON QUE ACTIVARA LA FUNCION DE ACTUALIZAR EL ITEM ASIGNADO AL TABLERO CONSULTADO
         //-----------------------------------------------IMAGENES-------------------------------------------
@@ -288,11 +295,21 @@ namespace MttoApp.ViewModel
             //Cerrar ventana icon by a target="_blank"
             //href "https://iconos8.es"*/
 
+            //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
             get { return "Cerrar24px2.png"; }
-        } //=> NOMBRE DEL ARCHIVO (Imagen) QUE REPRESENTARA EL BOTON DE CLAUSURA
+        } 
+        
+        public string PlusIcon
+        {
+            //https://iconos8.es/icons/set/close-window"
+            //Cerrar ventana icon by a target="_blank"
+            //href "https://iconos8.es"*/
 
-          //DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
-          //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
+            get { return "Plus.png"; }
+        }
+
+        //DE LAS PAGINAS DE TIPO POP-UP (PaginaModificacionItems)
+        //--------------------------------------COLOR DE FONDO (POP UP)-------------------------------------
         public string BackGroundColor { get { return App.BackGroundColorPopUp; } } //=> COLOR DE FONDO PAGINAS INFORMACION (POP-UP)
 
         public string FrameColor { get { return App.FrameColorPopUp; } } //=> COLOR PARA EL MARCO DE LAS PAGINAS INFORMACION (POP-UP)
@@ -329,13 +346,14 @@ namespace MttoApp.ViewModel
         //TEXTO DEL TITULO DE LA PAGINA "PaginaConsultaTablero"
         //-----------------------------------TEXTOS MENSAJES POP-UP-----------------------------------------
         public string RegistrarTableroMethodMessage { get { return "Está a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
-
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "RegistroTablero" DONDE SE LE CONSULTA AL USUARIO
-        //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO
-        public string ModificacionItemsMethodMessage { get { return "Esta apunto de modificar la informacion de registro del item seleccionado.\n\n¿Desea Continuar?"; } }
-
+        //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO.
+        public string ModificacionItemsMethodMessage { get { return "Está apunto de modificar la informacion de registro del item seleccionado.\n\n¿Desea Continuar?"; } }
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "PaginaModificacionTablero" DONDE SE LE CONSULTA
-        //AL USUARIO SI DESEA CONTINUAR CON LA MODIFICACION DEL ITEM
+        //AL USUARIO SI DESEA CONTINUAR CON LA MODIFICACION DEL ITEM.
+        public string CreacionItemsMethodMessage { get { return "Está a punto de registrar un nuevo ítem, por favor verifique que la información proporcionada es correcta.\n\n¿Desea Continuar?"; } }
+        //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "PaginaCreacionItem" DONDE SE LE CONSULTA AL USUARIO 
+        //SI DESEA CONTINUAR CON LA CREACION DE UN NUEVO ITEM PARA EL TABLERO CONSULTADO
         public string AddItemMessage
         {
             get
@@ -399,6 +417,9 @@ namespace MttoApp.ViewModel
         //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
         //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA SELECCIONADO CUAL METODO DE CONSULTA (CONSULTA POR TABLERO ID
         //O CONSULTAPOR SAP ID) DE TABLEROS
+        public string ItemDescriptionText { get { return $"La descripción del ítem no puede contener ninguno de los siguientes campos:\n\n{App.ForbiddenCharacters}"; } }
+        //TEXTO USADO EN LAS PAGINAS "PaginaCrearItems" Y "PaginaModificacionesItems" USADO PARA INDICARLE
+        //AL USUARIO QUE EL TEXTO INGRESADO EN EL CAMPO DESCRIPCION NO PUEDE CONTENER LOS CARACTERES PROHIBIDOS.
         public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
 
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE DE CONSULTA
@@ -409,8 +430,9 @@ namespace MttoApp.ViewModel
 
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
         public string EliminarItemText { get { return eliminaritemtext; } }
-
         //TEXTO UTILIZADO PARA MOSTRA UN MENSAJE NOTIFICANDO EL ESTATUS DE LA OPERAICION DE ELIMINACION DE UN ITEM SELECCIONADO
+        public string NoItemsText { get { return "No hay items/elementos asignados a este tablero."; } }
+        public string AddItemsText { get { return "Crear un nuevo item para el tablero."; } }
         //----------------------------------------------------------------------------------------------------------
         //LISTA DE NIVELES DE USUARIO (USADO EN LA PAGINA "PaginaRegistro.xaml.cs")
         public List<string> FilialesList
@@ -468,7 +490,7 @@ namespace MttoApp.ViewModel
         //CONSTRUCTOR DE LA CLASE
         //NOTA: SE SOBRE ESCRIBE EL CONSTRUCTOR DE LA CLASE PARA PODER PERMITIR EL ACCESO A LA CLASE
         //"PaginaModificacionItems" (ESTO DEBIDO A QUE DICHA CLASE MANEJA EL MISMO MODELO DE ITEMS USADO
-        //EN LAS PAGINAS "PaginaConsultaTableros" Y "PaginaRegistroTableros".
+        //EN LAS PAGINAS "PaginaConsultaTableros" Y "PaginaRegistroTableros").
         public RegistroTableroViewModel(Personas persona, Usuarios usuario, ItemTablero item_2_modify)
         {
             //==========================================================================================
@@ -489,6 +511,36 @@ namespace MttoApp.ViewModel
             //SE LLENAN LOS OBJETOS Persona e Usuario
             Persona = new Personas().NewPersona(persona);
             Usuario = new Usuarios().NewUsuario(usuario);
+        }
+
+        //==================================================================================================
+        //==================================================================================================
+        //CONSTRUCTOR DE LA CLASE
+        //NOTA: SE SOBRE ESCRIBE EL CONSTRUCTOR DE LA CLASE PARA PODER PERMITIR EL ACCESO A LA CLASE
+        //"PaginaCrearItems" (ESTO DEBIDO A QUE DICHA CLASE MANEJA EL MISMO MODELO DE ITEMS USADO
+        //EN LAS PAGINAS "PaginaConsultaTableros" Y "PaginaRegistroTableros").
+        public RegistroTableroViewModel(Personas persona, Usuarios usuario, string tableroid)
+        {
+            //==========================================================================================
+            //SE INICIALIZAN LAS VARIABLES LOCALES (Tablero e HistorialTablero)
+            tableroID = tableroid;
+            filial = area = codigoqrdata = codigoqrfilename = tipodeconsulta = string.Empty;
+            codigoqr = null;
+            codigoqrbyte = null;
+            ultimafechaconsulta = DateTime.Now;
+
+            //==========================================================================================
+            //SE INICIALIZAN LAS VARIABLES LOCALES (PaginaCrearItems)
+            items = null;
+            item = null;
+            descripcion = string.Empty;
+            cantidad = string.Empty;
+
+            //==========================================================================================
+            //SE LLENAN LOS OBJETOS Persona e Usuario
+            Persona = new Personas().NewPersona(persona);
+            Usuario = new Usuarios().NewUsuario(usuario);
+
         }
 
         //==================================================================================================
@@ -731,6 +783,15 @@ namespace MttoApp.ViewModel
                 respuesta = "No hay conexion a internet";
             }
 
+            if (respuesta.ToLower() == "registro exitoso")
+            {
+                //==========================================================================================
+                //SE INICIALIZAN LAS VARIABLES LOCALES (Tablero e HistorialTablero)
+                TableroID = Filial= Area = TipoDeConsulta = string.Empty;
+                items = null;
+                //==========================================================================================
+            }
+
             return await Task.FromResult(respuesta);
         }
 
@@ -872,6 +933,82 @@ namespace MttoApp.ViewModel
                 }
             }
 
+            return await Task.FromResult(flag);
+        }
+
+        public async Task<bool> CrearRegistroItem()
+        {
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+            string url = App.BaseUrl + "/registrotableros/createitem";
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
+            bool flag = false;
+
+            //SE CREA LA CLASE MODELO DEL OBJETO QUE SERA ENVIADA AL CONTROLADOR "RegistroTableroController"
+            var model = new ItemTablero()
+            {
+                TableroId = TableroID,
+                Descripcion = Descripcion,
+                Cantidad = Convert.ToInt32(Cantidad),
+            };
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA LA RESPUESTA DE LA SOLICITUD HTTP
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+            var current = Xamarin.Essentials.Connectivity.NetworkAccess;
+
+            //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+            if (current == Xamarin.Essentials.NetworkAccess.Internet)
+            {
+                //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                //SE INICIA EL CICLO TRY...CATCH
+                try
+                {
+                    //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
+                    //----------------------------------------------------------------------------------------------
+                    //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
+                    //----------------------------------------------------------------------------------------------
+                    using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                    {
+                        //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                        client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                        //SE REALIZA LA CONVERSION A OBJETO JSON
+                        var json = JsonConvert.SerializeObject(model);
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                        //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE REALIZA LA SOLICITUD HTTP
+                        response = await client.PostAsync(url, httpContent);
+
+                        //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
+                        if (response.IsSuccessStatusCode)
+                        {
+                            //SE ACTIVA LA BANDERA QUE INDICA UNA ACTIALIZACION EXITOSA
+                            flag = true;
+                            items = null;
+                            //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
+                            items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
+                        }
+                    }
+                }
+                catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
+                {
+                    httperrorresponse = "Error de conexion, intente nuevamente";
+                }
+            }
+
+            //RETORNAMOS EL VALOR DE LA BANDERA
+            //TRUE => SE ADICIONO SATISFACTORIAMENTE EL REGISTRO DEL ITEM
+            //FALSE => NO SE ADICIONO SATISFACTORIAMENTE EL REGISTRO DEL ITEM
             return await Task.FromResult(flag);
         }
 

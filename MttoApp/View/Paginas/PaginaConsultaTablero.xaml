@@ -327,7 +327,7 @@
 
                     <!--====================================================================================================>
                     <=====================================================================================================-->
-                    <!--INFORMACION DEL CODIGO QR-->
+                    <!--LISTA DE ITEMS DEL TABLERO-->
                     <Frame  BackgroundColor="{Binding BackGroundColor}"
                             BorderColor="Black"
                             CornerRadius="10"
@@ -342,11 +342,13 @@
 
                                     Text="{Binding ItemsTableroHeader}"
 
-                                    HorizontalTextAlignment="Center" />
+                                    HorizontalTextAlignment="Center"
+                                    x:Name="labelItemsTablero"/>
 
                             <!--TITULOS COLUMNAS ITEMS DEL TABLERO-->
                             <Grid ColumnSpacing="10"
-                                          HorizontalOptions="StartAndExpand">
+                                  HorizontalOptions="StartAndExpand"
+                                  x:Name="gridItemsTablero">
 
                                 <Grid.ColumnDefinitions>
 
@@ -417,6 +419,44 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
+
+                            <!--ETIQUETA: NO HAY ITEMS ASIGADOS AL TABLERO-->
+                            <Grid x:Name="gridNoItems"
+                                  HorizontalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="25"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        Text="{Binding NoItemsText}"
+
+                                        HorizontalTextAlignment="Center"
+                                        
+                                        Grid.Column="0"
+                                        x:Name="NoItemsLabel"/>
+
+                                <Label  FontSize="{Binding EntryFontSize}"
+                                        TextColor="Black"
+
+                                        Text="{Binding AddItemsText}"
+
+                                        HorizontalTextAlignment="Center"
+                                        
+                                        Grid.Column="0"
+                                        x:Name="AddItemsLabel"/>
+
+                                <ImageButton    Source="{Binding PlusIcon}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                Clicked="AddItem"
+                                                Aspect="AspectFit"
+                                                
+                                                Grid.Column="1"/>
+
+                            </Grid>
 
                         </StackLayout>
 

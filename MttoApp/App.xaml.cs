@@ -64,6 +64,7 @@ namespace MttoApp
         //TEXTO USADO PARA INDICAR EL "KEY" / "LLAVE" USADA EN LOS METODOS
         //SUBSCRIBE Y SEND DE LA CLASE "MessageCenter" 
         public const string ItemUpdate = "ItemUpdate";
+        public const string ItemAdd = "ItemAdd";
 
         //===============================================================================================
         //===============================================================================================
