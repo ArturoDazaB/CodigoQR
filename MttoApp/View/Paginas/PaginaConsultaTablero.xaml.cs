@@ -387,7 +387,48 @@ namespace MttoApp.View.Paginas
         //METODO ACTIVADO AL PRESIONAR EL BOTON ELIMINAR
         async private void EliminarTablero(object sender, EventArgs e)
         {
-            var result = await DisplayAlert("Alerta", "¿Esta seguro que desea eliminar el tablero junto con toda su informacion?", "Si", "No, regresar");
+            bool flag = false;
+
+            //SE LE SOLICITA AL USUARIO LA CONFIRMACION DE ELIMINACION DEL TABLERO
+            if (await DisplayAlert("Alerta", DatosPagina.EliminarTableroMethodMessage, "Si", "No, regresar"))
+            {
+                //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
+                ActivityIndicator.IsVisible = true;
+                ActivityIndicator.IsRunning = true;
+                await Task.Run(async () =>
+                {
+                    //HACEMOS EL LLAMADO A LA FUNCION QUE PROCESARA LA SOLICITUD HTTP
+                    flag = await DatosPagina.EliminarTaleroHttpClient();
+                    //DETENEMOS LA ACTIVIDAD DEL "ActivityIndicator"
+                    ActivityIndicator.IsRunning = false;
+                });
+
+                //ESCONDEMOS EL ACTIVITY INDICATOR
+                ActivityIndicator.IsVisible = true;
+
+                if (flag)
+                {
+                    //SE LE NOTIFICA AL USUARIO QUE SE PROCESO 
+                    DatosPagina.MensajePantalla(DatosPagina.EliminarTableroSucced);
+
+                    //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
+                    FrameInformacionBasica.IsVisible  = FrameItemsTablero.IsVisible = FrameCodigoQR.IsVisible = 
+                    BotonEliminar.IsVisible = ActivityIndicator.IsVisible = false;
+                    //LIMPIAMOS LOS CAMPOS DE TEXTO
+                    entryTableroID.Text = string.Empty;
+                    //INDICAMOS LA POSICION DEL PICKER
+                    PickerOpciones.SelectedIndex = default;
+                    //SE VUELVE VISIBLE EL TEXTO INDICATIVO DE NO ITEM
+                    AddItemsLabel.IsVisible = false;
+                    NoItemsLabel.IsVisible = true;
+                    //SE REMUEVEN LOS ITEMS RESTANTES EXISTENE EN LA LISTA
+                    listViewItems.ItemsSource = null;
+                }
+                else 
+                {
+                    DatosPagina.MensajePantalla("No se pudo completar la peticion, intentelo nuevamente.");
+                }
+            }
         }
 
         //========================================================================================================

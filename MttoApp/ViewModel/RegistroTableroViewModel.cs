@@ -378,6 +378,8 @@ namespace MttoApp.ViewModel
         }
 
         //TEXTO USADO EN LA FUNCION "AddItem" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string EliminarTableroMethodMessage { get { return "¿Esta seguro que desea eliminar el tablero junto con toda su información?"; } }
+        public string EliminarTableroSucced { get { return "Tablero eliminado exitosamente."; } }
         public string OnUnfocusedTableroID
         {
             get
@@ -934,6 +936,15 @@ namespace MttoApp.ViewModel
             }
 
             return await Task.FromResult(flag);
+        }
+
+        public async Task<bool> EliminarTaleroHttpClient()
+        {
+            //INSERTE SU CODIGO AQUI 
+
+            await Task.Delay(1500);
+
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> CrearRegistroItem()
