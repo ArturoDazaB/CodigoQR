@@ -245,47 +245,87 @@
                                     CornerRadius="10"
                                     x:Name="BotonAddItem" />
 
-                            <ListView x:Name="listViewItems"
+                            <StackLayout x:Name = "listaItems">
+
+                                <!--CABECERA DE LAS COLUMNAS-->
+                                <Grid ColumnSpacing="10"
+                                  HorizontalOptions="StartAndExpand">
+
+                                    <Grid.ColumnDefinitions>
+
+                                        <ColumnDefinition Width="100" />
+                                        <!--0) COLUMNA CANTIDAD-->
+                                        <ColumnDefinition Width="auto" />
+                                        <!--1) COLUMNA DESCRIPCION-->
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--===========================================================================================-->
+                                    <!--0) COLUMNA CEDULA-->
+                                    <Label  Text="{Binding ColumnaCant}"
+                                                FontSize="15"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                TextColor="Black"
+                                                Grid.Column="0" />
+
+                                    <!--===========================================================================================-->
+                                    <!--0) COLUMNA NOMBRES-->
+                                    <Label  Text="{Binding ColumnaDescripcion}"
+                                                FontSize="15"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                TextColor="Black"
+                                                Grid.Column="1" />
+                                </Grid>
+
+                                <ListView x:Name="listViewItems"
                                       SeparatorColor="Black"
                                       SelectionMode="None">
 
-                                <ListView.ItemTemplate>
+                                    <ListView.ItemTemplate>
 
-                                    <DataTemplate>
+                                        <DataTemplate>
 
-                                        <ViewCell>
+                                            <ViewCell>
 
-                                            <Grid   ColumnSpacing="10"
+                                                <Grid   ColumnSpacing="10"
                                                     HorizontalOptions="StartAndExpand">
 
-                                                <Grid.ColumnDefinitions>
+                                                    <Grid.ColumnDefinitions>
 
-                                                    <ColumnDefinition Width="auto" />
-                                                    <!--0) CANTIDAD-->
-                                                    <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="100" />
+                                                        <!--0) CANTIDAD-->
+                                                        <ColumnDefinition Width="auto" />
+                                                        <!--1) DESCRIPCION-->
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!--=======================================================-->
                                                     <!--1) DESCRIPCION-->
-                                                </Grid.ColumnDefinitions>
-
-                                                <!--=======================================================-->
-                                                <!--1) DESCRIPCION-->
-                                                <Label  Text="{Binding Descripcion}"
+                                                    <Label  Text="{Binding Descripcion}"
                                                         FontSize="15"
                                                         HorizontalOptions="Start"
                                                         TextColor="Black"
                                                         Grid.Column="1" />
 
-                                                <!--=======================================================-->
-                                                <!--0) CANTIDAD-->
-                                                <Label  Text="{Binding Cantidad}"
+                                                    <!--=======================================================-->
+                                                    <!--0) CANTIDAD-->
+                                                    <Label  Text="{Binding Cantidad}"
                                                         FontSize="15"
                                                         HorizontalOptions="Start"
                                                         TextColor="Black"
                                                         Grid.Column="0" />
-                                            </Grid>
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                                </Grid>
+                                                
+                                            </ViewCell>
+                                            
+                                        </DataTemplate>
+                                        
+                                    </ListView.ItemTemplate>
+                                    
+                                </ListView>
+
+                            </StackLayout>
+                            
                         </StackLayout>
                     </Frame>
 
@@ -299,10 +339,31 @@
                             BackgroundColor="{Binding BackGroundColor}"
                             x:Name="CODIGO">
 
-                        <Frame BorderColor="Black">
+                        <StackLayout>
 
-                            <StackLayout x:Name="StackQR" />
-                        </Frame>
+                            <!--SECCION IMAGEN CODIGO QR-->
+                            <Frame BorderColor="Black">
+
+                                <StackLayout x:Name="StackQR" />
+                            </Frame>
+
+                            <!--BOTON PARA GUARDAR EL CODIGO QR EN LA GALERIA DEL DISPOSITIVO-->
+                            <Button VerticalOptions="Center"
+                            Text="{Binding GuardarTableroPH}"
+                            Margin="2,2,2,4"
+                            Clicked="GuardarImagen"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            BackgroundColor="{Binding ButtonColor}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HeightRequest="35"
+                            CornerRadius="10"
+                            IsVisible="False"
+                            x:Name="BotonImagen" />
+
+                        </StackLayout>
+
                     </Frame>
 
                     <!--==================================================================================>
@@ -321,21 +382,6 @@
                             HeightRequest="35"
                             CornerRadius="10"
                             x:Name="BotonGenerar" />
-
-                    <!--BOTON PARA ALMACENAR EL REGISTRO DEL NUEVO TABLERO-->
-                    <Button VerticalOptions="Center"
-                            Text="{Binding GuardarTableroPH}"
-                            Margin="2,2,2,4"
-                            Clicked="GuardarImagen"
-                            BorderColor="Black"
-                            BorderWidth="1"
-                            BackgroundColor="{Binding ButtonColor}"
-                            TextColor="White"
-                            FontAttributes="Bold"
-                            HeightRequest="35"
-                            CornerRadius="10"
-                            IsVisible="False"
-                            x:Name="BotonImagen" />
 
                     <Button VerticalOptions="Center"
                             Text="{Binding RegistrarTableroPH}"

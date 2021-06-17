@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\Paginas\PaginaCrearItems.xaml.cs">
+      <DependentUpon>PaginaCrearItems.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\Paginas\PaginaModificacionItems.xaml.cs">
       <DependentUpon>PaginaModificacionItems.xaml</DependentUpon>
     </Compile>

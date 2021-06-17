@@ -55,7 +55,7 @@ namespace MttoApp.View.Paginas
             listViewItems.ItemsSource = null;       //=> SE VUELVE NULA LA LISTA DE ITEMS
             Items = new List<ItemTablero>();        //=> SE INICIALIZA EL OBJETO QUE TENDRA LA LISTA DE ITEMS DE TABLERO
             FrameItemsTablero.IsVisible =           //=> SE VUELVE INVISIBLE EL FRAME QUE CONTENDRA LA SECCION DE ITEMS 
-                listViewItems.IsVisible = false;    //=> SE VUELVE INVISIBLE LA LISTA DE ITEMS
+            listaItems.IsVisible = false;    //=> SE VUELVE INVISIBLE LA LISTA DE ITEMS
         }
 
         //==========================================================================
@@ -139,45 +139,81 @@ namespace MttoApp.View.Paginas
             //SE EVALUA LA RESPUESTA OBTENIDA DIRECTAMENTE EN EL CONDICIONAL
             if (await DisplayAlert("Alerta", DatosPagina.RegistrarTableroMethodMessage, DatosPagina.AffirmativeText, DatosPagina.NegativeText))
             {
-                //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
-                ActivityIndicator.IsVisible = true;
-                ActivityIndicator.IsRunning = true;
-                await Task.Run(async() =>
+                //SE EVALUA LA CANTIDAD DE ITEMS CONTENIDOS EN LA LISTA "items"
+                if (Items.Count > 0) //EXISTE AL MENOS UN ITEM DENTRO DE LA LISTA DE ITEMS
                 {
-                    respuesta = await DatosPagina.RegistrarTablero(Items);
-                    ActivityIndicator.IsRunning = false;
-                });
-
-                ActivityIndicator.IsVisible = false;
-
-                //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
-                //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE
-                //NO VACIA O NULA => NO SE PUDO REALIZAR EL REGISTRO
-                if (!string.IsNullOrEmpty(respuesta))
-                {
-                    //SE MUESTRA POR MENSAJE DE CONSOLA Y DE ALERTA LA RESPUESTA OBTENIDA POR EL METODO REGISTRO TABLERO
-                    DatosPagina.MensajePantalla(respuesta);
-
-                    //EVALUAMOS SI LA RESPUESTA OBTENIDA ES DE REGISRO EXITOSO 
-                    if (respuesta.ToLower() == "registro exitoso")
+                    //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
+                    ActivityIndicator.IsVisible = true;
+                    ActivityIndicator.IsRunning = true;
+                    await Task.Run(async () =>
                     {
-                        //SE ESCONDE LA SECCION (FRAME) QUE CONTENDRA EL CODIGO QR
-                        CODIGO.IsVisible = false;
+                        respuesta = await DatosPagina.RegistrarTablero(Items);
+                        ActivityIndicator.IsRunning = false;
+                    });
 
-                        //SE HABILITA EL BOTON DE GENERAR CODIGO
-                        BotonGenerar.IsVisible = BotonGenerar.IsEnabled = true;
+                    ActivityIndicator.IsVisible = false;
+                }
+                else //NO EXISTE NINGUN ITEM DENTRO DE LA LISTA DE ITEMS
+                {
+                    //SE LE PREGUNTA AL USUARIO SI DESEA CONTINUAR CON EL REGISTRO A PESAR DE NO HABER INGRESADO ITEMS DENTRO DEL TABLERO
+                    if (await DisplayAlert("Alerta", DatosPagina.NoItemsText + "\n\n¿Desea continuar el registro?", DatosPagina.AffirmativeText, DatosPagina.NegativeText))
+                    {
+                        //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
+                        ActivityIndicator.IsVisible = true;
+                        ActivityIndicator.IsRunning = true;
+                        await Task.Run(async () =>
+                        {
+                            respuesta = await DatosPagina.RegistrarTablero(Items);
+                            ActivityIndicator.IsRunning = false;
+                        });
 
-                        //SE DESHABILITA EL BOTON DE GUARDAR EL TABLERO (CODIGOQR)
-                        BotonImagen.IsVisible = BotonImagen.IsEnabled = false;
-
-                        //SE DESHABILITA EL BOTON DE REGISTRAR EL TABLERO
-                        BotonRegistrar.IsVisible = BotonRegistrar.IsEnabled = false;
-
-                        //SE REMUEVE TODO ELEMENTO QUE SE ENCUENTRE DENTRO DEL STACKLAYOUT DEL FRAME "CODIGO"
-                        StackQR.Children.Clear();
+                        ActivityIndicator.IsVisible = false;
                     }
                 }
             }
+
+            //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
+            //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE
+            //NO VACIA O NULA => NO SE PUDO REALIZAR EL REGISTRO
+            if (!string.IsNullOrEmpty(respuesta))
+            {
+                //SE MUESTRA POR MENSAJE DE CONSOLA Y DE ALERTA LA RESPUESTA OBTENIDA POR EL METODO REGISTRO TABLERO
+                DatosPagina.MensajePantalla(respuesta);
+
+                //EVALUAMOS SI LA RESPUESTA OBTENIDA ES DE REGISRO EXITOSO 
+                if (respuesta.ToLower() == "registro exitoso")
+                {
+                    //SE ESCONDE LA SECCION (FRAME) QUE CONTENDRA EL CODIGO QR
+                    CODIGO.IsVisible = false;
+
+                    //SE HABILITA EL BOTON DE GENERAR CODIGO
+                    BotonGenerar.IsVisible = BotonGenerar.IsEnabled = true;
+
+                    //SE DESHABILITA EL BOTON DE GUARDAR EL TABLERO (CODIGOQR)
+                    BotonImagen.IsVisible = BotonImagen.IsEnabled = false;
+
+                    //SE DESHABILITA EL BOTON DE REGISTRAR EL TABLERO
+                    BotonRegistrar.IsVisible = BotonRegistrar.IsEnabled = false;
+
+                    //SE ESCONDE LA SECCION DE INFORMACION DEL TABLERO
+                    FrameItemsTablero.IsVisible = false;
+
+                    //SE LIMPIA LA INFORMACION DE LOS CAMPOS
+                    entryTableroID.Text = entrySAPID.Text = entryArea.Text = entryDescripcion.Text = entryCantidad.Text= string.Empty;
+                    //SE INDICA EL NUMERO DE INDICE DEL PICKER AL CUAL DAR SET
+                    filialPicker.SelectedIndex = default;
+                    //SE LIMPIA LA LISTA DE ITEMS
+                    listViewItems.ItemsSource = null;
+                    //SE LIMPIA LA VARIABLE 
+                    Items = new List<ItemTablero>();
+                    //ESCONDEMOS LA LISTA DE ITEMS
+                    listaItems.IsVisible = false;
+
+                    //SE REMUEVE TODO ELEMENTO QUE SE ENCUENTRE DENTRO DEL STACKLAYOUT DEL FRAME "CODIGO"
+                    StackQR.Children.Clear();
+                }
+            }
+
         }
 
         //==========================================================================
@@ -192,7 +228,7 @@ namespace MttoApp.View.Paginas
             {
                 //SE VUELVE NULO LA FUENTE DE LA LISTA Y SE VUELVE INVISIBLE
                 listViewItems.ItemsSource = null;
-                listViewItems.IsVisible = false;
+                listaItems.IsVisible = false;
 
                 //SE AÑADE EL NUEVO ITEM A LA LISTA
                 Items = DatosPagina.AddItem(DatosPagina.TableroID, DatosPagina.Descripcion, Int16.Parse(DatosPagina.Cantidad), Items);
@@ -202,7 +238,7 @@ namespace MttoApp.View.Paginas
                 listViewItems.HeightRequest = (Items.Count * HeightRow);
 
                 //SE VUELVE VISIBLE LA LISTA Y SE BORRAN LOS DATOS QUE POSEEAN LOS ENTRY "entryDescripcion" Y "entryCantidad"
-                listViewItems.IsVisible = true;
+                listaItems.IsVisible = true;
                 entryDescripcion.Text = entryCantidad.Text = string.Empty;
             }
             else //=> false => ALGUNA, O AMBAS, E LAS PROPIEDADES EVALUADAS EN EL CONDICIONAL SUPERIOR SE ENCUENTRA VACIA
