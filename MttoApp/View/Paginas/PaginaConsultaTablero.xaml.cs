@@ -404,7 +404,7 @@ namespace MttoApp.View.Paginas
                 });
 
                 //ESCONDEMOS EL ACTIVITY INDICATOR
-                ActivityIndicator.IsVisible = true;
+                ActivityIndicator.IsVisible = false;
 
                 if (flag)
                 {
@@ -426,7 +426,14 @@ namespace MttoApp.View.Paginas
                 }
                 else 
                 {
-                    DatosPagina.MensajePantalla("No se pudo completar la peticion, intentelo nuevamente.");
+                    if (!string.IsNullOrEmpty(DatosPagina.HttpErrorResponse))
+                    {
+                        DatosPagina.MensajePantalla(DatosPagina.HttpErrorResponse);
+                    }
+                    else
+                    {
+                        DatosPagina.MensajePantalla("No se pudo completar la peticion, intentelo nuevamente.");
+                    }
                 }
             }
         }
