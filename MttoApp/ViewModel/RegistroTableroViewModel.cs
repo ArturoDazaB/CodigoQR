@@ -721,7 +721,7 @@ namespace MttoApp.ViewModel
                 //INFORMACION DEL TABLERO
                 tableroInfo = new Tableros()
                 {
-                    TableroID = TableroID,
+                    TableroID = TableroID.ToLower(),
                     SapID = SapID,
                     IDCreador = Usuario.Cedula,
                     Filial = Filial,
