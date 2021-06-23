@@ -97,7 +97,7 @@ namespace MttoApp.View.Paginas
                             {
                                 //DE ESTAR VACIA SE LE NOTIFICARA AL USUARIO QUE
                                 //NO SE ENCONTRO NINGUN USUARIO QUE RESPONDA A ESE ID (CEDULA)
-                                ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
+                                ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
                             }
                             else
                             {
@@ -134,7 +134,7 @@ namespace MttoApp.View.Paginas
                             if (Lista == null)
                             {
                                 //LA LISTA SE ENCUENTRA VACIA: NO SE ENCONTRO NINGUN RESULTADO
-                                ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
+                                ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
                             }
                             else
                             {
@@ -169,7 +169,7 @@ namespace MttoApp.View.Paginas
                             });
 
                             if (Lista == null)
-                                ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
+                                ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;
@@ -197,7 +197,7 @@ namespace MttoApp.View.Paginas
                             });
 
                             if (Lista == null)
-                                ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
+                                ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;
@@ -223,7 +223,7 @@ namespace MttoApp.View.Paginas
                             });
 
                             if (Lista == null)
-                                ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
+                                ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;

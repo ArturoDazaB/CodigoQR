@@ -336,6 +336,10 @@ namespace MttoApp.ViewModel
             if (response.IsSuccessStatusCode)
                 //DE SER POSITIVO, SE DESERILIZA EL OBJETO JSON (List<>)CONTENIDO EN LA RESPUESTA RECIBIDA LUEGO DEL CONSUMO DEL SERVICIO WEB
                 lista = JsonConvert.DeserializeObject<List<ResponseQueryAdmin>>(await response.Content.ReadAsStringAsync());
+            else if ((int)response.StatusCode == 401)
+            {
+                errormessage = await App.TokenInfoMessage();
+            }
             else
                 //DE SER NEGATIVO, SE DESERIALIZA EL OBJETO JSON (STRING)
                 errormessage = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
@@ -399,16 +403,10 @@ namespace MttoApp.ViewModel
 
                             //SE DESENCRIPTA LA CONTRASEÑA
                             informacion.Usuario.Password = Metodos.DecryptString(informacion.Usuario.Password);
-
-                            //====================================================================================
-                            //====================================================================================
-                            Console.WriteLine("\n\n====================================");
-                            Console.WriteLine("====================================");
-                            Console.WriteLine("La contraseña desencriptada es: " + informacion.Usuario.Password);
-                            Console.WriteLine("====================================");
-                            Console.WriteLine("====================================\n\n");
-                            //====================================================================================
-                            //====================================================================================
+                        }
+                        else if ((int)response.StatusCode == 401)
+                        {
+                            errormessage = await App.TokenInfoMessage();
                         }
                         else
                         {
