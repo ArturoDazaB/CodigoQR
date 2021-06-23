@@ -378,6 +378,8 @@ namespace MttoApp.ViewModel
         }
 
         //TEXTO USADO EN LA FUNCION "AddItem" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string EliminarTableroMethodMessage { get { return "¿Esta seguro que desea eliminar el tablero junto con toda su información?"; } }
+        public string EliminarTableroSucced { get { return "Tablero eliminado exitosamente."; } }
         public string OnUnfocusedTableroID
         {
             get
@@ -719,7 +721,7 @@ namespace MttoApp.ViewModel
                 //INFORMACION DEL TABLERO
                 tableroInfo = new Tableros()
                 {
-                    TableroID = TableroID,
+                    TableroID = TableroID.ToLower(),
                     SapID = SapID,
                     IDCreador = Usuario.Cedula,
                     Filial = Filial,
@@ -936,10 +938,91 @@ namespace MttoApp.ViewModel
             return await Task.FromResult(flag);
         }
 
+        public async Task<bool> EliminarTaleroHttpClient()
+        {
+            //SE CREA E INICIALIZA LA VARIABLE QUE SERA RETORNADA POR LA FUNCION
+            bool flag = false;
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+            string url = App.BaseUrl + "/consultatableros/delete";
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA LA RESPUESTA DE LA SOLICITUD HTTP
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            //VALIDACION DE PROPIEDADES "TableroID" y "SapID"
+            if (!string.IsNullOrEmpty(TableroID) && //=>    LA PROPIEDAD "TableoID" NO ES NULA O VACIA
+                !string.IsNullOrEmpty(SapID))       //=>    LA PROPIEDAD "SapID" NO ES NULA O VACIA 
+            {
+                //CREAMOS LA VARIABLE MODELO
+                var model = new RequestConsultaTablero
+                {
+                    //ID DEL TABLERO CONSULTADO
+                    TableroId = TableroID,
+                    //ID DE SAP ASIGNADO AL TABLERO CONSULTADO
+                    SapId = SapID,
+                    //ID DEL USUARIO QUE SE ENCUENTRA NAVEGANDO Y POR ENDE REALIZO LA SOLICITUD
+                    UserId = Usuarios.Cedula,
+                };
+
+                //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+                var current = Xamarin.Essentials.Connectivity.NetworkAccess;
+                //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+                if (current == Xamarin.Essentials.NetworkAccess.Internet)
+                {
+                    //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET, SE INICIA EL CICLO TRY...CATCH
+                    try
+                    {
+                        //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                        //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                        //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
+                        //----------------------------------------------------------------------------------------------
+                        //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                        //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                        //TIPO HttpClientHandler =>
+                        //----------------------------------------------------------------------------------------------
+                        using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                        {
+                            //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                            client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                            //SE REALIZA LA CONVERSION A OBJETO JSON
+                            var json = JsonConvert.SerializeObject(model);
+                            //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                            //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE REALIZA LA SOLICITUD HTTP
+                            response = await client.PostAsync(url, httpContent);
+
+                            //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
+                            if (response.IsSuccessStatusCode) //=> CODIGO 200 (OK) RETONADO
+                            { 
+                                //EL CODIGO DE ESTATUS OBTENIDO ES EL 200 OK SE ACTIVA LA BANDERA
+                                flag = true;
+                            }
+                            else //=> CUALQUIE OTRO CODIGO RETORNADO (BADREQUEST 400).
+                            {
+                                //SE DESERIALIZA EL MENSAJE CONTENIDO SI 
+                                httperrorresponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+                            }
+                        }
+                    }
+                    catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
+                    {
+                        httperrorresponse = "Error de conexion, intente nuevamente";
+                    }
+                }
+            }
+
+            return await Task.FromResult(flag);
+        }
+
         public async Task<bool> CrearRegistroItem()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = App.BaseUrl + "/registrotableros/createitem";
+            string url = App.BaseUrl + "/consultatableros/createitem";
 
             //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
             bool flag = false;
@@ -1015,7 +1098,7 @@ namespace MttoApp.ViewModel
         public async Task<bool> ModificarRegistroItem()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = App.BaseUrl + "/registrotableros/modifyitem";
+            string url = App.BaseUrl + "/consultatableros/modifyitem";
 
             //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
             bool flag = false;
@@ -1091,7 +1174,7 @@ namespace MttoApp.ViewModel
         public async Task EliminarRegistroItem(ItemTablero item2delete)
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = App.BaseUrl + "/registrotableros/deleteitem";
+            string url = App.BaseUrl + "/consultatableros/deleteitem";
 
             //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
             bool flag = false;
