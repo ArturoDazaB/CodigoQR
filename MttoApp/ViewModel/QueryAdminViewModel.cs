@@ -338,7 +338,7 @@ namespace MttoApp.ViewModel
                 lista = JsonConvert.DeserializeObject<List<ResponseQueryAdmin>>(await response.Content.ReadAsStringAsync());
             else if ((int)response.StatusCode == 401)
             {
-                errormessage = await App.TokenInfoMessage();
+                errormessage = await App.Token.UserInfoMessage();
             }
             else
                 //DE SER NEGATIVO, SE DESERIALIZA EL OBJETO JSON (STRING)
@@ -406,7 +406,7 @@ namespace MttoApp.ViewModel
                         }
                         else if ((int)response.StatusCode == 401)
                         {
-                            errormessage = await App.TokenInfoMessage();
+                            errormessage = await App.Token.UserInfoMessage();
                         }
                         else
                         {

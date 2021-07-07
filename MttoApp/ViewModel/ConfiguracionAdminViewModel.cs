@@ -1109,7 +1109,7 @@ namespace MttoApp.ViewModel
                         if ((int)response.StatusCode == 401)
                         {
                             //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                            return await App.TokenInfoMessage();
+                            return await App.Token.UserInfoMessage();
                         }
                         else
                         {
@@ -1188,7 +1188,7 @@ namespace MttoApp.ViewModel
                             if ((int)response.StatusCode == 401)
                             {
                                 //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                                return await App.TokenInfoMessage();
+                                return await App.Token.UserInfoMessage();
                             }
                             else
                             {
@@ -1256,7 +1256,7 @@ namespace MttoApp.ViewModel
                             if ((int)response.StatusCode == 401)
                             {
                                 //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                                return await App.TokenInfoMessage();
+                                return await App.Token.UserInfoMessage();
                             }
                             else
                             {

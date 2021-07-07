@@ -75,7 +75,7 @@ namespace MttoApp.View.Paginas
                         usernameEntry.Text = string.Empty;
                         passwordEntry.Text = string.Empty;
 
-                        App.TokenInfo();
+                        App.Token.TokenInfo();
 
                         //SE REALIZA EL LLAMADO A LA PAGINA "UserMainPage"
                         await Navigation.PushModalAsync(new UserMainPage(loginresponse.UserInfo.Persona, 

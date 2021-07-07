@@ -767,7 +767,7 @@ namespace MttoApp.ViewModel
 
                         if ((int)response.StatusCode == 401)
                         {
-                            respuesta = await App.TokenInfoMessage();
+                            respuesta = await App.Token.UserInfoMessage();
                         }
                         else
                         {
@@ -930,7 +930,7 @@ namespace MttoApp.ViewModel
                         }
                         else if ((int)response.StatusCode == 401)
                         {
-                            httperrorresponse = await App.TokenInfoMessage();
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                         else
                         {
@@ -1013,7 +1013,7 @@ namespace MttoApp.ViewModel
                             }
                             else if ((int)response.StatusCode == 401)
                             {
-                                httperrorresponse = await App.TokenInfoMessage();
+                                httperrorresponse = await App.Token.UserInfoMessage();
                             }
                             else //=> CUALQUIE OTRO CODIGO RETORNADO (BADREQUEST 400).
                             {
@@ -1096,7 +1096,7 @@ namespace MttoApp.ViewModel
                         }
                         else if ((int)response.StatusCode == 401)
                         {
-                            httperrorresponse = await App.TokenInfoMessage();
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                     }
                 }
@@ -1176,7 +1176,7 @@ namespace MttoApp.ViewModel
                         }
                         else if ((int)response.StatusCode == 401) 
                         {
-                            httperrorresponse = await App.TokenInfoMessage();
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                     }
                 }
@@ -1247,7 +1247,7 @@ namespace MttoApp.ViewModel
                         }
                         else if ((int)response.StatusCode == 401)
                         {
-                            eliminaritemtext = await App.TokenInfoMessage();
+                            eliminaritemtext = await App.Token.UserInfoMessage();
                         }
 
                         //SE EVALUA EL ESTADO DE LA BANDERA
