@@ -277,6 +277,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //--------------------------------------------------------------------------------------------------------
                         //DEPENDIENDO DEL VALOR QUE POSEA SeleccionBusqueda:
                         //(EN ESTE CASO SOLO PUEDE TENER 4, QUE SON: 0-ID, 1-NUMERO DE FICHA, 2-NOMBRES, 3-APELLIDOS, 4-USERNAME)
@@ -393,6 +395,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP POST
                         response = await client.PostAsync(url, httpContent);
 

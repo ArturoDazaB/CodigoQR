@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MttoApp.ViewModel
@@ -762,6 +763,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
 
@@ -890,10 +893,10 @@ namespace MttoApp.ViewModel
                         var json = JsonConvert.SerializeObject(model);
                         //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                        //HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                        //HttpRequestMessage request = new HttpRequestMessage() { Method = HttpMethod.Get, Content = new StringContent(json, Encoding.UTF8, "application/json"), RequestUri = new Uri(url)};
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
                         //response = await client.SendAsync(request);
@@ -1002,6 +1005,8 @@ namespace MttoApp.ViewModel
                             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                             //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                             //SE REALIZA LA SOLICITUD HTTP
                             response = await client.PostAsync(url, httpContent);
 
@@ -1082,6 +1087,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
@@ -1163,6 +1170,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
@@ -1234,6 +1243,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
