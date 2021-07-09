@@ -70,13 +70,17 @@ namespace MttoApp.View.Paginas
                     //SE EVALUA EL ESTADO DE LA RESPUESTA
                     if (loginresponse != null)
                     {
-                        //SE REALIZA EL LLAMADO A LA PAGINA "UserMainPage"
-                        await Navigation.PushModalAsync(new UserMainPage(loginresponse.UserInfo.Persona, loginresponse.UserInfo.Usuario, loginresponse.UltimaFechaIngreso));
-
                         //SI LA RESPUESTA ES DIFERENTE DE NULL => SE OBTUVO UN RESULTADO
                         //SE LIMPIAN LAS ENTRADAS DE TEXTO PARA EL USERNAME Y PARA EL PASSWORD
                         usernameEntry.Text = string.Empty;
                         passwordEntry.Text = string.Empty;
+
+                        App.Token.TokenInfo();
+
+                        //SE REALIZA EL LLAMADO A LA PAGINA "UserMainPage"
+                        await Navigation.PushModalAsync(new UserMainPage(loginresponse.UserInfo.Persona, 
+                                                                         loginresponse.UserInfo.Usuario, 
+                                                                         loginresponse.UltimaFechaIngreso));
                     }
                     else
                     {

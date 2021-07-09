@@ -1010,7 +1010,6 @@ namespace MttoApp.ViewModel
             Console.WriteLine("\nNombres: " + Nombres);
             Console.WriteLine("\nApellidos: " + Apellidos);
             Console.WriteLine("\nCedula: " + Cedula);
-            //Console.WriteLine("\nFecha de Nacimiento: " + FechaNacimiento);
             Console.WriteLine("\nTelefono: " + Telefono);
             Console.WriteLine("\nCorreo: " + Correo);
             Console.WriteLine("\n\nUsername: " + Username);
@@ -1103,11 +1102,21 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-                        //SE RETORNA EL MENSAJE OBTENIDO POR 
-                        var text = await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
-                        return text;
+
+                        if ((int)response.StatusCode == 401)
+                        {
+                            //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
+                            return await App.Token.UserInfoMessage();
+                        }
+                        else
+                        {
+                            //SE RETORNA EL MENSAJE OBTENIDO POR 
+                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        }
                     }
                 }
                 //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -1174,10 +1183,21 @@ namespace MttoApp.ViewModel
                             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                             //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                             //SE REALIZA LA SOLICITUD HTTP
                             HttpResponseMessage response = await client.PutAsync(url, httpContent);
-                            //SE RETORNA EL MENSAJE OBTENIDO POR 
-                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+
+                            if ((int)response.StatusCode == 401)
+                            {
+                                //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
+                                return await App.Token.UserInfoMessage();
+                            }
+                            else
+                            {
+                                //SE RETORNA EL MENSAJE OBTENIDO POR 
+                                return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                            }
                         }
                     }
                     //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -1233,10 +1253,21 @@ namespace MttoApp.ViewModel
                             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                             //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                             //SE REALIZA LA SOLICITUD HTTP
                             HttpResponseMessage response = await client.PutAsync(url, httpContent);
-                            //SE RETORNA EL MENSAJE OBTENIDO POR 
-                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+
+                            if ((int)response.StatusCode == 401)
+                            {
+                                //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
+                                return await App.Token.UserInfoMessage();
+                            }
+                            else
+                            {
+                                //SE RETORNA EL MENSAJE OBTENIDO POR 
+                                return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                            }
                         }
                     }
                     //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO

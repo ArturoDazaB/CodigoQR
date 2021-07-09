@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MttoApp.ViewModel
@@ -762,10 +763,20 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-                        //SE RETORNA EL MENSAJE OBTENIDO POR
-                        respuesta = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+
+                        if ((int)response.StatusCode == 401)
+                        {
+                            respuesta = await App.Token.UserInfoMessage();
+                        }
+                        else
+                        {
+                            //SE RETORNA EL MENSAJE OBTENIDO POR
+                            respuesta = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+                        }
                     }
                 }
                 //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -882,10 +893,10 @@ namespace MttoApp.ViewModel
                         var json = JsonConvert.SerializeObject(model);
                         //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                        //HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                        //HttpRequestMessage request = new HttpRequestMessage() { Method = HttpMethod.Get, Content = new StringContent(json, Encoding.UTF8, "application/json"), RequestUri = new Uri(url)};
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
                         //response = await client.SendAsync(request);
@@ -919,6 +930,10 @@ namespace MttoApp.ViewModel
                                 items = tablero.itemsTablero;
                                 //-------------------------------------------------------------------------------
                             });
+                        }
+                        else if ((int)response.StatusCode == 401)
+                        {
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                         else
                         {
@@ -990,14 +1005,20 @@ namespace MttoApp.ViewModel
                             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                             //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                             //SE REALIZA LA SOLICITUD HTTP
                             response = await client.PostAsync(url, httpContent);
 
                             //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
                             if (response.IsSuccessStatusCode) //=> CODIGO 200 (OK) RETONADO
-                            { 
+                            {
                                 //EL CODIGO DE ESTATUS OBTENIDO ES EL 200 OK SE ACTIVA LA BANDERA
                                 flag = true;
+                            }
+                            else if ((int)response.StatusCode == 401)
+                            {
+                                httperrorresponse = await App.Token.UserInfoMessage();
                             }
                             else //=> CUALQUIE OTRO CODIGO RETORNADO (BADREQUEST 400).
                             {
@@ -1066,6 +1087,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
@@ -1077,6 +1100,10 @@ namespace MttoApp.ViewModel
                             items = null;
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
+                        }
+                        else if ((int)response.StatusCode == 401)
+                        {
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                     }
                 }
@@ -1143,6 +1170,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
@@ -1153,6 +1182,10 @@ namespace MttoApp.ViewModel
                             flag = true;
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
+                        }
+                        else if ((int)response.StatusCode == 401) 
+                        {
+                            httperrorresponse = await App.Token.UserInfoMessage();
                         }
                     }
                 }
@@ -1210,6 +1243,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP
                         response = await client.PostAsync(url, httpContent);
 
@@ -1220,6 +1255,10 @@ namespace MttoApp.ViewModel
                             flag = true;
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
+                        }
+                        else if ((int)response.StatusCode == 401)
+                        {
+                            eliminaritemtext = await App.Token.UserInfoMessage();
                         }
 
                         //SE EVALUA EL ESTADO DE LA BANDERA

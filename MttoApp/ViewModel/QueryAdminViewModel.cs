@@ -277,6 +277,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //--------------------------------------------------------------------------------------------------------
                         //DEPENDIENDO DEL VALOR QUE POSEA SeleccionBusqueda:
                         //(EN ESTE CASO SOLO PUEDE TENER 4, QUE SON: 0-ID, 1-NUMERO DE FICHA, 2-NOMBRES, 3-APELLIDOS, 4-USERNAME)
@@ -336,6 +338,10 @@ namespace MttoApp.ViewModel
             if (response.IsSuccessStatusCode)
                 //DE SER POSITIVO, SE DESERILIZA EL OBJETO JSON (List<>)CONTENIDO EN LA RESPUESTA RECIBIDA LUEGO DEL CONSUMO DEL SERVICIO WEB
                 lista = JsonConvert.DeserializeObject<List<ResponseQueryAdmin>>(await response.Content.ReadAsStringAsync());
+            else if ((int)response.StatusCode == 401)
+            {
+                errormessage = await App.Token.UserInfoMessage();
+            }
             else
                 //DE SER NEGATIVO, SE DESERIALIZA EL OBJETO JSON (STRING)
                 errormessage = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
@@ -389,6 +395,8 @@ namespace MttoApp.ViewModel
                         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE HACE LA CONFIGURACION DE AUTORIZACION DE LA SOLICITUD HTTP
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("token"));
                         //SE REALIZA LA SOLICITUD HTTP POST
                         response = await client.PostAsync(url, httpContent);
 
@@ -399,16 +407,10 @@ namespace MttoApp.ViewModel
 
                             //SE DESENCRIPTA LA CONTRASEÑA
                             informacion.Usuario.Password = Metodos.DecryptString(informacion.Usuario.Password);
-
-                            //====================================================================================
-                            //====================================================================================
-                            Console.WriteLine("\n\n====================================");
-                            Console.WriteLine("====================================");
-                            Console.WriteLine("La contraseña desencriptada es: " + informacion.Usuario.Password);
-                            Console.WriteLine("====================================");
-                            Console.WriteLine("====================================\n\n");
-                            //====================================================================================
-                            //====================================================================================
+                        }
+                        else if ((int)response.StatusCode == 401)
+                        {
+                            errormessage = await App.Token.UserInfoMessage();
                         }
                         else
                         {
