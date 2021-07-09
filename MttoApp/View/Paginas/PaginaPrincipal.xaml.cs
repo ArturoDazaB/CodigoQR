@@ -77,6 +77,13 @@ namespace MttoApp.View.Paginas
                         //SE LIMPIAN LAS ENTRADAS DE TEXTO PARA EL USERNAME Y PARA EL PASSWORD
                         usernameEntry.Text = string.Empty;
                         passwordEntry.Text = string.Empty;
+
+                        App.Token.TokenInfo();
+
+                        //SE REALIZA EL LLAMADO A LA PAGINA "UserMainPage"
+                        await Navigation.PushModalAsync(new UserMainPage(loginresponse.UserInfo.Persona, 
+                                                                         loginresponse.UserInfo.Usuario, 
+                                                                         loginresponse.UltimaFechaIngreso));
                     }
                     else
                     {

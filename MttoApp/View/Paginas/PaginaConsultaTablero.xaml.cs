@@ -443,21 +443,23 @@ namespace MttoApp.View.Paginas
         //METODO ACTIVADO AL PRESIONAR EL ICONO PLUS
         async private void AddItem(object sender, EventArgs e)
         {
-            await Task.Run(async () =>
+            if(DatosPagina.NivelUsuario > 5 )
             {
-                //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
-                await Navigation.PushPopupAsync(new PaginaCrearItems(DatosPagina.Personas, DatosPagina.Usuarios, DatosPagina.TableroID));
-            });
-
-            //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
-            MessagingCenter.Subscribe<PaginaCrearItems, List<ItemTablero>>
-            (this, App.ItemAdd, (p, items) =>
-            {
-                if (items.Count > 0)
+                await Task.Run(async () =>
                 {
+                    //HACEMOS UN LLAMADO A LA PAGINA TIPO POP UP "PaginaModificacionItems"
+                    await Navigation.PushPopupAsync(new PaginaCrearItems(DatosPagina.Personas, DatosPagina.Usuarios, DatosPagina.TableroID));
+                });
+
+                //INICIALIZACION DEL PATRON "Publisher - Subscriber" (Subscriptor en este caso)
+                MessagingCenter.Subscribe<PaginaCrearItems, List<ItemTablero>>
+                (this, App.ItemAdd, (p, items) =>
+                {
+                    if (items.Count > 0)
+                    {
                     //SE VUELVEN VISIBLES LA LISTA, LA CABECERA DE LA LISTA
                     gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = true;
-                    NoItemsLabel.IsVisible = false;
+                        NoItemsLabel.IsVisible = false;
                     //VOLVEMOS NULA LA FUENTE DE LA LISTVIEW "listViewItems"
                     listViewItems.ItemsSource = null;
                     //DIMENSIONAMOS EL TAMAÑO DEL LISTVIEW "listViewItems"
@@ -465,17 +467,20 @@ namespace MttoApp.View.Paginas
                     //ASIGNAMOS LA LISTA DE ITEMS DEL TABLERO CONSULTADO
                     //LUEGO DE LA MODIFICACION O ELIMINACION DEL/LOS ITEM(s)
                     listViewItems.ItemsSource = items;
-                }
-                else 
-                {
+                    }
+                    else
+                    {
                     //SE VUELVEN INVISIBLES LA LISTA, LA CABECERA DE LA LISTA
                     gridItemsTablero.IsVisible = listViewItems.IsVisible = AddItemsLabel.IsVisible = false;
-                    NoItemsLabel.IsVisible = true;
-                }
-
-                
-            });
-
+                        NoItemsLabel.IsVisible = true;
+                    }
+                });
+            }
+            else 
+            {
+                //SE LE NOTIFICA AL USUAIO A TRAVES DE UN MENSAJE QUE NO PUEDE SER PROCESADA SU SOLICITUD
+                DatosPagina.MensajePantalla("Opcion no disponible para usuarios cuyo nivel sea menor a 5");
+            }
         }
 
         //==========================================================================

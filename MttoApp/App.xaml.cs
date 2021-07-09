@@ -66,6 +66,9 @@ namespace MttoApp
         public const string ItemUpdate = "ItemUpdate";
         public const string ItemAdd = "ItemAdd";
 
+        
+
+
         //===============================================================================================
         //===============================================================================================
         //PROPIEDADES DE LA APLICACION
@@ -161,6 +164,52 @@ namespace MttoApp
 
             //SE RETORNA EL OBJETO CREADO
             return handler;
+        }
+
+        public class Token
+        {
+            private const string TokenExpired = "El tiempo de navegacion ha expirado.\nVuelva a ingresar nuevamente.";
+
+            private const string NoAuthenticated = "Usuario no autenticado.\nSolicitud denegada.";
+
+            public static async void TokenInfo()
+            {
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(await SecureStorage.GetAsync("token"));
+
+                Console.WriteLine("\n\n==================================================");
+                Console.WriteLine("==================================================");
+                Console.WriteLine("FECHA DE CREACION DEL TOKEN: " +
+                    DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(token.Claims.FirstOrDefault(c => c.Type == "nbf")?.Value)));
+                Console.WriteLine("FECHA DE EXPIRACION: " +
+                    DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(token.Claims.FirstOrDefault(c => c.Type == "exp")?.Value)));
+                Console.WriteLine("==================================================");
+                Console.WriteLine("==================================================\n\n");
+            }
+
+            public static async Task<string> UserInfoMessage()
+            {
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(await SecureStorage.GetAsync("token"));
+
+                if (DateTimeOffset.Now >= DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(token.Claims.FirstOrDefault(c => c.Type == "exp")?.Value)))
+                {
+                    return TokenExpired;
+                }
+                else
+                {
+                    return NoAuthenticated;
+                }
+            }
+
+            public static async Task<bool> IsExpired()
+            {
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(await SecureStorage.GetAsync("token"));
+
+                if (DateTimeOffset.Now >= DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(token.Claims.FirstOrDefault(c => c.Type == "exp")?.Value)))
+                    return true;
+                else
+                    return false;
+            }
+
         }
     }
 }
