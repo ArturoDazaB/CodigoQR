@@ -1105,17 +1105,9 @@ namespace MttoApp.ViewModel
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-
-                        if ((int)response.StatusCode == 401)
-                        {
-                            //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                            return await App.TokenInfoMessage();
-                        }
-                        else
-                        {
-                            //SE RETORNA EL MENSAJE OBTENIDO POR 
-                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
-                        }
+                        //SE RETORNA EL MENSAJE OBTENIDO POR 
+                        var text = await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        return text;
                     }
                 }
                 //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -1184,17 +1176,8 @@ namespace MttoApp.ViewModel
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                             //SE REALIZA LA SOLICITUD HTTP
                             HttpResponseMessage response = await client.PutAsync(url, httpContent);
-
-                            if ((int)response.StatusCode == 401)
-                            {
-                                //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                                return await App.TokenInfoMessage();
-                            }
-                            else
-                            {
-                                //SE RETORNA EL MENSAJE OBTENIDO POR 
-                                return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
-                            }
+                            //SE RETORNA EL MENSAJE OBTENIDO POR 
+                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
                         }
                     }
                     //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -1252,17 +1235,8 @@ namespace MttoApp.ViewModel
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                             //SE REALIZA LA SOLICITUD HTTP
                             HttpResponseMessage response = await client.PutAsync(url, httpContent);
-
-                            if ((int)response.StatusCode == 401)
-                            {
-                                //SE RETORNA EL MENSAJE DE TIEMPO EXPIRADO O NO AUTENTICACION
-                                return await App.TokenInfoMessage();
-                            }
-                            else
-                            {
-                                //SE RETORNA EL MENSAJE OBTENIDO POR 
-                                return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
-                            }
+                            //SE RETORNA EL MENSAJE OBTENIDO POR 
+                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
                         }
                     }
                     //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO

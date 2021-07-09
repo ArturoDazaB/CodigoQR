@@ -721,7 +721,7 @@ namespace MttoApp.ViewModel
                 //INFORMACION DEL TABLERO
                 tableroInfo = new Tableros()
                 {
-                    TableroID = TableroID.ToLower(),
+                    TableroID = TableroID,
                     SapID = SapID,
                     IDCreador = Usuario.Cedula,
                     Filial = Filial,
@@ -764,16 +764,8 @@ namespace MttoApp.ViewModel
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-
-                        if ((int)response.StatusCode == 401)
-                        {
-                            respuesta = await App.TokenInfoMessage();
-                        }
-                        else
-                        {
-                            //SE RETORNA EL MENSAJE OBTENIDO POR
-                            respuesta = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
-                        }
+                        //SE RETORNA EL MENSAJE OBTENIDO POR
+                        respuesta = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
                     }
                 }
                 //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
@@ -928,10 +920,6 @@ namespace MttoApp.ViewModel
                                 //-------------------------------------------------------------------------------
                             });
                         }
-                        else if ((int)response.StatusCode == 401)
-                        {
-                            httperrorresponse = await App.TokenInfoMessage();
-                        }
                         else
                         {
                             httperrorresponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
@@ -1007,13 +995,9 @@ namespace MttoApp.ViewModel
 
                             //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
                             if (response.IsSuccessStatusCode) //=> CODIGO 200 (OK) RETONADO
-                            {
+                            { 
                                 //EL CODIGO DE ESTATUS OBTENIDO ES EL 200 OK SE ACTIVA LA BANDERA
                                 flag = true;
-                            }
-                            else if ((int)response.StatusCode == 401)
-                            {
-                                httperrorresponse = await App.TokenInfoMessage();
                             }
                             else //=> CUALQUIE OTRO CODIGO RETORNADO (BADREQUEST 400).
                             {
@@ -1094,10 +1078,6 @@ namespace MttoApp.ViewModel
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
                         }
-                        else if ((int)response.StatusCode == 401)
-                        {
-                            httperrorresponse = await App.TokenInfoMessage();
-                        }
                     }
                 }
                 catch (Exception ex) when (ex is HttpRequestException ||
@@ -1174,10 +1154,6 @@ namespace MttoApp.ViewModel
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
                         }
-                        else if ((int)response.StatusCode == 401) 
-                        {
-                            httperrorresponse = await App.TokenInfoMessage();
-                        }
                     }
                 }
                 catch (Exception ex) when (ex is HttpRequestException ||
@@ -1244,10 +1220,6 @@ namespace MttoApp.ViewModel
                             flag = true;
                             //SE DESERIALIZA EL OBJETO JSON CONTENIDO EN LA RESPUESTA HTTP
                             items = JsonConvert.DeserializeObject<List<ItemTablero>>(await response.Content.ReadAsStringAsync());
-                        }
-                        else if ((int)response.StatusCode == 401)
-                        {
-                            eliminaritemtext = await App.TokenInfoMessage();
                         }
 
                         //SE EVALUA EL ESTADO DE LA BANDERA
