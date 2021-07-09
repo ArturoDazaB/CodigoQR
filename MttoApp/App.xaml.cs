@@ -4,6 +4,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using MttoApp.View.Paginas;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace MttoApp
 {
