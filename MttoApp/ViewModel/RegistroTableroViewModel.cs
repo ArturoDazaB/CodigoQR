@@ -722,7 +722,7 @@ namespace MttoApp.ViewModel
                 //INFORMACION DEL TABLERO
                 tableroInfo = new Tableros()
                 {
-                    TableroID = TableroID.ToLower(),
+                    TableroID = TableroID,
                     SapID = SapID,
                     IDCreador = Usuario.Cedula,
                     Filial = Filial,
@@ -1012,7 +1012,7 @@ namespace MttoApp.ViewModel
 
                             //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
                             if (response.IsSuccessStatusCode) //=> CODIGO 200 (OK) RETONADO
-                            {
+                            { 
                                 //EL CODIGO DE ESTATUS OBTENIDO ES EL 200 OK SE ACTIVA LA BANDERA
                                 flag = true;
                             }

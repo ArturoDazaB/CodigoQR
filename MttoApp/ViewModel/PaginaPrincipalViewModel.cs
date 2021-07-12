@@ -229,15 +229,8 @@ namespace MttoApp.ViewModel
                             result = await response.Content.ReadAsStringAsync();
                             //SE REALIZA LA EL MAPEO DE UN OBJETO JSON A UN OBJETO "LogInResponse"
                             LogInResponse loginresponse = await Task.FromResult(JsonConvert.DeserializeObject<LogInResponse>(result));
-
-                            if (loginresponse.UserInfo.Usuario.Cedula != 0)
-                            {
-                                //SE DESENCRIPTA LA CONTRASEÑA
-                                loginresponse.UserInfo.Usuario.Password = Metodos.DecryptString(loginresponse.UserInfo.Usuario.Password);
-                            }
-
-                            //SE ALMACENA EL TOKEN DENTRO DE LA APLICACION
-                            await SecureStorage.SetAsync("token", loginresponse.Token);
+                            //SE DESENCRIPTA LA CONTRASEÑA
+                            loginresponse.UserInfo.Usuario.Password = Metodos.DecryptString(loginresponse.UserInfo.Usuario.Password);
                             //SE RETORNA EL OBJETO 
                             return loginresponse;
                         }

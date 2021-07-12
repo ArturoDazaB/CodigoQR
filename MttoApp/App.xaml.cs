@@ -1,20 +1,21 @@
-﻿using MttoApp.View.Paginas;
-using System;
+﻿using System;
+using System.Net.Http;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+using MttoApp.View.Paginas;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace MttoApp
 {
     public partial class App : Application
     {
-        //VARIABLE QUE ALMACENARA EL NOMBRE DEL ARCHIVO QUE TENDRA LA BASE DE DATOS
+        //VARIABLE QUE ALMACENARA EL NOMBRE DEL ARCHIVO QUE TENDRA LA BASE DE DATOS 
         //LOCAL QUE MANEJARA LA APLICACION CUANDO SE ENCUENTRE FUNCIONANDO STAND ALONE
         public static string FileName;
-
         //===============================================================================================
         //===============================================================================================
         //CONSTANTES QUE SERAN LLAMADOS EN LOS DISTINTOS "VIEWMODEL" EMPLEADOS PARA CADA PAGINA
@@ -39,7 +40,6 @@ namespace MttoApp
 
         //COLOR DEL FONDO (PAGINAS DE INFORMACION)
         public const string BackGroundColorPopUp = "#FFFDE7";
-
         //COLOR DEL MARCO (PAGINAS DE INFORMACION)
         public const string FrameColorPopUp = "#000000";
 
@@ -47,33 +47,27 @@ namespace MttoApp
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        public const string BaseUrl = "https://10.10.4.104:5002/mttoapp";
+        public const string BaseUrl = "https://10.10.0.83:5001/mttoapp";
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
         public const int TimeInSeconds = 5;
 
-        //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET
+        //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET 
         public const string NoNetworkAccessMessage = "Sin Acceso a Internet Enciende el WIFI o la Red Móvil para poder acceder";
-
         //DIRECCION IP DEL DISPOSITIVO
         public static string IPAddress { get { return DependencyService.Get<MttoApp.Servicios.IIPAddressManager>().GetIPAddress(); } }
 
         //TEXTO USADO PARA AFIRMAR (PROCEDER)
         public const string AffirmativeText = "Si";
-
         //TEXTO USADO PARA NEGAR (DENEGAR)
         public const string NegativeText = "No";
-
         //TEXTO USADO PARA AFIRMAR (ENTENDIDO)
         public const string OkText = "Entendido";
-
         //TEXTO USADO PARA INDICAR CUALES SON LOS CARACTERES PROHIBIDOS
         public const string ForbiddenCharacters = "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'";
-
         //TEXTO USADO PARA INDICAR EL "KEY" / "LLAVE" USADA EN LOS METODOS
-        //SUBSCRIBE Y SEND DE LA CLASE "MessageCenter"
+        //SUBSCRIBE Y SEND DE LA CLASE "MessageCenter" 
         public const string ItemUpdate = "ItemUpdate";
-
         public const string ItemAdd = "ItemAdd";
 
         
@@ -87,7 +81,6 @@ namespace MttoApp
         //SE DEFINEN LAS PROPIEDADES "SecretKey" y "PublicKey" PARA LAS FUNCIONES DE ECRIPTACION
         //Y DESENCRIPTACION (FUNCIONES ALBERGADAS EN EL ARCHIVO "Metodos").
         public static string SecretKey { get { return "12345678"; } }
-
         public static string PublicKey { get { return "98765432"; } }
 
         //===============================================================================================
@@ -103,12 +96,12 @@ namespace MttoApp
 
         //===============================================================================================
         //===============================================================================================
-        //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS
-        //REQUIERE QUE SEA ENVIADO UN PARAMETRO QUE LLEVA POR NOMBRE "filename" (PARAMETRO QUE LLEVARA EL
-        //NOMBRE DE ARCHIVO CON EL  CUAL SE IDENTIFICARA LA BASE DE DATOS LOCAL Sqlite QUE UTILIZA LA
+        //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS 
+        //REQUIERE QUE SEA ENVIADO UN PARAMETRO QUE LLEVA POR NOMBRE "filename" (PARAMETRO QUE LLEVARA EL 
+        //NOMBRE DE ARCHIVO CON EL  CUAL SE IDENTIFICARA LA BASE DE DATOS LOCAL Sqlite QUE UTILIZA LA 
         //APLICACION CUANDO SE ENCUENTRA FUNCIONANDO STAND ALONE)
         //-----------------------------------------------------------------------------------------------
-        //NOTA: ESTE METODO CONSTRUCTOR ES LLAMADO EN LAS CLASES "MainActivity" Y "AppDelegate" DE LOS
+        //NOTA: ESTE METODO CONSTRUCTOR ES LLAMADO EN LAS CLASES "MainActivity" Y "AppDelegate" DE LOS 
         //PROYECTOS MttoApp.Android Y MttoApp.iOS RESPECTIVAMENTE
         //-----------------------------------------------------------------------------------------------
         //===============================================================================================
@@ -125,7 +118,7 @@ namespace MttoApp
         //===============================================================================================
         //===============================================================================================
         //LA CLASE APLICACION (App) CONTIENE TRES METODOS "VIRTUALES" (PALABRA CLAVE QUE INVALIDA LAS
-        //ACCIONES EJECUTADAS EN EL METODO MATRIZ Y PERMITE REDEFINIRLO EN UNA CLASE DERIVADA) QUE
+        //ACCIONES EJECUTADAS EN EL METODO MATRIZ Y PERMITE REDEFINIRLO EN UNA CLASE DERIVADA) QUE 
         //PUEDEN SER REEMPLAZADOS PARA RESPONDER A CAMBIOS DE CICLO DE VIDA DE LA APLICACION
 
         //METODO INVOCADO CUANDO SE INICIA LA APLICACION

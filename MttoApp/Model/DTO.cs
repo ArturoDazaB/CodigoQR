@@ -86,15 +86,13 @@ namespace MttoApp.Model
     {
         public InformacionGeneral UserInfo { get; set; }
         public DateTime UltimaFechaIngreso { get; set; }
-        public string Token { get; set; }
 
-        public static LogInResponse NewLogInResponse(InformacionGeneral info, DateTime ultimoingreso, string token)
+        public static LogInResponse NewLogInResponse(InformacionGeneral info, DateTime ultimoingreso)
         {
             return new LogInResponse()
             {
                 UserInfo = info,
                 UltimaFechaIngreso = ultimoingreso,
-                Token = token,
             };
         }
     }
