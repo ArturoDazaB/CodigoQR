@@ -231,6 +231,8 @@ namespace MttoApp.ViewModel
                             LogInResponse loginresponse = await Task.FromResult(JsonConvert.DeserializeObject<LogInResponse>(result));
                             //SE DESENCRIPTA LA CONTRASEÑA
                             loginresponse.UserInfo.Usuario.Password = Metodos.DecryptString(loginresponse.UserInfo.Usuario.Password);
+                            //GUARDAMOS LA INFORMACION DEL TOKEN
+                            await SecureStorage.SetAsync("token", loginresponse.Token);
                             //SE RETORNA EL OBJETO 
                             return loginresponse;
                         }
